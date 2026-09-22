@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Корпоративный портал ИИ-агентов (Фонд МИК)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+/* ==========================================================================
+   1. ПЕРЕМЕННЫЕ — правьте здесь цвета, размеры, отступы
+   ========================================================================== */
+:root{
+  /* Палитра */
+  --green:            #17a05c;   /* основной зелёный (логотип, акценты) */
+  --green-dark:       #0f8a4d;
+  --green-soft:       #e8f6ee;   /* фон плиток/активного пункта меню */
+  --green-soft-2:     #f3fbf6;   /* заливка карточки-раздела */
+  --blue:             #2563eb;
+  --blue-soft:        #e4edfc;
+  --blue-soft-2:      #f5f9ff;
+  --violet:           #6d4aff;
+  --violet-soft:      #ece9fd;
+  --violet-soft-2:    #f8f6ff;
+
+  --ink:              #0f2e44;   /* основной текст / заголовки */
+  --ink-2:            #123c55;
+  --muted:            #64808f;   /* второстепенный текст */
+  --muted-2:          #8aa2ae;
+
+  --page-bg:          #f4f9fb;   /* фон рабочей области */
+  --surface:          #ffffff;
+  --line:             #e8eef2;   /* границы */
+  --line-soft:        #eef3f6;
+
+  /* Размеры */
+  --sidebar-w:        285px;
+  --topbar-h:         72px;
+  --radius-lg:        18px;
+  --radius-md:        14px;
+  --radius-sm:        12px;
+  --content-pad:      28px;
+  --card-gap:         12px;
+}
+
+/* ==========================================================================
+   2. БАЗА
+   ========================================================================== */
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Arial,sans-serif;
+  background:var(--page-bg);
+  color:var(--ink);
+  -webkit-font-smoothing:antialiased;
+  font-size:14px;
+  line-height:1.4;
+}
+svg{display:block}
+.app{display:flex;min-height:100vh}
+
+/* ==========================================================================
+   3. БОКОВОЕ МЕНЮ
+   ========================================================================== */
+.sidebar{
+  width:var(--sidebar-w);
+  min-width:var(--sidebar-w);
+  background:var(--surface);
+  border-right:1px solid var(--line);
+  display:flex;
+  flex-direction:column;
+  position:sticky;
+  top:0;
+  height:100vh;
+}
+.brand{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  padding:18px 18px 16px;
+}
+.brand__logo{width:38px;height:38px;flex:none}
+.brand__text{
+  font-size:14px;
+  font-weight:700;
+  line-height:1.3;
+  color:var(--ink);
+  letter-spacing:-.01em;
+}
+
+.nav{padding:10px 14px;display:flex;flex-direction:column;gap:4px}
+.nav__item{
+  display:flex;
+  align-items:center;
+  gap:14px;
+  padding:13px 14px;
+  border-radius:var(--radius-md);
+  color:var(--ink-2);
+  font-size:15px;
+  font-weight:500;
+  text-decoration:none;
+  cursor:pointer;
+  user-select:none;
+}
+.nav__item:hover{background:#f3f7f9}
+.nav__item.is-active{
+  background:var(--green-soft);
+  color:var(--green-dark);
+  font-weight:600;
+}
+.nav__icon{
+  width:30px;height:30px;flex:none;
+  display:grid;place-items:center;
+  border-radius:9px;
+  background:var(--green-soft);
+  color:var(--green);
+}
+.nav__item.is-active .nav__icon{background:#ffffff}
+.nav__chevron{margin-left:auto;color:var(--muted-2)}
+
+.sidebar__bottom{margin-top:auto;padding:16px 14px 20px}
+.user-row{
+  display:flex;align-items:center;gap:12px;
+  padding:8px 6px 14px;
+}
+.user-row__avatar{
+  width:32px;height:32px;border-radius:50%;
+  background:var(--green-soft);color:var(--green);
+  display:grid;place-items:center;flex:none;
+}
+.user-row__name{font-size:14px;font-weight:600;color:var(--ink)}
+.user-row__role{font-size:12.5px;color:var(--muted)}
+.user-row__gear{margin-left:auto;color:var(--muted);cursor:pointer}
+.user-row__gear:hover{color:var(--ink)}
+
+.app-card{
+  background:#f3f8fa;
+  border:1px solid var(--line-soft);
+  border-radius:var(--radius-md);
+  padding:14px 16px;
+  color:var(--muted);
+  font-size:13.5px;
+  line-height:1.45;
+}
+.app-card__ver{margin-top:10px;font-size:13px;color:var(--muted-2)}
+
+/* ==========================================================================
+   4. ВЕРХНЯЯ ПАНЕЛЬ
+   ========================================================================== */
+.main{flex:1;min-width:0;display:flex;flex-direction:column}
+.topbar{
+  height:var(--topbar-h);
+  background:var(--surface);
+  border-bottom:1px solid var(--line);
+  display:flex;
+  align-items:center;
+  padding:0 26px 0 30px;
+  gap:16px;
+  position:sticky;top:0;z-index:5;
+}
+.burger{
+  color:var(--ink);cursor:pointer;padding:6px;border-radius:8px;
+  background:none;border:0;
+}
+.burger:hover{background:#f1f5f7}
+.topbar__right{margin-left:auto;display:flex;align-items:center;gap:18px}
+.bell{position:relative;color:var(--muted);cursor:pointer}
+.bell:hover{color:var(--ink)}
+.bell__dot{
+  position:absolute;top:-1px;right:-1px;
+  width:9px;height:9px;border-radius:50%;
+  background:var(--green);border:2px solid #fff;
+}
+.profile{display:flex;align-items:center;gap:12px;cursor:pointer}
+.profile__avatar{
+  width:38px;height:38px;border-radius:50%;
+  background:var(--green-soft);color:var(--green-dark);
+  display:grid;place-items:center;
+  font-weight:700;font-size:13.5px;letter-spacing:.02em;
+}
+.profile__name{font-size:14.5px;font-weight:600;color:var(--ink)}
+.profile__chevron{color:var(--muted-2)}
+
+/* ==========================================================================
+   5. ШАПКА СТРАНИЦЫ: приветствие + баннер
+   ========================================================================== */
+.content{padding:var(--content-pad) var(--content-pad) 40px}
+.page-head{
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:32px;
+  margin-bottom:18px;
+}
+.greeting__title{
+  margin:0;
+  font-size:34px;
+  font-weight:800;
+  letter-spacing:-.02em;
+  color:var(--ink);
+}
+.greeting__sub{
+  margin:8px 0 0;
+  font-size:22px;
+  font-weight:500;
+  color:#5f8092;
+}
+.banner{
+  position:relative;
+  flex:none;
+  width:466px;
+  display:flex;
+  gap:16px;
+  background:#eaf7f0;
+  border:1px solid #dcf0e5;
+  border-radius:var(--radius-lg);
+  padding:18px 40px 18px 18px;
+}
+.banner__icon{
+  width:56px;height:56px;flex:none;
+  border-radius:15px;
+  background:#dcf1e6;color:var(--green-dark);
+  display:grid;place-items:center;
+}
+.banner__title{margin:2px 0 6px;font-size:14.5px;font-weight:700;color:var(--ink);line-height:1.35}
+.banner__text{margin:0;font-size:13.5px;color:#5b7f8e;line-height:1.45}
+.banner__close{
+  position:absolute;top:14px;right:14px;
+  background:none;border:0;cursor:pointer;color:var(--muted-2);padding:2px;
+}
+.banner__close:hover{color:var(--ink)}
+
+/* ==========================================================================
+   6. КАРТОЧКИ РАЗДЕЛОВ
+   ========================================================================== */
+.sections{
+  display:grid;
+  grid-template-columns:0.92fr 0.96fr 1.12fr;
+  gap:var(--card-gap);
+  align-items:stretch;
+  margin-bottom:20px;
+}
+.section-card{
+  position:relative;
+  overflow:hidden;
+  border:1px solid var(--line);
+  border-radius:20px;
+  padding:16px;
+  display:flex;
+  flex-direction:column;
+  gap:13px;
+}
+.section-card--green {background:linear-gradient(135deg,#ffffff 40%,var(--green-soft-2));}
+.section-card--blue  {background:linear-gradient(135deg,#ffffff 40%,var(--blue-soft-2));}
+.section-card--violet{background:linear-gradient(135deg,#ffffff 40%,var(--violet-soft-2));}
+
+.section-card__watermark{
+  position:absolute;
+  top:10px;right:-30px;
+  opacity:.45;
+  pointer-events:none;
+}
+.section-card__head{display:flex;gap:14px;align-items:flex-start;position:relative}
+.section-card__icon{
+  width:66px;height:66px;flex:none;
+  border-radius:17px;
+  display:grid;place-items:center;
+}
+.section-card--green  .section-card__icon{background:var(--green-soft); color:#127a41}
+.section-card--blue   .section-card__icon{background:var(--blue-soft);  color:var(--blue)}
+.section-card--violet .section-card__icon{background:var(--violet-soft);color:var(--violet)}
+
+.section-card__title{
+  margin:2px 0 8px;
+  font-size:20px;
+  font-weight:800;
+  letter-spacing:-.01em;
+  color:var(--ink);
+  line-height:1.2;
+}
+.section-card__desc{margin:0;font-size:12.7px;color:#5f8092;line-height:1.45;letter-spacing:-.008em}
+
+.section-card__list{display:flex;flex-direction:column;gap:8px}
+
+/* --- пункт-агент внутри карточки --- */
+.item{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  background:var(--surface);
+  border:1px solid var(--line);
+  border-radius:var(--radius-md);
+  padding:11px 12px;
+  cursor:pointer;
+}
+.item:hover{border-color:#cfe6d9;box-shadow:0 2px 10px rgba(16,58,80,.05)}
+.item__icon{
+  width:38px;height:38px;flex:none;
+  border-radius:12px;
+  display:grid;place-items:center;
+}
+.section-card--green  .item__icon{background:var(--green-soft); color:var(--green)}
+.section-card--blue   .item__icon{background:var(--blue-soft);  color:var(--blue)}
+.section-card--violet .item__icon{background:var(--violet-soft);color:var(--violet)}
+
+.item__body{min-width:0;flex:1}
+.item__title{font-size:14px;font-weight:700;color:var(--ink);line-height:1.3;letter-spacing:-.008em}
+.item__desc{margin-top:2px;font-size:12.5px;color:#6b8998;line-height:1.35;letter-spacing:-.008em}
+.item__arrow{
+  width:32px;height:32px;flex:none;
+  border-radius:50%;
+  background:var(--green-soft);color:var(--green);
+  display:grid;place-items:center;
+}
+.item:hover .item__arrow{background:var(--green);color:#fff}
+
+/* ==========================================================================
+   7. НЕДАВНИЕ ЗАПРОСЫ
+   ========================================================================== */
+.recent{
+  background:var(--surface);
+  border:1px solid var(--line);
+  border-radius:20px;
+  padding:18px 12px 12px;
+}
+.recent__head{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 12px 12px;
+}
+.recent__title{margin:0;font-size:20px;font-weight:800;letter-spacing:-.01em;color:var(--ink)}
+.recent__all{
+  display:flex;align-items:center;gap:8px;
+  color:var(--green);font-size:14px;font-weight:600;
+  text-decoration:none;cursor:pointer;
+}
+.recent__all:hover{color:var(--green-dark)}
+.recent__list{display:flex;flex-direction:column;gap:6px}
+.recent-row{
+  display:flex;align-items:center;gap:14px;
+  padding:9px 12px;
+  border-radius:var(--radius-sm);
+  cursor:pointer;
+}
+.recent-row:hover{background:#f5faf7}
+.recent-row__icon{
+  width:30px;height:30px;flex:none;
+  border-radius:9px;
+  background:var(--green-soft);color:var(--green);
+  display:grid;place-items:center;
+}
+.recent-row__text{font-size:14px;color:var(--ink);font-weight:500}
+.recent-row__time{margin-left:auto;font-size:13.5px;color:var(--muted-2)}
+
+/* ==========================================================================
+   8. АДАПТИВ (упрощённый)
+   ========================================================================== */
+@media (max-width:1280px){
+  .sections{grid-template-columns:1fr 1fr}
+  .page-head{flex-direction:column}
+  .banner{width:100%}
+}
+@media (max-width:880px){
+  .sidebar{display:none}
+  .sections{grid-template-columns:1fr}
+  .greeting__title{font-size:26px}
+  .greeting__sub{font-size:18px}
+  :root{--content-pad:18px}
+}
+</style>
+</head>
+<body>
+<div class="app">
+
+  <!-- ============================ БОКОВОЕ МЕНЮ ============================ -->
+  <aside class="sidebar">
+    <div class="brand">
+      <svg class="brand__logo" viewBox="0 0 40 40" fill="none" aria-hidden="true">
+        <path d="M4 34V6h7l9 13 9-13h7v28h-7V18l-9 13-9-13v16H4z" fill="#17a05c"/>
+        <path d="M27 6h9v9l-9-9z" fill="#3ec77e"/>
+      </svg>
+      <div class="brand__text">Корпоративный портал<br>ИИ-агентов (Фонд МИК)</div>
+    </div>
+
+    <nav class="nav">
+      <a class="nav__item is-active">
+        <span class="nav__icon">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V20a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V9.5"/><path d="M9.5 21v-6h5v6"/></svg>
+        </span>
+        Главная
+      </a>
+      <a class="nav__item">
+        <span class="nav__icon">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.4 8.4 0 0 1-9 8.4 9 9 0 0 1-3.6-.7L3 21l1.9-5A8.4 8.4 0 0 1 12 3.5a8.4 8.4 0 0 1 9 8z"/></svg>
+        </span>
+        Чат
+      </a>
+      <a class="nav__item">
+        <span class="nav__icon">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><path d="M13 2 4.5 13.5H11l-1 8.5 8.5-11.5H12l1-8.5z"/></svg>
+        </span>
+        Ассистенты
+        <svg class="nav__chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+      </a>
+      <a class="nav__item">
+        <span class="nav__icon">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="2.5"/><path d="M8 9h8M8 13h8M8 17h5"/></svg>
+        </span>
+        Мои документы
+      </a>
+    </nav>
+
+    <div class="sidebar__bottom">
+      <div class="user-row">
+        <span class="user-row__avatar">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="3.5"/><path d="M4.5 20a7.5 7.5 0 0 1 15 0"/></svg>
+        </span>
+        <div>
+          <div class="user-row__name">Иван Иванов</div>
+          <div class="user-row__role">Сотрудник фонда</div>
+        </div>
+        <span class="user-row__gear">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.6 1.6 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.6 1.6 0 0 0-1.8-.3 1.6 1.6 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1A1.6 1.6 0 0 0 9 19.4a1.6 1.6 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.6 1.6 0 0 0 .3-1.8 1.6 1.6 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1A1.6 1.6 0 0 0 4.6 9a1.6 1.6 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.6 1.6 0 0 0 1.8.3H9a1.6 1.6 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.6 1.6 0 0 0 1 1.5 1.6 1.6 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.6 1.6 0 0 0-.3 1.8V9a1.6 1.6 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.6 1.6 0 0 0-1.5 1z"/></svg>
+        </span>
+      </div>
+
+      <div class="app-card">
+        Корпоративный портал<br>ИИ-агентов (Фонд МИК)
+        <div class="app-card__ver">v 2.4.10</div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ============================ ОСНОВНАЯ ЧАСТЬ ============================ -->
+  <div class="main">
+
+    <!-- Верхняя панель -->
+    <header class="topbar">
+      <button class="burger" aria-label="Меню">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+      </button>
+
+      <div class="topbar__right">
+        <span class="bell">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 1 0-12 0c0 6-2 7-2 7h16s-2-1-2-7"/><path d="M13.7 20a2 2 0 0 1-3.4 0"/></svg>
+          <span class="bell__dot"></span>
+        </span>
+        <div class="profile">
+          <span class="profile__avatar">ИИ</span>
+          <span class="profile__name">Иван Иванов</span>
+          <svg class="profile__chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+        </div>
+      </div>
+    </header>
+
+    <main class="content">
+
+      <!-- Приветствие + баннер -->
+      <div class="page-head">
+        <div class="greeting">
+          <h1 class="greeting__title">Добрый день, Иван Иванов 👋</h1>
+          <p class="greeting__sub">Чем займёмся сегодня?</p>
+        </div>
+
+        <aside class="banner">
+          <span class="banner__icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.5l1.7 4.6 4.6 1.7-4.6 1.7L12 15.1l-1.7-4.6-4.6-1.7 4.6-1.7L12 2.5z"/><path d="M18.5 14l.9 2.3 2.3.9-2.3.9-.9 2.3-.9-2.3-2.3-.9 2.3-.9.9-2.3z"/><path d="M5.5 14.5l.7 1.8 1.8.7-1.8.7-.7 1.8-.7-1.8-1.8-.7 1.8-.7.7-1.8z"/></svg>
+          </span>
+          <div>
+            <p class="banner__title">ИИ-ассистенты помогают быстрее<br>решать рабочие задачи</p>
+            <p class="banner__text">Ищите информацию, анализируйте документы,<br>готовьте материалы и многое другое.</p>
+          </div>
+          <button class="banner__close" aria-label="Закрыть">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg>
+          </button>
+        </aside>
+      </div>
+
+      <!-- Три раздела -->
+      <div class="sections">
+
+        <!-- ---------- Раздел 1: Корпоративные инструменты ---------- -->
+        <section class="section-card section-card--green">
+          <svg class="section-card__watermark" width="150" height="150" viewBox="0 0 24 24" fill="none" stroke="#d8efe2" stroke-width="1.2" stroke-linejoin="round"><path d="M21.7 5.6 18 9.3l-3.3-3.3 3.7-3.7a6 6 0 0 0-7.6 7.3L3.5 16.9a2.2 2.2 0 0 0 3.1 3.1l7.3-7.3a6 6 0 0 0 7.8-7.1z"/></svg>
+          <header class="section-card__head">
+            <span class="section-card__icon">
+              <svg width="40" height="40" viewBox="0 0 24 24" fill="currentColor"><path d="M21.7 5.6 18 9.3l-3.3-3.3 3.7-3.7a6 6 0 0 0-7.6 7.3L3.5 16.9a2.2 2.2 0 0 0 3.1 3.1l7.3-7.3a6 6 0 0 0 7.8-7.1z"/></svg>
+            </span>
+            <div>
+              <h2 class="section-card__title">Корпоративные<br>инструменты</h2>
+              <p class="section-card__desc">Помогают обрабатывать информацию<br>и готовить рабочие материалы</p>
+            </div>
+          </header>
+
+          <div class="section-card__list">
+            <article class="item">
+              <span class="item__icon">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 10v4M10 6v12M14 8v8M18 11v2"/></svg>
+              </span>
+              <div class="item__body">
+                <div class="item__title">Расшифровка аудио<br>(транскрибация)</div>
+                <div class="item__desc">Преобразование речи в текст<br>с выделением ключевых мыслей</div>
+              </div>
+              <span class="item__arrow">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13M13 6l6 6-6 6"/></svg>
+              </span>
+            </article>
+
+            <article class="item">
+              <span class="item__icon">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h8l4 4v14H6z"/><path d="M9 11h6M9 15h4"/></svg>
+              </span>
+              <div class="item__body">
+                <div class="item__title">Саммаризация</div>
+                <div class="item__desc">Краткое изложение текста<br>и ключевые выводы</div>
+              </div>
+              <span class="item__arrow">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13M13 6l6 6-6 6"/></svg>
+              </span>
+            </article>
+
+            <article class="item">
+              <span class="item__icon">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h8l4 4v14H6z"/><path d="M9 11h6M9 15h4"/></svg>
+              </span>
+              <div class="item__body">
+                <div class="item__title">Протокол</div>
+                <div class="item__desc">Автоматическое формирование<br>структурированного протокола</div>
+              </div>
+              <span class="item__arrow">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13M13 6l6 6-6 6"/></svg>
+              </span>
+            </article>
+          </div>
+        </section>
+
+        <!-- ---------- Раздел 2: База знаний ---------- -->
+        <section class="section-card section-card--blue">
+          <svg class="section-card__watermark" width="150" height="150" viewBox="0 0 24 24" fill="none" stroke="#dbe7fa" stroke-width="1.2"><path d="M3 5.5A9 9 0 0 1 12 7a9 9 0 0 1 9-1.5V19a9 9 0 0 0-9-1.5A9 9 0 0 0 3 19V5.5z"/><path d="M12 7v10.5"/></svg>
+          <header class="section-card__head">
+            <span class="section-card__icon">
+              <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M3 5.5A9 9 0 0 1 12 7a9 9 0 0 1 9-1.5V19a9 9 0 0 0-9-1.5A9 9 0 0 0 3 19V5.5z"/><path d="M12 7v10.5"/></svg>
+            </span>
+            <div>
+              <h2 class="section-card__title">База знаний</h2>
+              <p class="section-card__desc">Доступ к внутренним документам<br>фонда и поддержка сотрудников</p>
+            </div>
+          </header>
+
+          <div class="section-card__list">
+            <article class="item">
+              <span class="item__icon">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M3 5.5A9 9 0 0 1 12 7a9 9 0 0 1 9-1.5V19a9 9 0 0 0-9-1.5A9 9 0 0 0 3 19V5.5z"/><path d="M12 7v10.5"/></svg>
+              </span>
+              <div class="item__body">
+                <div class="item__title">База знаний</div>
+                <div class="item__desc">Поиск по внутренней базе<br>знаний фонда</div>
+              </div>
+              <span class="item__arrow">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13M13 6l6 6-6 6"/></svg>
+              </span>
+            </article>
+
+            <article class="item">
+              <span class="item__icon">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3"/><path d="M3.5 19a5.5 5.5 0 0 1 11 0"/><path d="M16 6.5a3 3 0 0 1 0 5.6"/><path d="M17.5 14.5A5 5 0 0 1 21 19"/></svg>
+              </span>
+              <div class="item__body">
+                <div class="item__title">Онбординг и адаптация</div>
+                <div class="item__desc">Материалы для новых сотрудников<br>и полезные инструкции</div>
+              </div>
+              <span class="item__arrow">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13M13 6l6 6-6 6"/></svg>
+              </span>
+            </article>
+          </div>
+        </section>
+
+        <!-- ---------- Раздел 3: Закупочные процедуры ---------- -->
+        <section class="section-card section-card--violet">
+          <svg class="section-card__watermark" width="150" height="150" viewBox="0 0 24 24" fill="none" stroke="#e5e0fb" stroke-width="1.2"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 9h8M8 13h8M8 17h5"/></svg>
+          <header class="section-card__head">
+            <span class="section-card__icon">
+              <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 3h2.2l2.3 11.2a1.5 1.5 0 0 0 1.5 1.2h8.6a1.5 1.5 0 0 0 1.5-1.2L20 6.5H6"/><circle cx="9.5" cy="19.5" r="1.5"/><circle cx="17" cy="19.5" r="1.5"/></svg>
+            </span>
+            <div>
+              <h2 class="section-card__title">Закупочные<br>процедуры</h2>
+              <p class="section-card__desc">ИИ-агенты для подготовки документов<br>на всех этапах закупочного процесса</p>
+            </div>
+          </header>
+
+          <div class="section-card__list">
+            <article class="item">
+              <span class="item__icon">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h8l4 4v14H6z"/><path d="M9 11h6M9 15h4"/></svg>
+              </span>
+              <div class="item__body">
+                <div class="item__title">Формирование и проверка<br>закупочной документации</div>
+                <div class="item__desc">ТЗ, СЗ, обоснование</div>
+              </div>
+              <span class="item__arrow">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13M13 6l6 6-6 6"/></svg>
+              </span>
+            </article>
+
+            <article class="item">
+              <span class="item__icon">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h8l4 4v14H6z"/><path d="M9 11h6M9 15h4"/></svg>
+              </span>
+              <div class="item__body">
+                <div class="item__title">Формирование и проверка КП</div>
+                <div class="item__desc">Анализ и подготовка коммерческих<br>предложений</div>
+              </div>
+              <span class="item__arrow">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13M13 6l6 6-6 6"/></svg>
+              </span>
+            </article>
+
+            <article class="item">
+              <span class="item__icon">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M8.5 7.5h7M8.5 12h.01M12 12h.01M15.5 12h.01M8.5 16h.01M12 16h.01M15.5 16h.01"/></svg>
+              </span>
+              <div class="item__body">
+                <div class="item__title">Расчет НМЦД</div>
+                <div class="item__desc">Определение и обоснование<br>начальной максимальной цены договора</div>
+              </div>
+              <span class="item__arrow">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13M13 6l6 6-6 6"/></svg>
+              </span>
+            </article>
+
+            <article class="item">
+              <span class="item__icon">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h8l4 4v14H6z"/><path d="M9 11h6M9 15h4"/></svg>
+              </span>
+              <div class="item__body">
+                <div class="item__title">Формирование Договора</div>
+                <div class="item__desc">Подготовка проекта договора</div>
+              </div>
+              <span class="item__arrow">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13M13 6l6 6-6 6"/></svg>
+              </span>
+            </article>
+
+            <article class="item">
+              <span class="item__icon">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 19V11M12 19V5M18 19v-6"/></svg>
+              </span>
+              <div class="item__body">
+                <div class="item__title">Формирование отчетной<br>документации</div>
+                <div class="item__desc">Подготовка отчетов по завершению закупки</div>
+              </div>
+              <span class="item__arrow">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13M13 6l6 6-6 6"/></svg>
+              </span>
+            </article>
+          </div>
+        </section>
+      </div>
+
+      <!-- Недавние запросы -->
+      <section class="recent">
+        <header class="recent__head">
+          <h2 class="recent__title">Недавние запросы</h2>
+          <a class="recent__all">
+            Смотреть все
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13M13 6l6 6-6 6"/></svg>
+          </a>
+        </header>
+
+        <div class="recent__list">
+          <div class="recent-row">
+            <span class="recent-row__icon">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h8l4 4v14H6z"/><path d="M9 11h6M9 15h4"/></svg>
+            </span>
+            <span class="recent-row__text">Найди положение о закупочной деятельности</span>
+            <span class="recent-row__time">Сегодня, 10:24</span>
+          </div>
+
+          <div class="recent-row">
+            <span class="recent-row__icon">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h8l4 4v14H6z"/><path d="M9 11h6M9 15h4"/></svg>
+            </span>
+            <span class="recent-row__text">Сделай краткое резюме по документу</span>
+            <span class="recent-row__time">Вчера, 16:18</span>
+          </div>
+
+          <div class="recent-row">
+            <span class="recent-row__icon">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 10v4M10 6v12M14 8v8M18 11v2"/></svg>
+            </span>
+            <span class="recent-row__text">Расшифруй запись совещания</span>
+            <span class="recent-row__time">Вчера, 14:03</span>
+          </div>
+
+          <div class="recent-row">
+            <span class="recent-row__icon">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.4 8.4 0 0 1-9 8.4 9 9 0 0 1-3.6-.7L3 21l1.9-5A8.4 8.4 0 0 1 12 3.5a8.4 8.4 0 0 1 9 8z"/></svg>
+            </span>
+            <span class="recent-row__text">Подготовь протокол по встрече с подрядчиком</span>
+            <span class="recent-row__time">12 мая, 11:20</span>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+</div>
+</body>
+</html>
