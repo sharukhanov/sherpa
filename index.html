@@ -129,16 +129,14 @@ svg{display:block}
   flex-direction:column;
   gap:2px;
   padding:4px 0 6px;
-  max-height:480px;                   /* если ассистентов много — список прокручивается */
-  overflow-y:auto;
 }
 .submenu.is-open{display:flex}
-.submenu::-webkit-scrollbar{width:5px}
-.submenu::-webkit-scrollbar-thumb{background:#dfe8ed;border-radius:3px}
+.nav::-webkit-scrollbar{width:5px}
+.nav::-webkit-scrollbar-thumb{background:#dfe8ed;border-radius:3px}
 
 .submenu__item{
   display:flex;
-  align-items:center;
+  align-items:flex-start;
   gap:11px;
   padding:7px 10px 7px 12px;
   border-radius:10px;
@@ -148,17 +146,18 @@ svg{display:block}
   user-select:none;
 }
 .submenu__item:hover{background:#f3f7f9}
-.submenu__icon{width:20px;height:20px;flex:none;display:grid;place-items:center}
+.submenu__icon{width:20px;height:20px;flex:none;display:grid;place-items:center;margin-top:1px}
 .submenu__icon--green {color:var(--green)}
 .submenu__icon--blue  {color:var(--blue)}
 .submenu__icon--violet{color:var(--violet)}
 .submenu__icon--amber {color:var(--amber)}
 .submenu__name{
   flex:1;min-width:0;
-  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;   /* длинные названия обрезаются */
+  line-height:1.3;        /* длинные названия переносятся на вторую строку */
 }
 .submenu__dots{
   flex:none;
+  align-self:center;
   color:var(--green);
   font-size:15px;
   line-height:1;
@@ -469,60 +468,60 @@ svg{display:block}
       <div class="submenu" id="assistantsList">
         <div class="submenu__item">
           <span class="submenu__icon submenu__icon--green"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.4 8.4 0 0 1-9 8.4 9 9 0 0 1-3.6-.7L3 21l1.9-5A8.4 8.4 0 0 1 12 3.5a8.4 8.4 0 0 1 9 8z"/></svg></span>
-          <span class="submenu__name" title="Чат">Чат</span>
+          <span class="submenu__name">Чат</span>
         </div>
         <div class="submenu__item">
           <span class="submenu__icon submenu__icon--green"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3"/><path d="M3.5 19a5.5 5.5 0 0 1 11 0"/><path d="M16 6.5a3 3 0 0 1 0 5.6"/><path d="M17.5 14.5A5 5 0 0 1 21 19"/></svg></span>
-          <span class="submenu__name" title="Все ассистенты">Все ассистенты</span>
+          <span class="submenu__name">Все ассистенты</span>
         </div>
         <div class="submenu__item">
-          <span class="submenu__icon submenu__icon--blue"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.4 8.4 0 0 1-9 8.4 9 9 0 0 1-3.6-.7L3 21l1.9-5A8.4 8.4 0 0 1 12 3.5a8.4 8.4 0 0 1 9 8z"/><path d="M8.5 11.5h.01M12 11.5h.01M15.5 11.5h.01"/></svg></span>
-          <span class="submenu__name" title="Найти документ">Найти документ</span>
+          <span class="submenu__icon submenu__icon--green"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 10v4M10 6v12M14 8v8M18 11v2"/></svg></span>
+          <span class="submenu__name">Расшифровать запись</span>
           <span class="submenu__dots">···</span>
         </div>
         <div class="submenu__item">
-          <span class="submenu__icon submenu__icon--green"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.4 8.4 0 0 1-9 8.4 9 9 0 0 1-3.6-.7L3 21l1.9-5A8.4 8.4 0 0 1 12 3.5a8.4 8.4 0 0 1 9 8z"/><path d="M8.5 11.5h.01M12 11.5h.01M15.5 11.5h.01"/></svg></span>
-          <span class="submenu__name" title="Онбординг и адаптация">Онбординг и адаптация</span>
+          <span class="submenu__icon submenu__icon--green"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h8l4 4v14H6z"/><path d="M9 11h6M9 15h4"/></svg></span>
+          <span class="submenu__name">Сделать краткое содержание</span>
           <span class="submenu__dots">···</span>
         </div>
         <div class="submenu__item">
-          <span class="submenu__icon submenu__icon--blue"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M3 5.5A9 9 0 0 1 12 7a9 9 0 0 1 9-1.5V19a9 9 0 0 0-9-1.5A9 9 0 0 0 3 19V5.5z"/><path d="M12 7v10.5"/></svg></span>
-          <span class="submenu__name" title="База знаний тест">База знаний тест</span>
+          <span class="submenu__icon submenu__icon--green"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h8l4 4v14H6z"/><path d="m9 13 2 2 4-4"/></svg></span>
+          <span class="submenu__name">Подготовить протокол</span>
           <span class="submenu__dots">···</span>
         </div>
         <div class="submenu__item">
-          <span class="submenu__icon submenu__icon--amber"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 14v-2a8 8 0 0 1 16 0v2"/><rect x="2.5" y="13.5" width="4.5" height="6" rx="2"/><rect x="17" y="13.5" width="4.5" height="6" rx="2"/></svg></span>
-          <span class="submenu__name" title="Транскрибация (Из аудио и видео)">Транскрибация (Из аудио и видео)</span>
+          <span class="submenu__icon submenu__icon--blue"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h8l4 4v6"/><path d="M6 3v18h6"/><circle cx="16.5" cy="16.5" r="3.5"/><path d="m19 19 2.5 2.5"/></svg></span>
+          <span class="submenu__name">Найти документ</span>
           <span class="submenu__dots">···</span>
         </div>
         <div class="submenu__item">
-          <span class="submenu__icon submenu__icon--blue"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.4 8.4 0 0 1-9 8.4 9 9 0 0 1-3.6-.7L3 21l1.9-5A8.4 8.4 0 0 1 12 3.5a8.4 8.4 0 0 1 9 8z"/><path d="M8.5 11.5h.01M12 11.5h.01M15.5 11.5h.01"/></svg></span>
-          <span class="submenu__name" title="База знаний">База знаний</span>
+          <span class="submenu__icon submenu__icon--blue"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.4 8.4 0 0 1-9 8.4 9 9 0 0 1-3.6-.7L3 21l1.9-5A8.4 8.4 0 0 1 12 3.5a8.4 8.4 0 0 1 9 8z"/><path d="M10.2 9.3a1.9 1.9 0 0 1 3.6.8c0 1.3-1.8 1.5-1.8 2.7"/><path d="M12 15.6h.01"/></svg></span>
+          <span class="submenu__name">Получить ответ по материалам Фонда</span>
           <span class="submenu__dots">···</span>
         </div>
         <div class="submenu__item">
-          <span class="submenu__icon submenu__icon--violet"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"><path d="M12 3l7 3v5.5c0 4.3-2.9 7.8-7 9.5-4.1-1.7-7-5.2-7-9.5V6l7-3z"/></svg></span>
-          <span class="submenu__name" title="Анонимайзер">Анонимайзер</span>
+          <span class="submenu__icon submenu__icon--violet"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M8.5 7.5h7M8.5 12h.01M12 12h.01M15.5 12h.01M8.5 16h.01M12 16h.01M15.5 16h.01"/></svg></span>
+          <span class="submenu__name">Рассчитать цену договора</span>
           <span class="submenu__dots">···</span>
         </div>
         <div class="submenu__item">
-          <span class="submenu__icon submenu__icon--blue"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.4 8.4 0 0 1-9 8.4 9 9 0 0 1-3.6-.7L3 21l1.9-5A8.4 8.4 0 0 1 12 3.5a8.4 8.4 0 0 1 9 8z"/><path d="M8.5 11.5h.01M12 11.5h.01M15.5 11.5h.01"/></svg></span>
-          <span class="submenu__name" title="Саммаризация Sherpa AI">Саммаризация Sherpa AI</span>
+          <span class="submenu__icon submenu__icon--violet"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h8l4 4v5"/><path d="M6 3v18h6"/><path d="m14.5 20.5 6-6 2 2-6 6h-2v-2z"/></svg></span>
+          <span class="submenu__name">Подготовить проект договора</span>
           <span class="submenu__dots">···</span>
         </div>
         <div class="submenu__item">
-          <span class="submenu__icon submenu__icon--blue"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h8l4 4v14H6z"/><path d="M9 11h6M9 15h4"/></svg></span>
-          <span class="submenu__name" title="Протокол">Протокол</span>
+          <span class="submenu__icon submenu__icon--violet"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h8l4 4v14H6z"/><path d="M9 11h6M9 15h4"/></svg></span>
+          <span class="submenu__name">Сформировать и проверить закупочную документацию</span>
           <span class="submenu__dots">···</span>
         </div>
         <div class="submenu__item">
-          <span class="submenu__icon submenu__icon--blue"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.4 8.4 0 0 1-9 8.4 9 9 0 0 1-3.6-.7L3 21l1.9-5A8.4 8.4 0 0 1 12 3.5a8.4 8.4 0 0 1 9 8z"/><path d="M8.5 11.5h.01M12 11.5h.01M15.5 11.5h.01"/></svg></span>
-          <span class="submenu__name" title="ИИ-юрист">ИИ-юрист</span>
+          <span class="submenu__icon submenu__icon--violet"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h8l4 4v14H6z"/><path d="M9 11h6M9 15h4"/></svg></span>
+          <span class="submenu__name">Сформировать и проверить коммерческие предложения</span>
           <span class="submenu__dots">···</span>
         </div>
         <div class="submenu__item">
-          <span class="submenu__icon submenu__icon--amber"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M9.5 17h5"/><path d="M10 20h4"/><path d="M12 3a6 6 0 0 0-3.5 10.9V17h7v-3.1A6 6 0 0 0 12 3z"/></svg></span>
-          <span class="submenu__name" title="Саммаризация МИК">Саммаризация МИК</span>
+          <span class="submenu__icon submenu__icon--violet"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 19V11M12 19V5M18 19v-6"/></svg></span>
+          <span class="submenu__name">Сформировать и проверить отчётную документацию</span>
           <span class="submenu__dots">···</span>
         </div>
       </div>
