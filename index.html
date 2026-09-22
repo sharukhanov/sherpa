@@ -309,7 +309,10 @@ svg{display:block}
   opacity:.4;
   pointer-events:none;
 }
-.section-card__head{display:flex;gap:14px;align-items:flex-start;position:relative}
+.section-card__head{
+  display:flex;gap:14px;align-items:flex-start;position:relative;
+  min-height:96px;          /* одинаковая высота шапок => списки агентов начинаются на одном уровне */
+}
 .section-card__icon{
   width:66px;height:66px;flex:none;
   border-radius:17px;
