@@ -129,7 +129,7 @@ svg{display:block}
   flex-direction:column;
   gap:2px;
   padding:4px 0 6px;
-  max-height:430px;                   /* если ассистентов много — список прокручивается */
+  max-height:480px;                   /* если ассистентов много — список прокручивается */
   overflow-y:auto;
 }
 .submenu.is-open{display:flex}
@@ -456,12 +456,6 @@ svg{display:block}
         </span>
         Главная
       </a>
-      <a class="nav__item">
-        <span class="nav__icon">
-          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.4 8.4 0 0 1-9 8.4 9 9 0 0 1-3.6-.7L3 21l1.9-5A8.4 8.4 0 0 1 12 3.5a8.4 8.4 0 0 1 9 8z"/></svg>
-        </span>
-        Чат
-      </a>
       <!-- Ассистенты: клик разворачивает список ниже -->
       <a class="nav__item" id="assistantsToggle">
         <span class="nav__icon">
@@ -473,6 +467,10 @@ svg{display:block}
 
       <!-- список ассистентов: добавить класс is-open, чтобы он был раскрыт сразу -->
       <div class="submenu" id="assistantsList">
+        <div class="submenu__item">
+          <span class="submenu__icon submenu__icon--green"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.4 8.4 0 0 1-9 8.4 9 9 0 0 1-3.6-.7L3 21l1.9-5A8.4 8.4 0 0 1 12 3.5a8.4 8.4 0 0 1 9 8z"/></svg></span>
+          <span class="submenu__name" title="Чат">Чат</span>
+        </div>
         <div class="submenu__item">
           <span class="submenu__icon submenu__icon--green"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3"/><path d="M3.5 19a5.5 5.5 0 0 1 11 0"/><path d="M16 6.5a3 3 0 0 1 0 5.6"/><path d="M17.5 14.5A5 5 0 0 1 21 19"/></svg></span>
           <span class="submenu__name" title="Все ассистенты">Все ассистенты</span>
