@@ -183,7 +183,7 @@ svg{display:block}
 .profile__chevron{color:var(--muted-2)}
 
 /* ==========================================================================
-   5. ШАПКА СТРАНИЦЫ: приветствие + баннер
+   5. ШАПКА СТРАНИЦЫ: приветствие
    ========================================================================== */
 .content{padding:var(--content-pad) var(--content-pad) 40px}
 .page-head{
@@ -206,30 +206,6 @@ svg{display:block}
   font-weight:500;
   color:#5f8092;
 }
-.banner{
-  position:relative;
-  flex:none;
-  width:466px;
-  display:flex;
-  gap:16px;
-  background:#eaf7f0;
-  border:1px solid #dcf0e5;
-  border-radius:var(--radius-lg);
-  padding:18px 40px 18px 18px;
-}
-.banner__icon{
-  width:56px;height:56px;flex:none;
-  border-radius:15px;
-  background:#dcf1e6;color:var(--green-dark);
-  display:grid;place-items:center;
-}
-.banner__title{margin:2px 0 6px;font-size:14.5px;font-weight:700;color:var(--ink);line-height:1.35}
-.banner__text{margin:0;font-size:13.5px;color:#5b7f8e;line-height:1.45}
-.banner__close{
-  position:absolute;top:14px;right:14px;
-  background:none;border:0;cursor:pointer;color:var(--muted-2);padding:2px;
-}
-.banner__close:hover{color:var(--ink)}
 
 /* ==========================================================================
    6. КАРТОЧКИ РАЗДЕЛОВ
@@ -257,8 +233,8 @@ svg{display:block}
 
 .section-card__watermark{
   position:absolute;
-  top:10px;right:-30px;
-  opacity:.45;
+  top:10px;right:-34px;
+  opacity:.4;
   pointer-events:none;
 }
 .section-card__head{display:flex;gap:14px;align-items:flex-start;position:relative}
@@ -358,7 +334,6 @@ svg{display:block}
 @media (max-width:1280px){
   .sections{grid-template-columns:1fr 1fr}
   .page-head{flex-direction:column}
-  .banner{width:100%}
 }
 @media (max-width:880px){
   .sidebar{display:none}
@@ -462,44 +437,32 @@ svg{display:block}
           <p class="greeting__sub">Чем займёмся сегодня?</p>
         </div>
 
-        <aside class="banner">
-          <span class="banner__icon">
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.5l1.7 4.6 4.6 1.7-4.6 1.7L12 15.1l-1.7-4.6-4.6-1.7 4.6-1.7L12 2.5z"/><path d="M18.5 14l.9 2.3 2.3.9-2.3.9-.9 2.3-.9-2.3-2.3-.9 2.3-.9.9-2.3z"/><path d="M5.5 14.5l.7 1.8 1.8.7-1.8.7-.7 1.8-.7-1.8-1.8-.7 1.8-.7.7-1.8z"/></svg>
-          </span>
-          <div>
-            <p class="banner__title">ИИ-ассистенты помогают быстрее<br>решать рабочие задачи</p>
-            <p class="banner__text">Ищите информацию, анализируйте документы,<br>готовьте материалы и многое другое.</p>
-          </div>
-          <button class="banner__close" aria-label="Закрыть">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg>
-          </button>
-        </aside>
       </div>
 
       <!-- Три раздела -->
       <div class="sections">
 
-        <!-- ---------- Раздел 1: Корпоративные инструменты ---------- -->
+        <!-- ---------- Раздел 1: Работа со встречами ---------- -->
         <section class="section-card section-card--green">
-          <svg class="section-card__watermark" width="150" height="150" viewBox="0 0 24 24" fill="none" stroke="#d8efe2" stroke-width="1.2" stroke-linejoin="round"><path d="M21.7 5.6 18 9.3l-3.3-3.3 3.7-3.7a6 6 0 0 0-7.6 7.3L3.5 16.9a2.2 2.2 0 0 0 3.1 3.1l7.3-7.3a6 6 0 0 0 7.8-7.1z"/></svg>
+          <svg class="section-card__watermark" width="150" height="150" viewBox="0 0 24 24" fill="none" stroke="#e3f4ea" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2.5" width="6" height="11" rx="3"/><path d="M5.5 11a6.5 6.5 0 0 0 13 0"/><path d="M12 17.5V21"/></svg>
           <header class="section-card__head">
             <span class="section-card__icon">
-              <svg width="40" height="40" viewBox="0 0 24 24" fill="currentColor"><path d="M21.7 5.6 18 9.3l-3.3-3.3 3.7-3.7a6 6 0 0 0-7.6 7.3L3.5 16.9a2.2 2.2 0 0 0 3.1 3.1l7.3-7.3a6 6 0 0 0 7.8-7.1z"/></svg>
+              <svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2.5" width="6" height="11" rx="3"/><path d="M5.5 11a6.5 6.5 0 0 0 13 0"/><path d="M12 17.5V21"/><path d="M8.5 21h7"/></svg>
             </span>
             <div>
-              <h2 class="section-card__title">Корпоративные<br>инструменты</h2>
-              <p class="section-card__desc">Помогают обрабатывать информацию<br>и готовить рабочие материалы</p>
+              <h2 class="section-card__title">Работа со встречами</h2>
+              <p class="section-card__desc">Записи встреч — в текст, краткое<br>содержание и готовый протокол</p>
             </div>
           </header>
 
           <div class="section-card__list">
             <article class="item">
               <span class="item__icon">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 10v4M10 6v12M14 8v8M18 11v2"/></svg>
+                <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 10v4M10 6v12M14 8v8M18 11v2"/></svg>
               </span>
               <div class="item__body">
-                <div class="item__title">Расшифровка аудио<br>(транскрибация)</div>
-                <div class="item__desc">Преобразование речи в текст<br>с выделением ключевых мыслей</div>
+                <div class="item__title">Расшифровать запись</div>
+                <div class="item__desc">Распознавание речи в аудио-<br>и видеозаписях встреч</div>
               </div>
               <span class="item__arrow">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13M13 6l6 6-6 6"/></svg>
@@ -508,11 +471,11 @@ svg{display:block}
 
             <article class="item">
               <span class="item__icon">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h8l4 4v14H6z"/><path d="M9 11h6M9 15h4"/></svg>
+                <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h8l4 4v14H6z"/><path d="M9 11h6M9 15h4"/></svg>
               </span>
               <div class="item__body">
-                <div class="item__title">Саммаризация</div>
-                <div class="item__desc">Краткое изложение текста<br>и ключевые выводы</div>
+                <div class="item__title">Сделать краткое содержание</div>
+                <div class="item__desc">Основные тезисы, решения<br>и договорённости встречи</div>
               </div>
               <span class="item__arrow">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13M13 6l6 6-6 6"/></svg>
@@ -521,11 +484,11 @@ svg{display:block}
 
             <article class="item">
               <span class="item__icon">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h8l4 4v14H6z"/><path d="M9 11h6M9 15h4"/></svg>
+                <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h8l4 4v14H6z"/><path d="m9 13 2 2 4-4"/></svg>
               </span>
               <div class="item__body">
-                <div class="item__title">Протокол</div>
-                <div class="item__desc">Автоматическое формирование<br>структурированного протокола</div>
+                <div class="item__title">Подготовить протокол</div>
+                <div class="item__desc">Структурированный протокол<br>с решениями и поручениями</div>
               </div>
               <span class="item__arrow">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13M13 6l6 6-6 6"/></svg>
@@ -534,27 +497,27 @@ svg{display:block}
           </div>
         </section>
 
-        <!-- ---------- Раздел 2: База знаний ---------- -->
+        <!-- ---------- Раздел 2: Поиск по внутренним материалам ---------- -->
         <section class="section-card section-card--blue">
-          <svg class="section-card__watermark" width="150" height="150" viewBox="0 0 24 24" fill="none" stroke="#dbe7fa" stroke-width="1.2"><path d="M3 5.5A9 9 0 0 1 12 7a9 9 0 0 1 9-1.5V19a9 9 0 0 0-9-1.5A9 9 0 0 0 3 19V5.5z"/><path d="M12 7v10.5"/></svg>
+          <svg class="section-card__watermark" width="150" height="150" viewBox="0 0 24 24" fill="none" stroke="#dbe7fa" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 3h8l4 4v3.5"/><path d="M5 3v18h6.5"/><circle cx="16.5" cy="16.5" r="4"/><path d="m19.5 19.5 2.5 2.5"/></svg>
           <header class="section-card__head">
             <span class="section-card__icon">
-              <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M3 5.5A9 9 0 0 1 12 7a9 9 0 0 1 9-1.5V19a9 9 0 0 0-9-1.5A9 9 0 0 0 3 19V5.5z"/><path d="M12 7v10.5"/></svg>
+              <svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 3h8l4 4v3.5"/><path d="M5 3v18h6.5"/><circle cx="16.5" cy="16.5" r="4"/><path d="m19.5 19.5 2.5 2.5"/></svg>
             </span>
             <div>
-              <h2 class="section-card__title">База знаний</h2>
-              <p class="section-card__desc">Доступ к внутренним документам<br>фонда и поддержка сотрудников</p>
+              <h2 class="section-card__title">Поиск по внутренним<br>материалам</h2>
+              <p class="section-card__desc">Быстро найти документ или получить<br>ответ по материалам Фонда</p>
             </div>
           </header>
 
           <div class="section-card__list">
             <article class="item">
               <span class="item__icon">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M3 5.5A9 9 0 0 1 12 7a9 9 0 0 1 9-1.5V19a9 9 0 0 0-9-1.5A9 9 0 0 0 3 19V5.5z"/><path d="M12 7v10.5"/></svg>
+                <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h8l4 4v6"/><path d="M6 3v18h6"/><circle cx="16.5" cy="16.5" r="3.5"/><path d="m19 19 2.5 2.5"/></svg>
               </span>
               <div class="item__body">
-                <div class="item__title">База знаний</div>
-                <div class="item__desc">Поиск по внутренней базе<br>знаний фонда</div>
+                <div class="item__title">Найти документ</div>
+                <div class="item__desc">Поиск файлов по внутренним<br>материалам Фонда</div>
               </div>
               <span class="item__arrow">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13M13 6l6 6-6 6"/></svg>
@@ -563,11 +526,11 @@ svg{display:block}
 
             <article class="item">
               <span class="item__icon">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3"/><path d="M3.5 19a5.5 5.5 0 0 1 11 0"/><path d="M16 6.5a3 3 0 0 1 0 5.6"/><path d="M17.5 14.5A5 5 0 0 1 21 19"/></svg>
+                <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.4 8.4 0 0 1-9 8.4 9 9 0 0 1-3.6-.7L3 21l1.9-5A8.4 8.4 0 0 1 12 3.5a8.4 8.4 0 0 1 9 8z"/><path d="M10.2 9.3a1.9 1.9 0 0 1 3.6.8c0 1.3-1.8 1.5-1.8 2.7"/><path d="M12 15.6h.01"/></svg>
               </span>
               <div class="item__body">
-                <div class="item__title">Онбординг и адаптация</div>
-                <div class="item__desc">Материалы для новых сотрудников<br>и полезные инструкции</div>
+                <div class="item__title">Получить ответ по материалам Фонда</div>
+                <div class="item__desc">Ответ ИИ-агента со ссылками<br>на исходные документы</div>
               </div>
               <span class="item__arrow">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13M13 6l6 6-6 6"/></svg>
@@ -576,27 +539,27 @@ svg{display:block}
           </div>
         </section>
 
-        <!-- ---------- Раздел 3: Закупочные процедуры ---------- -->
+        <!-- ---------- Раздел 3: Закупки ---------- -->
         <section class="section-card section-card--violet">
           <svg class="section-card__watermark" width="150" height="150" viewBox="0 0 24 24" fill="none" stroke="#e5e0fb" stroke-width="1.2"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 9h8M8 13h8M8 17h5"/></svg>
           <header class="section-card__head">
             <span class="section-card__icon">
-              <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 3h2.2l2.3 11.2a1.5 1.5 0 0 0 1.5 1.2h8.6a1.5 1.5 0 0 0 1.5-1.2L20 6.5H6"/><circle cx="9.5" cy="19.5" r="1.5"/><circle cx="17" cy="19.5" r="1.5"/></svg>
+              <svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 3h2.2l2.3 11.2a1.5 1.5 0 0 0 1.5 1.2h8.6a1.5 1.5 0 0 0 1.5-1.2L20 6.5H6"/><circle cx="9.5" cy="19.5" r="1.5"/><circle cx="17" cy="19.5" r="1.5"/></svg>
             </span>
             <div>
-              <h2 class="section-card__title">Закупочные<br>процедуры</h2>
-              <p class="section-card__desc">ИИ-агенты для подготовки документов<br>на всех этапах закупочного процесса</p>
+              <h2 class="section-card__title">Закупки</h2>
+              <p class="section-card__desc">ИИ-агенты для подготовки документов<br>на всех этапах закупки</p>
             </div>
           </header>
 
           <div class="section-card__list">
             <article class="item">
               <span class="item__icon">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h8l4 4v14H6z"/><path d="M9 11h6M9 15h4"/></svg>
+                <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M8.5 7.5h7M8.5 12h.01M12 12h.01M15.5 12h.01M8.5 16h.01M12 16h.01M15.5 16h.01"/></svg>
               </span>
               <div class="item__body">
-                <div class="item__title">Формирование и проверка<br>закупочной документации</div>
-                <div class="item__desc">ТЗ, СЗ, обоснование</div>
+                <div class="item__title">Рассчитать цену договора</div>
+                <div class="item__desc">Определение и обоснование начальной<br>максимальной цены договора</div>
               </div>
               <span class="item__arrow">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13M13 6l6 6-6 6"/></svg>
@@ -605,11 +568,11 @@ svg{display:block}
 
             <article class="item">
               <span class="item__icon">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h8l4 4v14H6z"/><path d="M9 11h6M9 15h4"/></svg>
+                <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h8l4 4v5"/><path d="M6 3v18h6"/><path d="m14.5 20.5 6-6 2 2-6 6h-2v-2z"/></svg>
               </span>
               <div class="item__body">
-                <div class="item__title">Формирование и проверка КП</div>
-                <div class="item__desc">Анализ и подготовка коммерческих<br>предложений</div>
+                <div class="item__title">Подготовить проект договора</div>
+                <div class="item__desc">Формирование договора<br>по типовой форме Фонда</div>
               </div>
               <span class="item__arrow">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13M13 6l6 6-6 6"/></svg>
@@ -618,11 +581,11 @@ svg{display:block}
 
             <article class="item">
               <span class="item__icon">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M8.5 7.5h7M8.5 12h.01M12 12h.01M15.5 12h.01M8.5 16h.01M12 16h.01M15.5 16h.01"/></svg>
+                <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h8l4 4v14H6z"/><path d="M9 11h6M9 15h4"/></svg>
               </span>
               <div class="item__body">
-                <div class="item__title">Расчет НМЦД</div>
-                <div class="item__desc">Определение и обоснование<br>начальной максимальной цены договора</div>
+                <div class="item__title">Сформировать и проверить закупочную документацию</div>
+                <div class="item__desc">Техническое задание, служебная записка,<br>обоснование закупки</div>
               </div>
               <span class="item__arrow">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13M13 6l6 6-6 6"/></svg>
@@ -631,11 +594,11 @@ svg{display:block}
 
             <article class="item">
               <span class="item__icon">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h8l4 4v14H6z"/><path d="M9 11h6M9 15h4"/></svg>
+                <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h8l4 4v14H6z"/><path d="M9 11h6M9 15h4"/></svg>
               </span>
               <div class="item__body">
-                <div class="item__title">Формирование Договора</div>
-                <div class="item__desc">Подготовка проекта договора</div>
+                <div class="item__title">Сформировать и проверить коммерческие предложения</div>
+                <div class="item__desc">Анализ предложений поставщиков<br>и подготовка запросов</div>
               </div>
               <span class="item__arrow">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13M13 6l6 6-6 6"/></svg>
@@ -644,11 +607,11 @@ svg{display:block}
 
             <article class="item">
               <span class="item__icon">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 19V11M12 19V5M18 19v-6"/></svg>
+                <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 19V11M12 19V5M18 19v-6"/></svg>
               </span>
               <div class="item__body">
-                <div class="item__title">Формирование отчетной<br>документации</div>
-                <div class="item__desc">Подготовка отчетов по завершению закупки</div>
+                <div class="item__title">Сформировать и проверить отчётную документацию</div>
+                <div class="item__desc">Отчёты по завершению закупки</div>
               </div>
               <span class="item__arrow">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13M13 6l6 6-6 6"/></svg>
