@@ -91,25 +91,32 @@ svg{display:block}
   letter-spacing:-.01em;
 }
 
-.nav{padding:10px 14px;display:flex;flex-direction:column;gap:4px;min-height:0;overflow-y:auto}
-.nav__item{
+.nav{padding:10px 14px;display:flex;flex-direction:column;gap:6px;min-height:0;overflow-y:auto}
+.nav__item{                 /* основные разделы меню — крупнее и жирнее вложенных пунктов */
   display:flex;
   align-items:center;
   gap:14px;
-  padding:13px 14px;
+  padding:14px 14px;
+  border:1px solid transparent;
   border-radius:var(--radius-md);
-  color:var(--ink-2);
-  font-size:15px;
-  font-weight:500;
+  color:var(--ink);
+  font-size:15.5px;
+  font-weight:700;
+  letter-spacing:-.01em;
   text-decoration:none;
   cursor:pointer;
   user-select:none;
 }
-.nav__item:hover{background:#f3f7f9}
+.nav__item:hover{background:#f3f7f9;border-color:var(--line-soft)}
 .nav__item.is-active{
   background:var(--green-soft);
+  border-color:#cfeadc;
   color:var(--green-dark);
-  font-weight:600;
+}
+.nav__item.is-open{                 /* раздел с раскрытым списком */
+  background:var(--green-soft);
+  border-color:#cfeadc;
+  color:var(--green-dark);
 }
 .nav__icon{
   width:30px;height:30px;flex:none;
@@ -128,8 +135,14 @@ svg{display:block}
   display:none;                       /* открывается классом .is-open (см. скрипт внизу файла) */
   flex-direction:column;
   gap:2px;
-  padding:4px 0 6px;
+  margin:2px 0 4px 24px;              /* сдвиг вправо + линия-направляющая = вложенный уровень */
+  padding:2px 0 2px 10px;
+  border-left:2px solid var(--line-soft);
+  max-height:330px;                   /* список прокручивается, чтобы «Мои документы» не уезжали вниз */
+  overflow-y:auto;
 }
+.submenu::-webkit-scrollbar{width:4px}
+.submenu::-webkit-scrollbar-thumb{background:#dfe8ed;border-radius:2px}
 .submenu.is-open{display:flex}
 .nav::-webkit-scrollbar{width:5px}
 .nav::-webkit-scrollbar-thumb{background:#dfe8ed;border-radius:3px}
@@ -137,15 +150,16 @@ svg{display:block}
 .submenu__item{
   display:flex;
   align-items:flex-start;
-  gap:11px;
-  padding:7px 10px 7px 12px;
+  gap:10px;
+  padding:7px 8px 7px 10px;
   border-radius:10px;
-  color:var(--ink-2);
-  font-size:14px;
+  color:#4d6b7c;
+  font-size:13.5px;
+  font-weight:500;
   cursor:pointer;
   user-select:none;
 }
-.submenu__item:hover{background:#f3f7f9}
+.submenu__item:hover{background:#f3f7f9;color:var(--ink)}
 .submenu__icon{width:20px;height:20px;flex:none;display:grid;place-items:center;margin-top:1px}
 .submenu__icon--green {color:var(--green)}
 .submenu__icon--blue  {color:var(--blue)}
