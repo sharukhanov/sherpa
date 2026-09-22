@@ -132,7 +132,8 @@ svg{display:block}
 
 /* --- выпадающий список ассистентов --- */
 .submenu{
-  display:none;                       /* открывается классом .is-open (см. скрипт внизу файла) */
+  display:none;
+  flex:none;                          /* не сжимается, когда в меню много блоков */                       /* открывается классом .is-open (см. скрипт внизу файла) */
   flex-direction:column;
   gap:2px;
   margin:2px 0 4px 12px;              /* сдвиг вправо + линия-направляющая = вложенный уровень */
@@ -363,41 +364,44 @@ svg{display:block}
 .item:hover .item__arrow{background:var(--green);color:#fff}
 
 /* ==========================================================================
-   7. НЕДАВНИЕ ЗАПРОСЫ
+   7. НЕДАВНИЕ ЗАПРОСЫ (в боковом меню)
    ========================================================================== */
-.recent{
-  background:var(--surface);
-  border:1px solid var(--line);
-  border-radius:20px;
-  padding:18px 12px 12px;
+.side-recent{
+  flex:none;
+  margin-top:14px;
+  padding-top:14px;
+  border-top:1px solid var(--line-soft);
 }
-.recent__head{
+.side-recent__head{
   display:flex;align-items:center;justify-content:space-between;
-  padding:0 12px 12px;
+  padding:0 6px 8px;
 }
-.recent__title{margin:0;font-size:20px;font-weight:800;letter-spacing:-.01em;color:var(--ink)}
-.recent__all{
-  display:flex;align-items:center;gap:8px;
-  color:var(--green);font-size:14px;font-weight:600;
-  text-decoration:none;cursor:pointer;
+.side-recent__title{
+  margin:0;font-size:12px;font-weight:700;
+  letter-spacing:.06em;text-transform:uppercase;color:var(--muted);
 }
-.recent__all:hover{color:var(--green-dark)}
-.recent__list{display:flex;flex-direction:column;gap:6px}
-.recent-row{
-  display:flex;align-items:center;gap:14px;
-  padding:9px 12px;
-  border-radius:var(--radius-sm);
+.side-recent__all{font-size:12px;font-weight:600;color:var(--green);cursor:pointer}
+.side-recent__all:hover{color:var(--green-dark)}
+.side-recent__list{display:flex;flex-direction:column;gap:2px}
+
+.srec{
+  display:flex;align-items:flex-start;gap:9px;
+  padding:7px 6px;
+  border-radius:10px;
   cursor:pointer;
 }
-.recent-row:hover{background:#f5faf7}
-.recent-row__text{font-size:14px;color:var(--ink);font-weight:500}
-.recent-row__time{margin-left:auto;font-size:13.5px;color:var(--muted-2)}
+.srec:hover{background:#f5faf7}
+.srec__text{
+  font-size:12px;line-height:1.35;color:var(--ink-2);
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;
+}
+.srec__time{margin-top:2px;font-size:11px;color:var(--muted-2)}
 
-/* иконка агента справа + подсказка с его названием при наведении */
+/* иконка агента: цвет = цвет блока, название показывается при наведении (атрибут title) */
 .recent-row__agent{
-  position:relative;
-  width:30px;height:30px;flex:none;
-  border-radius:9px;
+  width:24px;height:24px;flex:none;
+  margin-top:1px;
+  border-radius:8px;
   display:grid;place-items:center;
   cursor:default;
 }
@@ -408,38 +412,6 @@ svg{display:block}
 .recent-row__agent--green:hover {background:var(--green); color:#fff}
 .recent-row__agent--blue:hover  {background:var(--blue);  color:#fff}
 .recent-row__agent--violet:hover{background:var(--violet);color:#fff}
-.recent-row__agent::after{          /* сам текст подсказки — берётся из data-agent */
-  content:attr(data-agent);
-  position:absolute;
-  bottom:calc(100% + 8px);
-  right:0;
-  white-space:nowrap;
-  background:var(--ink);
-  color:#fff;
-  font-size:12.5px;
-  font-weight:500;
-  letter-spacing:-.005em;
-  padding:6px 10px;
-  border-radius:8px;
-  box-shadow:0 6px 18px rgba(15,46,68,.18);
-  opacity:0;
-  transform:translateY(4px);
-  transition:opacity .15s ease,transform .15s ease;
-  pointer-events:none;
-}
-.recent-row__agent::before{         /* хвостик подсказки */
-  content:'';
-  position:absolute;
-  bottom:calc(100% + 3px);
-  right:11px;
-  border:5px solid transparent;
-  border-top-color:var(--ink);
-  opacity:0;
-  transition:opacity .15s ease;
-  pointer-events:none;
-}
-.recent-row__agent:hover::after,
-.recent-row__agent:hover::before{opacity:1;transform:translateY(0)}
 
 /* ==========================================================================
    8. ОНБОРДИНГ (модальное окно поверх страницы)
@@ -633,6 +605,51 @@ svg{display:block}
         </span>
         Мои документы
       </a>
+
+      <!-- Недавние запросы (компактный список под «Мои документы») -->
+      <div class="side-recent">
+        <div class="side-recent__head">
+          <h2 class="side-recent__title">Недавние запросы</h2>
+          <span class="side-recent__all">Все</span>
+        </div>
+        <div class="side-recent__list">
+          <div class="srec">
+            <span class="recent-row__agent--blue" title="Найти документ"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h8l4 4v6"/><path d="M6 3v18h6"/><circle cx="16.5" cy="16.5" r="3.5"/><path d="m19 19 2.5 2.5"/></svg></span>
+            <div>
+              <div class="srec__text">Найди положение о закупочной деятельности</div>
+              <div class="srec__time">Сегодня, 10:24</div>
+            </div>
+          </div>
+          <div class="srec">
+            <span class="recent-row__agent--violet" title="Рассчитать цену договора"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M8.5 7.5h7M8.5 12h.01M12 12h.01M15.5 12h.01M8.5 16h.01M12 16h.01M15.5 16h.01"/></svg></span>
+            <div>
+              <div class="srec__text">Рассчитай цену договора на поставку оборудования</div>
+              <div class="srec__time">Сегодня, 09:38</div>
+            </div>
+          </div>
+          <div class="srec">
+            <span class="recent-row__agent--green" title="Сделать краткое содержание"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h8l4 4v14H6z"/><path d="M9 11h6M9 15h4"/></svg></span>
+            <div>
+              <div class="srec__text">Сделай краткое резюме по документу</div>
+              <div class="srec__time">Вчера, 16:18</div>
+            </div>
+          </div>
+          <div class="srec">
+            <span class="recent-row__agent--green" title="Расшифровать запись"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 10v4M10 6v12M14 8v8M18 11v2"/></svg></span>
+            <div>
+              <div class="srec__text">Расшифруй запись совещания</div>
+              <div class="srec__time">Вчера, 14:03</div>
+            </div>
+          </div>
+          <div class="srec">
+            <span class="recent-row__agent--green" title="Подготовить протокол"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h8l4 4v14H6z"/><path d="m9 13 2 2 4-4"/></svg></span>
+            <div>
+              <div class="srec__text">Подготовь протокол по встрече с подрядчиком</div>
+              <div class="srec__time">12 мая, 11:20</div>
+            </div>
+          </div>
+        </div>
+      </div>
     </nav>
 
     <div class="sidebar__bottom">
@@ -873,60 +890,6 @@ svg{display:block}
           </div>
         </section>
       </div>
-
-      <!-- Недавние запросы -->
-      <section class="recent">
-        <header class="recent__head">
-          <h2 class="recent__title">Недавние запросы</h2>
-          <a class="recent__all">
-            Смотреть все
-            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13M13 6l6 6-6 6"/></svg>
-          </a>
-        </header>
-
-        <div class="recent__list">
-          <div class="recent-row">
-            <span class="recent-row__text">Найди положение о закупочной деятельности</span>
-            <span class="recent-row__time">Сегодня, 10:24</span>
-            <span class="recent-row__agent recent-row__agent--blue" data-agent="Найти документ">
-              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h8l4 4v6"/><path d="M6 3v18h6"/><circle cx="16.5" cy="16.5" r="3.5"/><path d="m19 19 2.5 2.5"/></svg>
-            </span>
-          </div>
-
-          <div class="recent-row">
-            <span class="recent-row__text">Рассчитай цену договора на поставку оборудования</span>
-            <span class="recent-row__time">Сегодня, 09:38</span>
-            <span class="recent-row__agent recent-row__agent--violet" data-agent="Рассчитать цену договора">
-              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M8.5 7.5h7M8.5 12h.01M12 12h.01M15.5 12h.01M8.5 16h.01M12 16h.01M15.5 16h.01"/></svg>
-            </span>
-          </div>
-
-          <div class="recent-row">
-            <span class="recent-row__text">Сделай краткое резюме по документу</span>
-            <span class="recent-row__time">Вчера, 16:18</span>
-            <span class="recent-row__agent recent-row__agent--green" data-agent="Сделать краткое содержание">
-              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h8l4 4v14H6z"/><path d="M9 11h6M9 15h4"/></svg>
-            </span>
-          </div>
-
-          <div class="recent-row">
-            <span class="recent-row__text">Расшифруй запись совещания</span>
-            <span class="recent-row__time">Вчера, 14:03</span>
-            <span class="recent-row__agent recent-row__agent--green" data-agent="Расшифровать запись">
-              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 10v4M10 6v12M14 8v8M18 11v2"/></svg>
-            </span>
-          </div>
-
-          <div class="recent-row">
-            <span class="recent-row__text">Подготовь протокол по встрече с подрядчиком</span>
-            <span class="recent-row__time">12 мая, 11:20</span>
-            <span class="recent-row__agent recent-row__agent--green" data-agent="Подготовить протокол">
-              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h8l4 4v14H6z"/><path d="m9 13 2 2 4-4"/></svg>
-            </span>
-          </div>
-
-        </div>
-      </section>
 
     </main>
   </div>
