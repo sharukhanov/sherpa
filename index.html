@@ -6,7 +6,7 @@
 <title>Корпоративный портал ИИ-агентов (Фонд МИК)</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@500;600&display=swap" rel="stylesheet">
 <style>
 /* ==========================================================================
    1. ПЕРЕМЕННЫЕ — правьте здесь цвета, размеры, отступы
@@ -301,6 +301,20 @@ svg{display:block}
   justify-content:space-between;
   gap:32px;
   margin-bottom:18px;
+}
+.page-intro{                 /* вводная строка над приветствием */
+  margin:0 0 18px;
+  max-width:760px;
+  font-family:'Playfair Display','Inter',Georgia,serif;
+  font-size:19px;
+  font-weight:500;
+  line-height:1.5;
+  letter-spacing:.005em;
+  color:var(--text-2);
+}
+.emoji{                      /* эмодзи берётся из системного набора: на macOS/iOS — вариант Apple */
+  font-family:'Apple Color Emoji','Segoe UI Emoji','Noto Color Emoji','Twemoji Mozilla',sans-serif;
+  font-weight:400;
 }
 .greeting__title{
   margin:0;
@@ -778,7 +792,8 @@ svg{display:block}
       <!-- Приветствие + баннер -->
       <div class="page-head">
         <div class="greeting">
-          <h1 class="greeting__title">Добрый день, Иван Иванов 👋</h1>
+          <p class="page-intro">Корпоративный портал ИИ-агентов Фонда МИК — единое пространство цифровых инструментов, которые помогают сотрудникам быстрее решать рабочие задачи.</p>
+          <h1 class="greeting__title">Добрый день, Иван Иванов <span class="emoji">👋</span></h1>
           <p class="greeting__sub">Чем займёмся сегодня?</p>
         </div>
 
