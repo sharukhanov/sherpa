@@ -958,8 +958,8 @@ svg{display:block}
 </div>
 
 
-<!-- ======================= ОНБОРДИНГ ======================= -->
-<div class="onb is-open" id="onb">
+<!-- =========== ОНБОРДИНГ (в бэклоге: показывается только по кнопке «?») =========== -->
+<div class="onb" id="onb">   <!-- отложено в бэклог: открывается только кнопкой «?» в шапке -->
   <div class="onb__card">
     <button class="onb__close" id="onbClose" aria-label="Закрыть">
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg>
@@ -1017,15 +1017,11 @@ svg{display:block}
     list.classList.toggle('is-open');
   });
 
-  /* --- онбординг: закрытие, галочка «больше не показывать», повторный вызов из шапки --- */
+  /* --- онбординг: открывается только кнопкой «?» в шапке (экран отложен в бэклог) --- */
   const onb     = document.getElementById('onb');
   const onbHide = document.getElementById('onbHide');
-  const KEY     = 'sherpa-onboarding-hidden';
 
-  const closeOnb = () => {
-    try { if (onbHide.checked) localStorage.setItem(KEY, '1'); } catch (e) {}
-    onb.classList.remove('is-open');
-  };
+  const closeOnb = () => onb.classList.remove('is-open');
   document.getElementById('onbStart').addEventListener('click', closeOnb);
   document.getElementById('onbClose').addEventListener('click', closeOnb);
   onb.addEventListener('click', e => { if (e.target === onb) closeOnb(); });
@@ -1036,8 +1032,6 @@ svg{display:block}
     onb.classList.add('is-open');
   });
 
-  /* если пользователь попросил больше не показывать — при загрузке окно скрыто */
-  try { if (localStorage.getItem(KEY) === '1') onb.classList.remove('is-open'); } catch (e) {}
 
   /* --- переключение светлой и тёмной темы (выбор запоминается) --- */
   const THEME_KEY = 'sherpa-theme';
