@@ -352,7 +352,7 @@ svg{display:block}
    ========================================================================== */
 .sections{
   display:grid;
-  grid-template-columns:0.92fr 0.96fr 1.12fr;
+  grid-template-columns:repeat(3,1fr);
   gap:var(--card-gap);
   align-items:stretch;
   margin-bottom:20px;
@@ -422,7 +422,18 @@ svg{display:block}
 
 .item__body{min-width:0;flex:1}
 .item__title{font-size:14px;font-weight:700;color:var(--ink);line-height:1.3;letter-spacing:-.008em}
-.item__desc{margin-top:2px;font-size:12.5px;color:var(--text-3);line-height:1.35;letter-spacing:-.008em}
+.item__desc{                 /* ровно три строки во всех карточках => баблы одной высоты */
+  margin-top:2px;
+  font-size:12px;
+  color:var(--text-3);
+  line-height:1.35;
+  letter-spacing:-.008em;
+  min-height:calc(3 * 1.35em);
+  display:-webkit-box;
+  -webkit-line-clamp:3;
+  -webkit-box-orient:vertical;
+  overflow:hidden;
+}
 .item__arrow{
   width:30px;height:30px;flex:none;
   border-radius:50%;
@@ -835,7 +846,7 @@ svg{display:block}
               </span>
               <div class="item__body">
                 <div class="item__title">Расшифровать запись</div>
-                <div class="item__desc">Распознать речь из аудио/видео<br>файла и перевести в текст</div>
+                <div class="item__desc">Распознать речь из аудио/видео файла и перевести в текст</div>
               </div>
               <span class="item__arrow">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13M13 6l6 6-6 6"/></svg>
@@ -848,7 +859,7 @@ svg{display:block}
               </span>
               <div class="item__body">
                 <div class="item__title">Подготовить итоги встречи</div>
-                <div class="item__desc">Создать протокол, выделить<br>поручения и сделать краткий<br>бриф встречи</div>
+                <div class="item__desc">Создать протокол, выделить поручения и сделать краткий бриф встречи</div>
               </div>
               <span class="item__arrow">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13M13 6l6 6-6 6"/></svg>
@@ -888,7 +899,7 @@ svg{display:block}
               </span>
               <div class="item__body">
                 <div class="item__title">Задать вопрос</div>
-                <div class="item__desc">Задать вопрос ИИ-агенту и найти нужный документ, регламент или стандарт по смыслу, а не по точному названию</div>
+                <div class="item__desc">Найти документ, регламент или стандарт по смыслу, а не по точному названию</div>
               </div>
               <span class="item__arrow">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13M13 6l6 6-6 6"/></svg>
