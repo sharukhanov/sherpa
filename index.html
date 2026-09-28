@@ -1299,18 +1299,28 @@ svg{display:block}
     });
   });
 
-  /* закрепить можно не больше пяти сервисов; по умолчанию — первые пять */
-  const MAX_PINS = 5;
+  /* в каждом блоке можно закрепить не больше пяти сервисов */
+  const MAX_PER_BLOCK = 5;
   let pinned = null;
   try { pinned = JSON.parse(localStorage.getItem(PIN_KEY)); } catch (e) {}
-  if (!Array.isArray(pinned)) pinned = services.slice(0, MAX_PINS).map(sv => sv.name);
-  pinned = pinned.slice(0, MAX_PINS);
+  if (!Array.isArray(pinned)) pinned = services.map(sv => sv.name);
 
   const isPinned = name => pinned.includes(name);
-  const limitReached = () => pinned.length >= MAX_PINS;
+  const pinnedInBlock = category =>
+    services.filter(sv => sv.category === category && isPinned(sv.name)).length;
+  const blockFull = category => pinnedInBlock(category) >= MAX_PER_BLOCK;
   const savePins = () => { try { localStorage.setItem(PIN_KEY, JSON.stringify(pinned)); } catch (e) {} };
+
+  /* если в блоке закреплено больше лимита (например, после правки списка) — оставляем первые пять */
+  services.forEach(sv => {
+    if (isPinned(sv.name) && pinnedInBlock(sv.category) > MAX_PER_BLOCK) {
+      pinned = pinned.filter(n => n !== sv.name);
+    }
+  });
+
   const togglePin = name => {
-    if (!isPinned(name) && limitReached()) return;          // лимит исчерпан
+    const sv = services.find(s => s.name === name);
+    if (!isPinned(name) && blockFull(sv.category)) return;   // в блоке уже пять сервисов
     pinned = isPinned(name) ? pinned.filter(n => n !== name) : [...pinned, name];
     savePins();
     renderMain();
@@ -1342,7 +1352,7 @@ svg{display:block}
 
   const tileHTML = sv => {
     const on = isPinned(sv.name);
-    const blocked = !on && limitReached();
+    const blocked = !on && blockFull(sv.category);
     return `
       <article class="tile ${on ? 'tile--pinned' : ''}">
         <div class="tile__top">
@@ -1354,7 +1364,7 @@ svg{display:block}
         </div>
         <div class="tile__foot">
           <button class="pin-btn ${on ? 'is-on' : ''}" data-name="${sv.name}"
-                  ${blocked ? 'disabled title="Сначала открепите другой сервис"' : ''}>
+                  ${blocked ? 'disabled title="В блоке уже пять сервисов — сначала открепите один из них"' : ''}>
             ${on ? CHECK_SVG + 'На главной' : PLUS_SVG + 'Закрепить на главной'}
           </button>
         </div>
@@ -1370,12 +1380,12 @@ svg{display:block}
       b.list.push(sv);
     });
     tiles.innerHTML = blocks.map(b => {
-      const on = b.list.filter(sv => isPinned(sv.name)).length;
+      const on = pinnedInBlock(b.title);
       return `<div class="tiles-group">
          <h2 class="tiles-group__title">
            <span class="tiles-group__dot tiles-group__dot--${b.color}"></span>
            ${b.title}
-           <span class="tiles-group__count">закреплено ${on} из ${b.list.length}</span>
+           <span class="tiles-group__count">закреплено ${on} из ${MAX_PER_BLOCK}</span>
          </h2>
          <div class="tiles__grid">${b.list.map(tileHTML).join('')}</div>
        </div>`;
@@ -1383,8 +1393,7 @@ svg{display:block}
     tiles.querySelectorAll('.pin-btn').forEach(btn =>
       btn.addEventListener('click', e => { e.stopPropagation(); togglePin(btn.dataset.name); }));
     document.getElementById('pinCount').innerHTML =
-      `Закреплено <b>${pinned.length}</b> из ${MAX_PINS}`
-      + (limitReached() ? ' — чтобы добавить другой сервис, сначала открепите один из текущих' : '');
+      `В каждом блоке главной можно закрепить до <b>${MAX_PER_BLOCK}</b> сервисов`;
   };
 
   renderMain();
