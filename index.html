@@ -328,6 +328,12 @@ svg{display:block}
 }
 .burger:hover{background:var(--hover)}
 .app.is-collapsed .burger{background:var(--green-soft);color:var(--green-dark)}
+.topbar__intro{              /* описание портала в шапке, рядом с бургером */
+  flex:1;min-width:0;margin:0 12px 0 6px;
+  font-size:13px;line-height:1.4;font-weight:500;
+  letter-spacing:-.01em;color:var(--muted);
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
 .topbar__right{margin-left:auto;display:flex;align-items:center;gap:18px}
 .profile{display:flex;align-items:center;gap:12px;cursor:pointer}
 .profile__avatar{
@@ -350,24 +356,7 @@ svg{display:block}
   gap:32px;
   margin-bottom:18px;
 }
-.page-intro{                 /* вводная строка: выделенный блок во всю ширину контента */
-  position:relative;
-  margin:0 0 22px;
-  padding:18px 22px 18px 26px;
-  border-radius:var(--radius-lg);
-  background:var(--green-soft-2);
-  font-size:16.5px;
-  font-weight:500;
-  line-height:1.5;
-  letter-spacing:-.011em;
-  color:var(--ink-2);
-}
-.page-intro::before{         /* тонкий акцент слева */
-  content:'';
-  position:absolute;left:12px;top:16px;bottom:16px;
-  width:3px;border-radius:2px;
-  background:var(--green);
-}
+.greeting{flex:1;min-width:0}
 .emoji{                      /* эмодзи-картинка (Apple): одинаково выглядит в любой системе */
   display:inline-block;
   width:.92em;height:.92em;
@@ -395,7 +384,7 @@ svg{display:block}
    ========================================================================== */
 .sections{
   display:grid;
-  grid-template-columns:repeat(3,1fr);
+  grid-template-columns:repeat(auto-fit,minmax(330px,1fr));   /* блоков может быть больше трех */
   gap:var(--card-gap);
   align-items:stretch;
   margin-bottom:20px;
@@ -417,7 +406,7 @@ svg{display:block}
 
 
 .section-card__head{
-  display:flex;gap:14px;align-items:flex-start;position:relative;
+  display:flex;gap:14px;align-items:center;position:relative;
   min-height:56px;          /* одинаковая высота шапок => списки сервисов начинаются на одном уровне */
 }
 .section-card__icon{
@@ -472,6 +461,11 @@ svg{display:block}
   line-height:1.35;
   letter-spacing:-.008em;
 }
+/* цвет иконки в блоке «Закрепленные» задается явно: карточка там без цветового модификатора */
+.item__icon--green {background:var(--green-soft); color:var(--green)}
+.item__icon--blue  {background:var(--blue-soft);  color:var(--blue)}
+.item__icon--violet{background:var(--violet-soft);color:var(--violet)}
+
 .item__arrow{
   width:30px;height:30px;flex:none;
   border-radius:50%;
@@ -480,6 +474,96 @@ svg{display:block}
   transition:background .15s ease,color .15s ease;
 }
 .item:hover .item__arrow{background:var(--green-soft);color:var(--green)}
+
+/* ==========================================================================
+   6.1 ЭКРАН «ВСЕ СЕРВИСЫ» И ЗАКРЕПЛЕННЫЕ
+   ========================================================================== */
+.page{display:none}
+.page.is-visible{display:block}
+
+.btn-all{                    /* переход в каталог сервисов с главной */
+  display:inline-flex;align-items:center;gap:8px;flex:none;
+  padding:11px 16px;
+  border:1px solid var(--line);border-radius:var(--radius-md);
+  background:var(--surface);color:var(--ink);
+  font-family:inherit;font-size:13.5px;font-weight:600;letter-spacing:-.01em;
+  cursor:pointer;
+}
+.btn-all:hover{background:var(--green-soft);border-color:var(--green-line);color:var(--green-dark)}
+
+.back{
+  display:inline-flex;align-items:center;gap:7px;
+  margin-bottom:10px;padding:0;
+  border:0;background:none;color:var(--muted);
+  font-family:inherit;font-size:13px;font-weight:600;cursor:pointer;
+}
+.back:hover{color:var(--green-dark)}
+.catalog__head{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;margin-bottom:18px}
+.catalog__title{margin:0;font-size:29px;font-weight:700;letter-spacing:-.032em;color:var(--ink)}
+
+.catalog__tools{display:flex;gap:12px;margin-bottom:18px;flex-wrap:wrap}
+.field{
+  display:flex;align-items:center;gap:9px;
+  padding:12px 14px;
+  border:1px solid var(--line);border-radius:var(--radius-md);
+  background:var(--surface);color:var(--muted-2);
+  font-size:13.5px;
+}
+.field--search{flex:1;min-width:280px}
+.field--select{position:relative;gap:12px;color:var(--ink);font-weight:500}
+.field__label{color:var(--muted-2);font-weight:400}
+
+.tiles{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:12px}
+.tile{
+  position:relative;
+  display:flex;flex-direction:column;gap:10px;
+  padding:16px;
+  border:1px solid var(--line);border-radius:var(--radius-xl);
+  background:var(--surface);box-shadow:var(--shadow-card);
+  cursor:pointer;
+}
+.tile:hover{border-color:var(--green-line-2)}
+.tile__top{display:flex;align-items:flex-start;gap:12px}
+.tile__icon{
+  width:38px;height:38px;flex:none;border-radius:12px;
+  display:grid;place-items:center;
+}
+.tile__icon--green {background:var(--green-soft); color:var(--green)}
+.tile__icon--blue  {background:var(--blue-soft);  color:var(--blue)}
+.tile__icon--violet{background:var(--violet-soft);color:var(--violet)}
+.tile__name{font-size:14.5px;font-weight:700;letter-spacing:-.015em;color:var(--ink);line-height:1.3;padding-right:26px}
+.tile__desc{margin-top:4px;font-size:12.5px;line-height:1.4;color:var(--text-3)}
+.tile__foot{margin-top:auto;display:flex;align-items:center;gap:8px}
+.tag{
+  padding:5px 10px;border-radius:999px;
+  font-size:11.5px;font-weight:600;letter-spacing:-.005em;
+}
+.tag--green {background:var(--green-soft); color:var(--green-dark)}
+.tag--blue  {background:var(--blue-soft);  color:var(--blue)}
+.tag--violet{background:var(--violet-soft);color:var(--violet)}
+
+.pin{                        /* закрепить сервис на главной */
+  position:absolute;top:14px;right:14px;
+  width:28px;height:28px;border:0;border-radius:8px;
+  background:transparent;color:var(--muted-2);
+  display:grid;place-items:center;cursor:pointer;
+}
+.pin:hover{background:var(--hover);color:var(--ink)}
+.pin.is-on{color:var(--green)}
+.pin.is-on:hover{background:var(--green-soft)}
+
+.block-empty{                /* в блоке не осталось закрепленных сервисов */
+  padding:14px 16px;
+  border:1px dashed var(--line);border-radius:var(--radius-md);
+  color:var(--muted);font-size:12.5px;line-height:1.4;
+}
+.item__pin{                  /* убрать сервис с главной прямо из строки */
+  width:26px;height:26px;flex:none;border:0;border-radius:7px;
+  background:transparent;color:var(--muted-2);
+  display:grid;place-items:center;cursor:pointer;opacity:0;
+}
+.item:hover .item__pin{opacity:1;color:var(--green)}
+.item__pin:hover{background:var(--green-soft)}
 
 /* ==========================================================================
    7. НЕДАВНИЕ ЗАПРОСЫ (в боковом меню)
@@ -646,7 +730,6 @@ svg{display:block}
    8. АДАПТИВ (упрощенный)
    ========================================================================== */
 @media (max-width:1280px){
-  .sections{grid-template-columns:1fr 1fr}
   .page-head{flex-direction:column}
 }
 @media (max-width:640px){
@@ -656,7 +739,6 @@ svg{display:block}
 }
 @media (max-width:880px){
   .sidebar{display:none}
-  .sections{grid-template-columns:1fr}
   .greeting__title{font-size:26px}
   .greeting__sub{font-size:18px}
   :root{--content-pad:18px}
@@ -677,7 +759,7 @@ svg{display:block}
     </div>
 
     <nav class="nav">
-      <a class="nav__item is-active">
+      <a class="nav__item is-active" id="navHome">
         <span class="nav__icon">
           <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V20a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V9.5"/><path d="M9.5 21v-6h5v6"/></svg>
         </span>
@@ -834,6 +916,8 @@ svg{display:block}
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
       </button>
 
+      <p class="topbar__intro">Корпоративный портал ИИ-агентов — единое пространство цифровых инструментов, которые помогают быстрее решать рабочие задачи.</p>
+
       <div class="topbar__right">
         <button class="help" id="onbOpen" title="Как устроен портал">
           <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9.6 9.3a2.5 2.5 0 0 1 4.8.9c0 1.7-2.4 2-2.4 3.5"/><path d="M12 17.2h.01"/></svg>
@@ -857,14 +941,20 @@ svg{display:block}
 
     <main class="content">
 
-      <!-- Приветствие + баннер -->
+    <!-- ==================== ЭКРАН: ГЛАВНАЯ ==================== -->
+    <section class="page is-visible" id="page-main">
+
+      <!-- Приветствие -->
       <div class="page-head">
         <div class="greeting">
-          <p class="page-intro">Корпоративный портал ИИ-агентов — единое пространство цифровых инструментов, которые помогают быстрее решать рабочие задачи.</p>
           <h1 class="greeting__title">Добрый день, Иван Иванов <span class="emoji" role="img" aria-label="Приветствие"></span></h1>
           <p class="greeting__sub">Чем займемся сегодня?</p>
         </div>
 
+        <button class="btn-all" id="goAll">
+          Все сервисы
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13M13 6l6 6-6 6"/></svg>
+        </button>
       </div>
 
       <!-- Три раздела -->
@@ -1029,6 +1119,35 @@ svg{display:block}
           </div>
         </section>
       </div>
+    </section>
+
+    <!-- ==================== ЭКРАН: ВСЕ СЕРВИСЫ ==================== -->
+    <section class="page" id="page-all">
+      <div class="catalog__head">
+        <div>
+          <button class="back" id="goBack">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H6M11 6l-6 6 6 6"/></svg>
+            На главную
+          </button>
+          <h1 class="catalog__title">Все сервисы</h1>
+        </div>
+      </div>
+
+      <div class="catalog__tools">
+        <div class="field field--search">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4.5 4.5"/></svg>
+          Поиск по названию сервиса
+        </div>
+        <div class="field field--select">
+          <span class="field__label">Сортировка</span>
+          Сначала закрепленные
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+        </div>
+      </div>
+
+      <!-- плитка сервисов (заполняется скриптом) -->
+      <div class="tiles" id="tiles"></div>
+    </section>
 
     </main>
   </div>
@@ -1135,14 +1254,110 @@ svg{display:block}
   document.getElementById('burger').addEventListener('click', () => app.classList.toggle('is-collapsed'));
 
   /* --- одинаковая высота баблов: все подтягиваются к самому высокому --- */
-  const items = [...document.querySelectorAll('.item')];
   const fitItems = () => {
-    items.forEach(i => i.style.minHeight = '0');
-    const h = Math.max(...items.map(i => i.offsetHeight));
-    items.forEach(i => i.style.minHeight = h + 'px');
+    const rows = [...document.querySelectorAll('.item')];
+    rows.forEach(i => i.style.minHeight = '0');
+    const h = Math.max(...rows.map(i => i.offsetHeight));
+    rows.forEach(i => i.style.minHeight = h + 'px');
   };
   fitItems();
   window.addEventListener('resize', fitItems);
+
+  /* ------------------------------------------------------------------
+     Сервисы: каталог «Все сервисы» и закрепление на главной.
+     Данные берутся из карточек главной — второго списка вести не нужно.
+     ------------------------------------------------------------------ */
+  const PIN_KEY = 'sherpa-pinned';
+  const PIN_SVG = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M9 4h6l-1 6 3.5 3H6.5L10 10 9 4z"/><path d="M12 13v7"/></svg>';
+
+  const services = [];
+  document.querySelectorAll('#page-main .section-card').forEach(card => {
+    const mod = [...card.classList].find(c => c.startsWith('section-card--')).replace('section-card--', '');
+    const category = card.querySelector('.section-card__title').textContent.trim();
+    card.querySelectorAll('.item').forEach(row => {
+      services.push({
+        name: row.querySelector('.item__title').textContent.trim(),
+        desc: row.querySelector('.item__desc').textContent.trim(),
+        icon: row.querySelector('.item__icon').innerHTML,
+        color: mod,
+        category,
+        row,
+      });
+    });
+  });
+
+  /* по умолчанию на главной закреплены все сервисы — лишние пользователь убирает сам */
+  let pinned = null;
+  try { pinned = JSON.parse(localStorage.getItem(PIN_KEY)); } catch (e) {}
+  if (!Array.isArray(pinned)) pinned = services.map(sv => sv.name);
+
+  const isPinned = name => pinned.includes(name);
+  const savePins = () => { try { localStorage.setItem(PIN_KEY, JSON.stringify(pinned)); } catch (e) {} };
+  const togglePin = name => {
+    pinned = isPinned(name) ? pinned.filter(n => n !== name) : [...pinned, name];
+    savePins();
+    renderMain();
+    renderTiles();
+  };
+
+  /* кнопка открепления в строке сервиса на главной */
+  services.forEach(sv => {
+    const btn = document.createElement('button');
+    btn.className = 'item__pin is-on';
+    btn.innerHTML = PIN_SVG;
+    btn.title = 'Убрать с главной';
+    btn.addEventListener('click', e => { e.stopPropagation(); togglePin(sv.name); });
+    sv.row.insertBefore(btn, sv.row.querySelector('.item__arrow'));
+  });
+
+  /* на главной в блоках показываются только закрепленные сервисы */
+  const renderMain = () => {
+    services.forEach(sv => sv.row.style.display = isPinned(sv.name) ? '' : 'none');
+    document.querySelectorAll('#page-main .section-card').forEach(card => {
+      const list = card.querySelector('.section-card__list');
+      const visible = [...list.querySelectorAll('.item')].some(r => r.style.display !== 'none');
+      let hint = list.querySelector('.block-empty');
+      if (visible) { if (hint) hint.remove(); return; }
+      if (!hint) {
+        hint = document.createElement('div');
+        hint.className = 'block-empty';
+        hint.textContent = 'Нет закрепленных сервисов. Добавьте их из раздела «Все сервисы».';
+        list.appendChild(hint);
+      }
+    });
+    fitItems();
+  };
+
+  /* плитка на экране «Все сервисы» */
+  const tiles = document.getElementById('tiles');
+  const renderTiles = () => {
+    const sorted = [...services].sort((a, b) => isPinned(b.name) - isPinned(a.name));
+    tiles.innerHTML = sorted.map(sv => `
+      <article class="tile">
+        <button class="pin ${isPinned(sv.name) ? 'is-on' : ''}" data-name="${sv.name}"
+                title="${isPinned(sv.name) ? 'Открепить' : 'Закрепить на главной'}">${PIN_SVG}</button>
+        <div class="tile__top">
+          <span class="tile__icon tile__icon--${sv.color}">${sv.icon}</span>
+          <div>
+            <div class="tile__name">${sv.name}</div>
+            <div class="tile__desc">${sv.desc}</div>
+          </div>
+        </div>
+        <div class="tile__foot"><span class="tag tag--${sv.color}">${sv.category}</span></div>
+      </article>`).join('');
+    tiles.querySelectorAll('.pin').forEach(b =>
+      b.addEventListener('click', e => { e.stopPropagation(); togglePin(b.dataset.name); }));
+  };
+
+  renderMain();
+  renderTiles();
+
+  /* переключение экранов */
+  const showPage = id => document.querySelectorAll('.page')
+    .forEach(p => p.classList.toggle('is-visible', p.id === id));
+  document.getElementById('goAll').addEventListener('click', () => { showPage('page-all'); window.scrollTo(0, 0); });
+  document.getElementById('goBack').addEventListener('click', () => { showPage('page-main'); fitItems(); });
+  document.getElementById('navHome').addEventListener('click', () => { showPage('page-main'); fitItems(); });
 
   /* --- подсказки [data-tip]: название агента при наведении на строку --- */
   const tip = document.getElementById('tip');
