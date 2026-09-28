@@ -306,7 +306,8 @@ svg{display:block}
   font-size:13px;
   line-height:1.45;
 }
-.app-card__ver{margin-top:10px;font-size:13px;color:var(--muted-2)}
+.app-card__name{margin-bottom:6px;font-weight:700;color:var(--ink-2);line-height:1.35}
+.app-card__ver{margin-top:10px;font-size:12.5px;color:var(--muted-2)}
 
 /* ==========================================================================
    4. ВЕРХНЯЯ ПАНЕЛЬ
@@ -328,13 +329,6 @@ svg{display:block}
 }
 .burger:hover{background:var(--hover)}
 .app.is-collapsed .burger{background:var(--green-soft);color:var(--green-dark)}
-.topbar__intro{              /* описание портала в шапке, рядом с бургером */
-  flex:1;min-width:0;max-width:760px;margin:0 16px 0 6px;
-  font-size:12.5px;line-height:1.35;font-weight:500;
-  letter-spacing:-.01em;color:var(--muted);
-  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;
-}
-@media (max-width:1280px){ .topbar__intro{display:none} }   /* на узких экранах уступает место кнопкам */
 .topbar__right{margin-left:auto;display:flex;align-items:center;gap:18px}
 .profile{display:flex;align-items:center;gap:12px;cursor:pointer}
 .profile__avatar{
@@ -915,7 +909,8 @@ svg{display:block}
       </div>
 
       <div class="app-card">
-        Корпоративный портал<br>ИИ-агентов (Фонд МИК)
+        <div class="app-card__name">Корпоративный портал ИИ-агентов (Фонд МИК)</div>
+        Единое пространство цифровых инструментов, которые помогают быстрее решать рабочие задачи.
         <div class="app-card__ver">v 2.4.10</div>
       </div>
     </div>
@@ -929,8 +924,6 @@ svg{display:block}
       <button class="burger" id="burger" aria-label="Скрыть или показать меню">
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
       </button>
-
-      <p class="topbar__intro">Корпоративный портал ИИ-агентов — единое пространство цифровых инструментов, которые помогают быстрее решать рабочие задачи.</p>
 
       <div class="topbar__right">
         <button class="help" id="onbOpen" title="Как устроен портал">
