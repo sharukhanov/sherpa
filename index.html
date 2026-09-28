@@ -513,7 +513,7 @@ svg{display:block}
 .field--select{position:relative;gap:12px;color:var(--ink);font-weight:500}
 .field__label{color:var(--muted-2);font-weight:400}
 
-.tiles{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:12px}
+.tiles__grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:12px}
 .tile{
   position:relative;
   display:flex;flex-direction:column;gap:10px;
@@ -533,7 +533,27 @@ svg{display:block}
 .tile__icon--violet{background:var(--violet-soft);color:var(--violet)}
 .tile__name{font-size:14.5px;font-weight:700;letter-spacing:-.015em;color:var(--ink);line-height:1.3;padding-right:26px}
 .tile__desc{margin-top:4px;font-size:12.5px;line-height:1.4;color:var(--text-3)}
-.tile__foot{margin-top:auto;display:flex;align-items:center;gap:8px}
+.tile__foot{margin-top:auto;display:flex;align-items:center;justify-content:space-between;gap:8px}
+.tile--pinned{border-color:var(--green-line);background:linear-gradient(160deg,var(--surface) 55%,var(--green-soft-2))}
+
+.pin-btn{                    /* явное состояние: закреплен сервис или нет */
+  display:inline-flex;align-items:center;gap:6px;flex:none;
+  padding:6px 11px;
+  border:1px solid var(--line);border-radius:999px;
+  background:var(--surface);color:var(--muted);
+  font-family:inherit;font-size:11.5px;font-weight:600;letter-spacing:-.005em;
+  cursor:pointer;
+}
+.pin-btn:hover{border-color:var(--green-line);background:var(--green-soft);color:var(--green-dark)}
+.pin-btn.is-on{background:var(--green);border-color:var(--green);color:#fff}
+.pin-btn.is-on:hover{background:var(--green-dark);border-color:var(--green-dark);color:#fff}
+
+.tiles-group{margin-bottom:22px}
+.tiles-group__title{
+  margin:0 0 10px;font-size:13px;font-weight:700;
+  letter-spacing:-.01em;color:var(--ink);
+}
+.tiles-group__count{color:var(--muted-2);font-weight:600}
 .tag{
   padding:5px 10px;border-radius:999px;
   font-size:11.5px;font-weight:600;letter-spacing:-.005em;
@@ -1330,12 +1350,11 @@ svg{display:block}
 
   /* плитка на экране «Все сервисы» */
   const tiles = document.getElementById('tiles');
-  const renderTiles = () => {
-    const sorted = [...services].sort((a, b) => isPinned(b.name) - isPinned(a.name));
-    tiles.innerHTML = sorted.map(sv => `
-      <article class="tile">
-        <button class="pin ${isPinned(sv.name) ? 'is-on' : ''}" data-name="${sv.name}"
-                title="${isPinned(sv.name) ? 'Открепить' : 'Закрепить на главной'}">${PIN_SVG}</button>
+  const CHECK_SVG = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7"/></svg>';
+  const PLUS_SVG  = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>';
+
+  const tileHTML = sv => `
+      <article class="tile ${isPinned(sv.name) ? 'tile--pinned' : ''}">
         <div class="tile__top">
           <span class="tile__icon tile__icon--${sv.color}">${sv.icon}</span>
           <div>
@@ -1343,9 +1362,24 @@ svg{display:block}
             <div class="tile__desc">${sv.desc}</div>
           </div>
         </div>
-        <div class="tile__foot"><span class="tag tag--${sv.color}">${sv.category}</span></div>
-      </article>`).join('');
-    tiles.querySelectorAll('.pin').forEach(b =>
+        <div class="tile__foot">
+          <span class="tag tag--${sv.color}">${sv.category}</span>
+          <button class="pin-btn ${isPinned(sv.name) ? 'is-on' : ''}" data-name="${sv.name}">
+            ${isPinned(sv.name) ? CHECK_SVG + 'На главной' : PLUS_SVG + 'Закрепить'}
+          </button>
+        </div>
+      </article>`;
+
+  const renderTiles = () => {
+    const on  = services.filter(sv => isPinned(sv.name));
+    const off = services.filter(sv => !isPinned(sv.name));
+    const group = (title, list) => !list.length ? '' :
+      `<div class="tiles-group">
+         <h2 class="tiles-group__title">${title} <span class="tiles-group__count">${list.length}</span></h2>
+         <div class="tiles__grid">${list.map(tileHTML).join('')}</div>
+       </div>`;
+    tiles.innerHTML = group('Закреплены на главной', on) + group('Остальные сервисы', off);
+    tiles.querySelectorAll('.pin-btn').forEach(b =>
       b.addEventListener('click', e => { e.stopPropagation(); togglePin(b.dataset.name); }));
   };
 
