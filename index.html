@@ -533,35 +533,36 @@ svg{display:block}
 .tile__icon--violet{background:var(--violet-soft);color:var(--violet)}
 .tile__name{font-size:14.5px;font-weight:700;letter-spacing:-.015em;color:var(--ink);line-height:1.3;padding-right:26px}
 .tile__desc{margin-top:4px;font-size:12.5px;line-height:1.4;color:var(--text-3)}
-.tile__foot{margin-top:auto;display:flex;align-items:center;justify-content:space-between;gap:8px}
+.tile__foot{margin-top:auto}
 .tile--pinned{border-color:var(--green-line);background:linear-gradient(160deg,var(--surface) 55%,var(--green-soft-2))}
 
 .pin-btn{                    /* явное состояние: закреплен сервис или нет */
-  display:inline-flex;align-items:center;gap:6px;flex:none;
-  padding:6px 11px;
-  border:1px solid var(--line);border-radius:999px;
+  display:inline-flex;align-items:center;gap:7px;
+  padding:8px 12px;
+  border:1px solid var(--line);border-radius:var(--radius-sm);
   background:var(--surface);color:var(--muted);
-  font-family:inherit;font-size:11.5px;font-weight:600;letter-spacing:-.005em;
+  font-family:inherit;font-size:12px;font-weight:600;letter-spacing:-.01em;
   cursor:pointer;
 }
 .pin-btn:hover{border-color:var(--green-line);background:var(--green-soft);color:var(--green-dark)}
+.pin-btn:disabled{opacity:.45;cursor:not-allowed}
+.pin-btn:disabled:hover{border-color:var(--line);background:var(--surface);color:var(--muted)}
+.catalog__hint{margin:6px 0 0;font-size:13px;color:var(--muted)}
+.catalog__hint b{color:var(--ink);font-weight:700}
 .pin-btn.is-on{background:var(--green);border-color:var(--green);color:#fff}
 .pin-btn.is-on:hover{background:var(--green-dark);border-color:var(--green-dark);color:#fff}
 
-.tiles-group{margin-bottom:22px}
+.tiles-group{margin-bottom:26px}
 .tiles-group__title{
-  margin:0 0 10px;font-size:13px;font-weight:700;
-  letter-spacing:-.01em;color:var(--ink);
+  display:flex;align-items:center;gap:9px;flex-wrap:wrap;
+  margin:0 0 12px;font-size:14px;font-weight:700;
+  letter-spacing:-.02em;color:var(--ink);
 }
-.tiles-group__count{color:var(--muted-2);font-weight:600}
-.tag{
-  padding:5px 10px;border-radius:999px;
-  font-size:11.5px;font-weight:600;letter-spacing:-.005em;
-}
-.tag--green {background:var(--green-soft); color:var(--green-dark)}
-.tag--blue  {background:var(--blue-soft);  color:var(--blue)}
-.tag--violet{background:var(--violet-soft);color:var(--violet)}
-
+.tiles-group__dot{width:8px;height:8px;border-radius:50%;flex:none}
+.tiles-group__dot--green {background:var(--green)}
+.tiles-group__dot--blue  {background:var(--blue)}
+.tiles-group__dot--violet{background:var(--violet)}
+.tiles-group__count{color:var(--muted-2);font-weight:500;font-size:12.5px;letter-spacing:-.005em}
 .pin{                        /* закрепить сервис на главной */
   position:absolute;top:14px;right:14px;
   width:28px;height:28px;border:0;border-radius:8px;
@@ -577,14 +578,6 @@ svg{display:block}
   border:1px dashed var(--line);border-radius:var(--radius-md);
   color:var(--muted);font-size:12.5px;line-height:1.4;
 }
-.item__pin{                  /* убрать сервис с главной прямо из строки */
-  width:26px;height:26px;flex:none;border:0;border-radius:7px;
-  background:transparent;color:var(--muted-2);
-  display:grid;place-items:center;cursor:pointer;opacity:0;
-}
-.item:hover .item__pin{opacity:1;color:var(--green)}
-.item__pin:hover{background:var(--green-soft)}
-
 /* ==========================================================================
    7. НЕДАВНИЕ ЗАПРОСЫ (в боковом меню)
    ========================================================================== */
@@ -1150,6 +1143,7 @@ svg{display:block}
             На главную
           </button>
           <h1 class="catalog__title">Все сервисы</h1>
+          <p class="catalog__hint" id="pinCount"></p>
         </div>
       </div>
 
@@ -1288,7 +1282,6 @@ svg{display:block}
      Данные берутся из карточек главной — второго списка вести не нужно.
      ------------------------------------------------------------------ */
   const PIN_KEY = 'sherpa-pinned';
-  const PIN_SVG = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M9 4h6l-1 6 3.5 3H6.5L10 10 9 4z"/><path d="M12 13v7"/></svg>';
 
   const services = [];
   document.querySelectorAll('#page-main .section-card').forEach(card => {
@@ -1306,29 +1299,23 @@ svg{display:block}
     });
   });
 
-  /* по умолчанию на главной закреплены все сервисы — лишние пользователь убирает сам */
+  /* закрепить можно не больше пяти сервисов; по умолчанию — первые пять */
+  const MAX_PINS = 5;
   let pinned = null;
   try { pinned = JSON.parse(localStorage.getItem(PIN_KEY)); } catch (e) {}
-  if (!Array.isArray(pinned)) pinned = services.map(sv => sv.name);
+  if (!Array.isArray(pinned)) pinned = services.slice(0, MAX_PINS).map(sv => sv.name);
+  pinned = pinned.slice(0, MAX_PINS);
 
   const isPinned = name => pinned.includes(name);
+  const limitReached = () => pinned.length >= MAX_PINS;
   const savePins = () => { try { localStorage.setItem(PIN_KEY, JSON.stringify(pinned)); } catch (e) {} };
   const togglePin = name => {
+    if (!isPinned(name) && limitReached()) return;          // лимит исчерпан
     pinned = isPinned(name) ? pinned.filter(n => n !== name) : [...pinned, name];
     savePins();
     renderMain();
     renderTiles();
   };
-
-  /* кнопка открепления в строке сервиса на главной */
-  services.forEach(sv => {
-    const btn = document.createElement('button');
-    btn.className = 'item__pin is-on';
-    btn.innerHTML = PIN_SVG;
-    btn.title = 'Убрать с главной';
-    btn.addEventListener('click', e => { e.stopPropagation(); togglePin(sv.name); });
-    sv.row.insertBefore(btn, sv.row.querySelector('.item__arrow'));
-  });
 
   /* на главной в блоках показываются только закрепленные сервисы */
   const renderMain = () => {
@@ -1353,8 +1340,11 @@ svg{display:block}
   const CHECK_SVG = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7"/></svg>';
   const PLUS_SVG  = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>';
 
-  const tileHTML = sv => `
-      <article class="tile ${isPinned(sv.name) ? 'tile--pinned' : ''}">
+  const tileHTML = sv => {
+    const on = isPinned(sv.name);
+    const blocked = !on && limitReached();
+    return `
+      <article class="tile ${on ? 'tile--pinned' : ''}">
         <div class="tile__top">
           <span class="tile__icon tile__icon--${sv.color}">${sv.icon}</span>
           <div>
@@ -1363,24 +1353,38 @@ svg{display:block}
           </div>
         </div>
         <div class="tile__foot">
-          <span class="tag tag--${sv.color}">${sv.category}</span>
-          <button class="pin-btn ${isPinned(sv.name) ? 'is-on' : ''}" data-name="${sv.name}">
-            ${isPinned(sv.name) ? CHECK_SVG + 'На главной' : PLUS_SVG + 'Закрепить'}
+          <button class="pin-btn ${on ? 'is-on' : ''}" data-name="${sv.name}"
+                  ${blocked ? 'disabled title="Сначала открепите другой сервис"' : ''}>
+            ${on ? CHECK_SVG + 'На главной' : PLUS_SVG + 'Закрепить на главной'}
           </button>
         </div>
       </article>`;
+  };
 
+  /* каталог сгруппирован по блокам главной — видно, куда попадет сервис */
   const renderTiles = () => {
-    const on  = services.filter(sv => isPinned(sv.name));
-    const off = services.filter(sv => !isPinned(sv.name));
-    const group = (title, list) => !list.length ? '' :
-      `<div class="tiles-group">
-         <h2 class="tiles-group__title">${title} <span class="tiles-group__count">${list.length}</span></h2>
-         <div class="tiles__grid">${list.map(tileHTML).join('')}</div>
+    const blocks = [];
+    services.forEach(sv => {
+      let b = blocks.find(x => x.title === sv.category);
+      if (!b) blocks.push(b = { title: sv.category, color: sv.color, list: [] });
+      b.list.push(sv);
+    });
+    tiles.innerHTML = blocks.map(b => {
+      const on = b.list.filter(sv => isPinned(sv.name)).length;
+      return `<div class="tiles-group">
+         <h2 class="tiles-group__title">
+           <span class="tiles-group__dot tiles-group__dot--${b.color}"></span>
+           ${b.title}
+           <span class="tiles-group__count">закреплено ${on} из ${b.list.length}</span>
+         </h2>
+         <div class="tiles__grid">${b.list.map(tileHTML).join('')}</div>
        </div>`;
-    tiles.innerHTML = group('Закреплены на главной', on) + group('Остальные сервисы', off);
-    tiles.querySelectorAll('.pin-btn').forEach(b =>
-      b.addEventListener('click', e => { e.stopPropagation(); togglePin(b.dataset.name); }));
+    }).join('');
+    tiles.querySelectorAll('.pin-btn').forEach(btn =>
+      btn.addEventListener('click', e => { e.stopPropagation(); togglePin(btn.dataset.name); }));
+    document.getElementById('pinCount').innerHTML =
+      `Закреплено <b>${pinned.length}</b> из ${MAX_PINS}`
+      + (limitReached() ? ' — чтобы добавить другой сервис, сначала открепите один из текущих' : '');
   };
 
   renderMain();
