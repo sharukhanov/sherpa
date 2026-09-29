@@ -456,10 +456,11 @@ svg{display:block}
   line-height:1.35;
   letter-spacing:-.008em;
 }
-/* цвет иконки в блоке «Закрепленные» задается явно: карточка там без цветового модификатора */
-.item__icon--green {background:var(--green-soft); color:var(--green)}
-.item__icon--blue  {background:var(--blue-soft);  color:var(--blue)}
-.item__icon--violet{background:var(--violet-soft);color:var(--violet)}
+/* четвертый цвет блока — янтарный (остальные заданы выше) */
+.section-card--amber .section-card__icon{background:var(--amber-soft);color:var(--amber)}
+.section-card--amber .item__icon{background:var(--amber-soft);color:var(--amber)}
+.tile__icon--amber{background:var(--amber-soft);color:var(--amber)}
+.tiles-group__dot--amber{background:var(--amber)}
 
 .item__arrow{
   width:30px;height:30px;flex:none;
@@ -558,6 +559,71 @@ svg{display:block}
 .tiles-group__dot--blue  {background:var(--blue)}
 .tiles-group__dot--violet{background:var(--violet)}
 .tiles-group__count{color:var(--muted-2);font-weight:500;font-size:12.5px;letter-spacing:-.005em}
+.block-edit{                 /* настроить название, цвет и иконку блока */
+  display:inline-flex;align-items:center;gap:6px;
+  margin-left:auto;padding:6px 10px;
+  border:1px solid var(--line);border-radius:var(--radius-sm);
+  background:var(--surface);color:var(--muted);
+  font-family:inherit;font-size:11.5px;font-weight:600;cursor:pointer;
+}
+.block-edit:hover{border-color:var(--green-line);background:var(--green-soft);color:var(--green-dark)}
+
+/* --- окно настройки блока --- */
+.modal{
+  position:fixed;inset:0;z-index:60;display:none;
+  align-items:center;justify-content:center;padding:24px;
+  background:var(--overlay);backdrop-filter:blur(2px);
+}
+.modal.is-open{display:flex}
+.modal__card{
+  width:100%;max-width:440px;max-height:90vh;overflow-y:auto;
+  padding:24px;border-radius:var(--radius-xl);
+  background:var(--surface);box-shadow:0 24px 60px rgba(15,46,68,.28);
+}
+.modal__title{margin:0 0 18px;font-size:19px;font-weight:700;letter-spacing:-.02em;color:var(--ink)}
+.modal__label{margin:16px 0 8px;font-size:12.5px;font-weight:600;color:var(--muted)}
+.modal__label:first-of-type{margin-top:0}
+.modal__input{
+  width:100%;padding:11px 13px;
+  border:1px solid var(--line);border-radius:var(--radius-sm);
+  background:var(--surface);color:var(--ink);
+  font-family:inherit;font-size:14px;
+}
+.modal__input:focus{outline:none;border-color:var(--green)}
+
+.swatches{display:flex;gap:10px}
+.swatch{
+  width:34px;height:34px;border-radius:11px;
+  border:2px solid transparent;cursor:pointer;
+}
+.swatch--green {background:var(--green)}
+.swatch--blue  {background:var(--blue)}
+.swatch--violet{background:var(--violet)}
+.swatch--amber {background:var(--amber)}
+.swatch.is-on{box-shadow:0 0 0 2px var(--surface) inset;border-color:var(--ink)}
+
+.icon-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.icon-pick{
+  aspect-ratio:1;display:grid;place-items:center;
+  border:1px solid var(--line);border-radius:var(--radius-sm);
+  background:var(--surface);cursor:pointer;
+}
+.icon-pick svg{width:22px;height:22px}
+.icon-pick--green {color:var(--green)}
+.icon-pick--blue  {color:var(--blue)}
+.icon-pick--violet{color:var(--violet)}
+.icon-pick--amber {color:var(--amber)}
+.icon-pick.is-on{border-color:var(--green);background:var(--green-soft)}
+
+.modal__foot{display:flex;justify-content:flex-end;gap:10px;margin-top:22px}
+.btn-ghost,.btn-primary{
+  padding:11px 18px;border-radius:var(--radius-sm);
+  font-family:inherit;font-size:13.5px;font-weight:600;cursor:pointer;
+}
+.btn-ghost{border:1px solid var(--line);background:var(--surface);color:var(--muted)}
+.btn-ghost:hover{color:var(--ink)}
+.btn-primary{border:0;background:var(--green);color:#fff}
+.btn-primary:hover{background:var(--green-dark)}
 .pin{                        /* закрепить сервис на главной */
   position:absolute;top:14px;right:14px;
   width:28px;height:28px;border:0;border-radius:8px;
@@ -968,7 +1034,7 @@ svg{display:block}
       <div class="sections">
 
         <!-- ---------- Раздел 1: Создать протокол по итогам встречи ---------- -->
-        <section class="section-card section-card--green">
+        <section class="section-card section-card--green" data-block="meet">
           <header class="section-card__head">
             <span class="section-card__icon">
               <svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2.5" width="6" height="11" rx="3"/><path d="M5.5 11a6.5 6.5 0 0 0 13 0"/><path d="M12 17.5V21"/><path d="M8.5 21h7"/></svg>
@@ -1008,7 +1074,7 @@ svg{display:block}
         </section>
 
         <!-- ---------- Раздел 2: Поиск материалов и файлов ---------- -->
-        <section class="section-card section-card--blue">
+        <section class="section-card section-card--blue" data-block="search">
           <header class="section-card__head">
             <span class="section-card__icon">
               <svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 3h8l4 4v3.5"/><path d="M5 3v18h6.5"/><circle cx="16.5" cy="16.5" r="4"/><path d="m19.5 19.5 2.5 2.5"/></svg>
@@ -1048,7 +1114,7 @@ svg{display:block}
         </section>
 
         <!-- ---------- Раздел 3: Создать или проверить закупочную документацию ---------- -->
-        <section class="section-card section-card--violet">
+        <section class="section-card section-card--violet" data-block="proc">
           <header class="section-card__head">
             <span class="section-card__icon">
               <svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h8l4 4v14H6z"/><text x="12" y="16.6" text-anchor="middle" font-size="9" font-family="Inter,sans-serif" font-weight="600" fill="currentColor" stroke="none">₽</text></svg>
@@ -1122,6 +1188,51 @@ svg{display:block}
               <span class="item__arrow">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13M13 6l6 6-6 6"/></svg>
               </span>
+            </article>
+          </div>
+        </section>
+
+        <!-- ---------- Раздел 4: Помощь сотрудникам ---------- -->
+        <section class="section-card section-card--amber" data-block="help">
+          <header class="section-card__head">
+            <span class="section-card__icon">
+              <svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3"/><path d="M3.5 19a5.5 5.5 0 0 1 11 0"/><path d="M16 6.5a3 3 0 0 1 0 5.6"/><path d="M17.5 14.5A5 5 0 0 1 21 19"/></svg>
+            </span>
+            <div>
+              <h2 class="section-card__title">Помощь сотрудникам</h2>
+            </div>
+          </header>
+
+          <div class="section-card__list">
+            <article class="item">
+              <span class="item__icon">
+                <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18"/><path d="M6 21h12"/><path d="M5 7h14"/><path d="m5 7-2.5 5a2.8 2.8 0 0 0 5 0z"/><path d="m19 7 2.5 5a2.8 2.8 0 0 1-5 0z"/></svg>
+              </span>
+              <div class="item__body">
+                <div class="item__title">ИИ-юрист</div>
+                <div class="item__desc">Ответы по регламентам и нормативным документам Фонда</div>
+              </div>
+              <span class="item__arrow"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13M13 6l6 6-6 6"/></svg></span>
+            </article>
+            <article class="item">
+              <span class="item__icon">
+                <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3"/><path d="M3.5 19a5.5 5.5 0 0 1 11 0"/><path d="M16 6.5a3 3 0 0 1 0 5.6"/><path d="M17.5 14.5A5 5 0 0 1 21 19"/></svg>
+              </span>
+              <div class="item__body">
+                <div class="item__title">Онбординг и адаптация</div>
+                <div class="item__desc">Материалы для новых сотрудников и ответы по кадровым вопросам</div>
+              </div>
+              <span class="item__arrow"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13M13 6l6 6-6 6"/></svg></span>
+            </article>
+            <article class="item">
+              <span class="item__icon">
+                <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.4 8.4 0 0 1-9 8.4 9 9 0 0 1-3.6-.7L3 21l1.9-5A8.4 8.4 0 0 1 12 3.5a8.4 8.4 0 0 1 9 8z"/><path d="M8.5 11.5h.01M12 11.5h.01M15.5 11.5h.01"/></svg>
+              </span>
+              <div class="item__body">
+                <div class="item__title">Чат-бот Москино</div>
+                <div class="item__desc">Помощь клиентам Московской кинокомиссии</div>
+              </div>
+              <span class="item__arrow"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13M13 6l6 6-6 6"/></svg></span>
             </article>
           </div>
         </section>
@@ -1210,6 +1321,27 @@ svg{display:block}
     </div>
   </div>
 </div>
+<!-- ============ НАСТРОЙКА БЛОКА (из каталога «Все сервисы») ============ -->
+<div class="modal" id="blockModal">
+  <div class="modal__card">
+    <h3 class="modal__title">Настройка блока</h3>
+
+    <label class="modal__label" for="blockName">Название блока</label>
+    <input class="modal__input" id="blockName" type="text" maxlength="60">
+
+    <div class="modal__label">Цвет</div>
+    <div class="swatches" id="blockColors"></div>
+
+    <div class="modal__label">Иконка</div>
+    <div class="icon-grid" id="blockIcons"></div>
+
+    <div class="modal__foot">
+      <button class="btn-ghost" id="blockCancel">Отмена</button>
+      <button class="btn-primary" id="blockSave">Сохранить</button>
+    </div>
+  </div>
+</div>
+
 <div class="tip" id="tip"></div>
 
 <!-- Скрипты макета: список ассистентов и окно онбординга -->
@@ -1276,21 +1408,50 @@ svg{display:block}
      Данные берутся из карточек главной — второго списка вести не нужно.
      ------------------------------------------------------------------ */
   const PIN_KEY = 'sherpa-pinned';
+  const BLOCK_KEY = 'sherpa-blocks';
 
+  /* блоки главной: название, цвет и иконку можно менять из каталога */
+  const blocks = [];
   const services = [];
   document.querySelectorAll('#page-main .section-card').forEach(card => {
-    const mod = [...card.classList].find(c => c.startsWith('section-card--')).replace('section-card--', '');
-    const category = card.querySelector('.section-card__title').textContent.trim();
+    const id = card.dataset.block;
+    blocks.push({
+      id, card,
+      title: card.querySelector('.section-card__title').textContent.trim(),
+      color: [...card.classList].find(c => c.startsWith('section-card--')).replace('section-card--', ''),
+      icon:  card.querySelector('.section-card__icon').innerHTML.trim(),
+    });
     card.querySelectorAll('.item').forEach(row => {
       services.push({
         name: row.querySelector('.item__title').textContent.trim(),
         desc: row.querySelector('.item__desc').textContent.trim(),
         icon: row.querySelector('.item__icon').innerHTML,
-        color: mod,
-        category,
+        block: id,
         row,
       });
     });
+  });
+
+  const blockById = id => blocks.find(b => b.id === id);
+
+  /* сохраненные настройки блоков */
+  try {
+    const saved = JSON.parse(localStorage.getItem(BLOCK_KEY)) || {};
+    blocks.forEach(b => Object.assign(b, saved[b.id] || {}));
+  } catch (e) {}
+  const saveBlocks = () => {
+    try {
+      const data = {};
+      blocks.forEach(b => data[b.id] = { title: b.title, color: b.color, icon: b.icon });
+      localStorage.setItem(BLOCK_KEY, JSON.stringify(data));
+    } catch (e) {}
+  };
+
+  /* применить настройки к карточкам главной */
+  const applyBlocks = () => blocks.forEach(b => {
+    b.card.className = 'section-card section-card--' + b.color;
+    b.card.querySelector('.section-card__title').textContent = b.title;
+    b.card.querySelector('.section-card__icon').innerHTML = b.icon;
   });
 
   /* в каждом блоке можно закрепить не больше пяти сервисов */
@@ -1300,21 +1461,21 @@ svg{display:block}
   if (!Array.isArray(pinned)) pinned = services.map(sv => sv.name);
 
   const isPinned = name => pinned.includes(name);
-  const pinnedInBlock = category =>
-    services.filter(sv => sv.category === category && isPinned(sv.name)).length;
-  const blockFull = category => pinnedInBlock(category) >= MAX_PER_BLOCK;
+  const pinnedInBlock = blockId =>
+    services.filter(sv => sv.block === blockId && isPinned(sv.name)).length;
+  const blockFull = blockId => pinnedInBlock(blockId) >= MAX_PER_BLOCK;
   const savePins = () => { try { localStorage.setItem(PIN_KEY, JSON.stringify(pinned)); } catch (e) {} };
 
   /* если в блоке закреплено больше лимита (например, после правки списка) — оставляем первые пять */
   services.forEach(sv => {
-    if (isPinned(sv.name) && pinnedInBlock(sv.category) > MAX_PER_BLOCK) {
+    if (isPinned(sv.name) && pinnedInBlock(sv.block) > MAX_PER_BLOCK) {
       pinned = pinned.filter(n => n !== sv.name);
     }
   });
 
   const togglePin = name => {
     const sv = services.find(s => s.name === name);
-    if (!isPinned(name) && blockFull(sv.category)) return;   // в блоке уже пять сервисов
+    if (!isPinned(name) && blockFull(sv.block)) return;   // в блоке уже пять сервисов
     pinned = isPinned(name) ? pinned.filter(n => n !== name) : [...pinned, name];
     savePins();
     renderMain();
@@ -1350,7 +1511,7 @@ svg{display:block}
     return `
       <article class="tile ${on ? 'tile--pinned' : ''}">
         <div class="tile__top">
-          <span class="tile__icon tile__icon--${sv.color}">${sv.icon}</span>
+          <span class="tile__icon tile__icon--${blockById(sv.block).color}">${sv.icon}</span>
           <div>
             <div class="tile__name">${sv.name}</div>
             <div class="tile__desc">${sv.desc}</div>
@@ -1365,31 +1526,87 @@ svg{display:block}
       </article>`;
   };
 
+  const GEAR_SVG = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h4l10-10-4-4L4 16v4z"/><path d="m14.5 5.5 4 4"/></svg>';
+
   /* каталог сгруппирован по блокам главной — видно, куда попадет сервис */
   const renderTiles = () => {
-    const blocks = [];
-    services.forEach(sv => {
-      let b = blocks.find(x => x.title === sv.category);
-      if (!b) blocks.push(b = { title: sv.category, color: sv.color, list: [] });
-      b.list.push(sv);
-    });
     tiles.innerHTML = blocks.map(b => {
-      const on = pinnedInBlock(b.title);
+      const list = services.filter(sv => sv.block === b.id);
       return `<div class="tiles-group">
          <h2 class="tiles-group__title">
            <span class="tiles-group__dot tiles-group__dot--${b.color}"></span>
            ${b.title}
-           <span class="tiles-group__count">закреплено ${on} из ${MAX_PER_BLOCK}</span>
+           <span class="tiles-group__count">закреплено ${pinnedInBlock(b.id)} из ${MAX_PER_BLOCK}</span>
+           <button class="block-edit" data-block="${b.id}">${GEAR_SVG}Настроить блок</button>
          </h2>
-         <div class="tiles__grid">${b.list.map(tileHTML).join('')}</div>
+         <div class="tiles__grid">${list.map(tileHTML).join('')}</div>
        </div>`;
     }).join('');
     tiles.querySelectorAll('.pin-btn').forEach(btn =>
       btn.addEventListener('click', e => { e.stopPropagation(); togglePin(btn.dataset.name); }));
+    tiles.querySelectorAll('.block-edit').forEach(btn =>
+      btn.addEventListener('click', e => { e.stopPropagation(); openBlockEditor(btn.dataset.block); }));
     document.getElementById('pinCount').innerHTML =
       `В каждом блоке главной можно закрепить до <b>${MAX_PER_BLOCK}</b> сервисов`;
   };
 
+  /* ---------- редактор блока: название, цвет, иконка ---------- */
+  const COLORS = [
+    ['green',  'Зеленый'],
+    ['blue',   'Синий'],
+    ['violet', 'Фиолетовый'],
+    ['amber',  'Янтарный'],
+  ];
+  const ICONS = [
+    '<svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2.5" width="6" height="11" rx="3"/><path d="M5.5 11a6.5 6.5 0 0 0 13 0"/><path d="M12 17.5V21"/><path d="M8.5 21h7"/></svg>',
+    '<svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 3h8l4 4v3.5"/><path d="M5 3v18h6.5"/><circle cx="16.5" cy="16.5" r="4"/><path d="m19.5 19.5 2.5 2.5"/></svg>',
+    '<svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h8l4 4v14H6z"/><text x="12" y="16.6" text-anchor="middle" font-size="9" font-family="Inter,sans-serif" font-weight="600" fill="currentColor" stroke="none">₽</text></svg>',
+    '<svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h8l4 4v14H6z"/><path d="M9 11h6M9 15h4"/></svg>',
+    '<svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.4 8.4 0 0 1-9 8.4 9 9 0 0 1-3.6-.7L3 21l1.9-5A8.4 8.4 0 0 1 12 3.5a8.4 8.4 0 0 1 9 8z"/></svg>',
+    '<svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3"/><path d="M3.5 19a5.5 5.5 0 0 1 11 0"/><path d="M16 6.5a3 3 0 0 1 0 5.6"/><path d="M17.5 14.5A5 5 0 0 1 21 19"/></svg>',
+    '<svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v5.5c0 4.3-2.9 7.8-7 9.5-4.1-1.7-7-5.2-7-9.5V6l7-3z"/></svg>',
+    '<svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><path d="M6 19V11M12 19V5M18 19v-6"/></svg>',
+  ];
+
+  const modal   = document.getElementById('blockModal');
+  const nameInp = document.getElementById('blockName');
+  let editing = null, pickColor = null, pickIcon = null;
+
+  const paintEditor = () => {
+    document.getElementById('blockColors').innerHTML = COLORS.map(([c, label]) =>
+      `<button class="swatch swatch--${c} ${c === pickColor ? 'is-on' : ''}" data-color="${c}" title="${label}"></button>`).join('');
+    document.getElementById('blockIcons').innerHTML = ICONS.map((ic, i) =>
+      `<button class="icon-pick icon-pick--${pickColor} ${ic.replace(/\s+/g,'') === String(pickIcon).replace(/\s+/g,'') ? 'is-on' : ''}" data-icon="${i}">${ic}</button>`).join('');
+    document.getElementById('blockColors').querySelectorAll('.swatch').forEach(b =>
+      b.addEventListener('click', () => { pickColor = b.dataset.color; paintEditor(); }));
+    document.getElementById('blockIcons').querySelectorAll('.icon-pick').forEach(b =>
+      b.addEventListener('click', () => { pickIcon = ICONS[b.dataset.icon]; paintEditor(); }));
+  };
+
+  const openBlockEditor = id => {
+    editing = blockById(id);
+    nameInp.value = editing.title;
+    pickColor = editing.color;
+    const norm = str => str.replace(/\s+/g, '');
+    pickIcon = ICONS.find(ic => norm(ic) === norm(editing.icon)) || editing.icon;
+    paintEditor();
+    modal.classList.add('is-open');
+  };
+  const closeBlockEditor = () => modal.classList.remove('is-open');
+
+  document.getElementById('blockCancel').addEventListener('click', closeBlockEditor);
+  modal.addEventListener('click', e => { if (e.target === modal) closeBlockEditor(); });
+  document.getElementById('blockSave').addEventListener('click', () => {
+    editing.title = nameInp.value.trim() || editing.title;
+    editing.color = pickColor;
+    editing.icon  = pickIcon;
+    saveBlocks();
+    applyBlocks();
+    renderTiles();
+    closeBlockEditor();
+  });
+
+  applyBlocks();
   renderMain();
   renderTiles();
 
