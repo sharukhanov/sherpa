@@ -509,7 +509,13 @@ svg{display:block}
 .field--select{position:relative;gap:12px;color:var(--ink);font-weight:500}
 .field__label{color:var(--muted-2);font-weight:400}
 
-.tiles__grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:12px}
+.tiles__grid{
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:12px;
+  min-height:96px;padding:4px;border:2px dashed transparent;border-radius:var(--radius-xl);
+}
+.tiles__grid.is-drop{border-color:var(--green-line);background:var(--green-soft-2)}   /* сюда можно перетащить */
+.tile{cursor:grab}
+.tile.is-dragging{opacity:.4}
 .tile{
   position:relative;
   display:flex;flex-direction:column;gap:10px;
@@ -1409,6 +1415,7 @@ svg{display:block}
      ------------------------------------------------------------------ */
   const PIN_KEY = 'sherpa-pinned';
   const BLOCK_KEY = 'sherpa-blocks';
+  const MOVE_KEY = 'sherpa-service-blocks';
 
   /* блоки главной: название, цвет и иконку можно менять из каталога */
   const blocks = [];
@@ -1453,6 +1460,39 @@ svg{display:block}
     b.card.querySelector('.section-card__title').textContent = b.title;
     b.card.querySelector('.section-card__icon').innerHTML = b.icon;
   });
+
+  /* сервис можно перетащить в другой блок — запоминаем такие переносы */
+  const saveMoves = () => {
+    try {
+      const data = {};
+      services.forEach(sv => data[sv.name] = sv.block);
+      localStorage.setItem(MOVE_KEY, JSON.stringify(data));
+    } catch (e) {}
+  };
+  const moveService = (name, blockId) => {
+    const sv = services.find(s => s.name === name);
+    if (!sv || sv.block === blockId || !blockById(blockId)) return;
+    sv.block = blockId;
+    blockById(blockId).card.querySelector('.section-card__list').appendChild(sv.row);
+    if (isPinned(name) && pinnedInBlock(blockId) > MAX_PER_BLOCK) {
+      pinned = pinned.filter(n => n !== name);     // в новом блоке уже пять закрепленных
+      savePins();
+    }
+    saveMoves();
+    renderMain();
+    renderTiles();
+  };
+
+  try {
+    const saved = JSON.parse(localStorage.getItem(MOVE_KEY)) || {};
+    Object.entries(saved).forEach(([name, blockId]) => {
+      const sv = services.find(s => s.name === name);
+      if (sv && blockById(blockId) && sv.block !== blockId) {
+        sv.block = blockId;
+        blockById(blockId).card.querySelector('.section-card__list').appendChild(sv.row);
+      }
+    });
+  } catch (e) {}
 
   /* в каждом блоке можно закрепить не больше пяти сервисов */
   const MAX_PER_BLOCK = 5;
@@ -1509,7 +1549,7 @@ svg{display:block}
     const on = isPinned(sv.name);
     const blocked = !on && blockFull(sv.category);
     return `
-      <article class="tile ${on ? 'tile--pinned' : ''}">
+      <article class="tile ${on ? 'tile--pinned' : ''}" draggable="true" data-name="${sv.name}">
         <div class="tile__top">
           <span class="tile__icon tile__icon--${blockById(sv.block).color}">${sv.icon}</span>
           <div>
@@ -1539,13 +1579,41 @@ svg{display:block}
            <span class="tiles-group__count">закреплено ${pinnedInBlock(b.id)} из ${MAX_PER_BLOCK}</span>
            <button class="block-edit" data-block="${b.id}">${GEAR_SVG}Настроить блок</button>
          </h2>
-         <div class="tiles__grid">${list.map(tileHTML).join('')}</div>
+         <div class="tiles__grid" data-block="${b.id}">${list.map(tileHTML).join('')}</div>
        </div>`;
     }).join('');
     tiles.querySelectorAll('.pin-btn').forEach(btn =>
       btn.addEventListener('click', e => { e.stopPropagation(); togglePin(btn.dataset.name); }));
     tiles.querySelectorAll('.block-edit').forEach(btn =>
       btn.addEventListener('click', e => { e.stopPropagation(); openBlockEditor(btn.dataset.block); }));
+
+    /* перетаскивание сервиса в другой блок */
+    let dragged = null;
+    tiles.querySelectorAll('.tile').forEach(tile => {
+      tile.addEventListener('dragstart', e => {
+        dragged = tile.dataset.name;
+        tile.classList.add('is-dragging');
+        e.dataTransfer.effectAllowed = 'move';
+        e.dataTransfer.setData('text/plain', dragged);
+      });
+      tile.addEventListener('dragend', () => {
+        tile.classList.remove('is-dragging');
+        tiles.querySelectorAll('.tiles__grid').forEach(g => g.classList.remove('is-drop'));
+      });
+    });
+    tiles.querySelectorAll('.tiles__grid').forEach(grid => {
+      grid.addEventListener('dragover', e => {
+        e.preventDefault();
+        e.dataTransfer.dropEffect = 'move';
+        grid.classList.add('is-drop');
+      });
+      grid.addEventListener('dragleave', () => grid.classList.remove('is-drop'));
+      grid.addEventListener('drop', e => {
+        e.preventDefault();
+        grid.classList.remove('is-drop');
+        moveService(dragged || e.dataTransfer.getData('text/plain'), grid.dataset.block);
+      });
+    });
     document.getElementById('pinCount').innerHTML =
       `В каждом блоке главной можно закрепить до <b>${MAX_PER_BLOCK}</b> сервисов`;
   };
