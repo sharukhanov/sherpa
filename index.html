@@ -462,6 +462,11 @@ svg{display:block}
 .tile__icon--amber{background:var(--amber-soft);color:var(--amber)}
 .tiles-group__dot--amber{background:var(--amber)}
 
+/* дополнительные сервисы (вне блоков) */
+.tile__icon--muted{background:var(--surface-2);color:var(--muted-2)}
+.tiles-group__dot--muted{background:var(--muted-2)}
+.tiles-group--pool{padding-top:6px;border-top:1px solid var(--line);margin-top:4px}
+
 .item__arrow{
   width:30px;height:30px;flex:none;
   border-radius:50%;
@@ -756,15 +761,24 @@ svg{display:block}
 .onb__card-text{margin-top:4px;font-size:12.3px;line-height:1.4;color:var(--text-3)}
 
 /* примеры задач — чтобы вернувшийся пользователь сразу начал работу */
-.onb__examples{display:flex;flex-wrap:wrap;gap:8px}
-.onb__chip{
-  display:inline-flex;align-items:center;gap:8px;
-  padding:8px 12px;
-  border:1px solid var(--line);border-radius:999px;
-  background:var(--surface-2);font-size:12.5px;color:var(--ink-2);cursor:pointer;
+.onb__links{display:flex;flex-direction:column;gap:6px}
+.onb__link{
+  display:flex;align-items:center;gap:12px;
+  padding:10px 12px;border-radius:var(--radius-sm);
+  color:var(--ink);text-decoration:none;cursor:pointer;
 }
-.onb__chip:hover{border-color:var(--green-line-2);background:var(--green-soft);color:var(--green-dark)}
-.onb__chip svg{color:var(--green)}
+.onb__link:hover{background:var(--green-soft)}
+.onb__link-icon{
+  width:32px;height:32px;flex:none;border-radius:10px;
+  display:grid;place-items:center;
+  background:var(--green-soft);color:var(--green);
+}
+.onb__link:hover .onb__link-icon{background:var(--green);color:#fff}
+.onb__link-body{display:flex;flex-direction:column;gap:2px;min-width:0}
+.onb__link-body b{font-size:13px;font-weight:600;letter-spacing:-.01em}
+.onb__link-body span{font-size:12px;color:var(--text-3)}
+.onb__link-go{margin-left:auto;flex:none;color:var(--muted-2)}
+.onb__link:hover .onb__link-go{color:var(--green)}
 
 .onb__foot{
   display:flex;align-items:center;justify-content:space-between;gap:16px;
@@ -1198,18 +1212,10 @@ svg{display:block}
           </div>
         </section>
 
-        <!-- ---------- Раздел 4: Помощь сотрудникам ---------- -->
-        <section class="section-card section-card--amber" data-block="help">
-          <header class="section-card__head">
-            <span class="section-card__icon">
-              <svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3"/><path d="M3.5 19a5.5 5.5 0 0 1 11 0"/><path d="M16 6.5a3 3 0 0 1 0 5.6"/><path d="M17.5 14.5A5 5 0 0 1 21 19"/></svg>
-            </span>
-            <div>
-              <h2 class="section-card__title">Помощь сотрудникам</h2>
-            </div>
-          </header>
+      </div>
 
-          <div class="section-card__list">
+      <!-- дополнительные сервисы: пока не привязаны к блокам, живут в каталоге -->
+      <div id="poolServices" hidden>
             <article class="item">
               <span class="item__icon">
                 <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18"/><path d="M6 21h12"/><path d="M5 7h14"/><path d="m5 7-2.5 5a2.8 2.8 0 0 0 5 0z"/><path d="m19 7 2.5 5a2.8 2.8 0 0 1-5 0z"/></svg>
@@ -1240,8 +1246,6 @@ svg{display:block}
               </div>
               <span class="item__arrow"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13M13 6l6 6-6 6"/></svg></span>
             </article>
-          </div>
-        </section>
       </div>
     </section>
 
@@ -1311,12 +1315,28 @@ svg{display:block}
       </div>
     </div>
 
-    <div class="onb__subtitle">Примеры задач:</div>
-    <div class="onb__examples">
-      <span class="onb__chip"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13M13 6l6 6-6 6"/></svg>Расшифруй запись совещания</span>
-      <span class="onb__chip"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13M13 6l6 6-6 6"/></svg>Найди положение о закупочной деятельности</span>
-      <span class="onb__chip"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13M13 6l6 6-6 6"/></svg>Рассчитай цену договора</span>
-      <span class="onb__chip"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13M13 6l6 6-6 6"/></svg>Подготовь итоги встречи</span>
+    <div class="onb__subtitle">Полезные материалы:</div>
+    <div class="onb__links">
+      <a class="onb__link">
+        <span class="onb__link-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m10 8.5 6 3.5-6 3.5z"/></svg></span>
+        <span class="onb__link-body"><b>Видео-инструкция: как работать с платформой</b><span>7 минут, основные сценарии</span></span>
+        <svg class="onb__link-go" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13M13 6l6 6-6 6"/></svg>
+      </a>
+      <a class="onb__link">
+        <span class="onb__link-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M3 5.5A9 9 0 0 1 12 7a9 9 0 0 1 9-1.5V19a9 9 0 0 0-9-1.5A9 9 0 0 0 3 19V5.5z"/><path d="M12 7v10.5"/></svg></span>
+        <span class="onb__link-body"><b>База знаний портала</b><span>Регламенты, инструкции и памятки</span></span>
+        <svg class="onb__link-go" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13M13 6l6 6-6 6"/></svg>
+      </a>
+      <a class="onb__link">
+        <span class="onb__link-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9.6 9.3a2.5 2.5 0 0 1 4.8.9c0 1.7-2.4 2-2.4 3.5"/><path d="M12 17.2h.01"/></svg></span>
+        <span class="onb__link-body"><b>Частые вопросы</b><span>Ответы на типовые вопросы сотрудников</span></span>
+        <svg class="onb__link-go" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13M13 6l6 6-6 6"/></svg>
+      </a>
+      <a class="onb__link">
+        <span class="onb__link-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.4 8.4 0 0 1-9 8.4 9 9 0 0 1-3.6-.7L3 21l1.9-5A8.4 8.4 0 0 1 12 3.5a8.4 8.4 0 0 1 9 8z"/></svg></span>
+        <span class="onb__link-body"><b>Написать в поддержку</b><span>Если что-то не работает или не хватает агента</span></span>
+        <svg class="onb__link-go" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13M13 6l6 6-6 6"/></svg>
+      </a>
     </div>
 
     <p class="onb__lead" style="margin-top:20px">Начните с любого сервиса на главной странице.</p>
@@ -1439,6 +1459,18 @@ svg{display:block}
     });
   });
 
+  /* дополнительные сервисы: в блоки не входят, лежат в каталоге и перетаскиваются */
+  const pool = document.getElementById('poolServices');
+  pool.querySelectorAll('.item').forEach(row => {
+    services.push({
+      name: row.querySelector('.item__title').textContent.trim(),
+      desc: row.querySelector('.item__desc').textContent.trim(),
+      icon: row.querySelector('.item__icon').innerHTML,
+      block: '',
+      row,
+    });
+  });
+
   const blockById = id => blocks.find(b => b.id === id);
 
   /* сохраненные настройки блоков */
@@ -1469,13 +1501,19 @@ svg{display:block}
       localStorage.setItem(MOVE_KEY, JSON.stringify(data));
     } catch (e) {}
   };
+  const placeRow = (sv, blockId) => {
+    const target = blockId ? blockById(blockId).card.querySelector('.section-card__list') : pool;
+    target.appendChild(sv.row);
+  };
+
   const moveService = (name, blockId) => {
     const sv = services.find(s => s.name === name);
-    if (!sv || sv.block === blockId || !blockById(blockId)) return;
+    if (!sv || sv.block === blockId || (blockId && !blockById(blockId))) return;
     sv.block = blockId;
-    blockById(blockId).card.querySelector('.section-card__list').appendChild(sv.row);
-    if (isPinned(name) && pinnedInBlock(blockId) > MAX_PER_BLOCK) {
-      pinned = pinned.filter(n => n !== name);     // в новом блоке уже пять закрепленных
+    placeRow(sv, blockId);
+    const overflow = blockId && isPinned(name) && pinnedInBlock(blockId) > MAX_PER_BLOCK;
+    if (!blockId || overflow) {                    // вне блока или в блоке уже пять закрепленных
+      pinned = pinned.filter(n => n !== name);
       savePins();
     }
     saveMoves();
@@ -1487,9 +1525,9 @@ svg{display:block}
     const saved = JSON.parse(localStorage.getItem(MOVE_KEY)) || {};
     Object.entries(saved).forEach(([name, blockId]) => {
       const sv = services.find(s => s.name === name);
-      if (sv && blockById(blockId) && sv.block !== blockId) {
+      if (sv && sv.block !== blockId && (!blockId || blockById(blockId))) {
         sv.block = blockId;
-        blockById(blockId).card.querySelector('.section-card__list').appendChild(sv.row);
+        placeRow(sv, blockId);
       }
     });
   } catch (e) {}
@@ -1505,6 +1543,12 @@ svg{display:block}
     services.filter(sv => sv.block === blockId && isPinned(sv.name)).length;
   const blockFull = blockId => pinnedInBlock(blockId) >= MAX_PER_BLOCK;
   const savePins = () => { try { localStorage.setItem(PIN_KEY, JSON.stringify(pinned)); } catch (e) {} };
+
+  /* сервисы вне блоков на главной не показываются */
+  pinned = pinned.filter(name => {
+    const sv = services.find(s => s.name === name);
+    return sv && sv.block;
+  });
 
   /* если в блоке закреплено больше лимита (например, после правки списка) — оставляем первые пять */
   services.forEach(sv => {
@@ -1546,12 +1590,16 @@ svg{display:block}
   const PLUS_SVG  = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>';
 
   const tileHTML = sv => {
-    const on = isPinned(sv.name);
-    const blocked = !on && blockFull(sv.category);
+    const inPool = !sv.block;
+    const on = !inPool && isPinned(sv.name);
+    const blocked = inPool || (!on && blockFull(sv.block));
+    const hint = inPool
+      ? 'Перетащите сервис в блок, чтобы закрепить его на главной'
+      : 'В блоке уже пять сервисов — сначала открепите один из них';
     return `
       <article class="tile ${on ? 'tile--pinned' : ''}" draggable="true" data-name="${sv.name}">
         <div class="tile__top">
-          <span class="tile__icon tile__icon--${blockById(sv.block).color}">${sv.icon}</span>
+          <span class="tile__icon tile__icon--${inPool ? 'muted' : blockById(sv.block).color}">${sv.icon}</span>
           <div>
             <div class="tile__name">${sv.name}</div>
             <div class="tile__desc">${sv.desc}</div>
@@ -1559,7 +1607,7 @@ svg{display:block}
         </div>
         <div class="tile__foot">
           <button class="pin-btn ${on ? 'is-on' : ''}" data-name="${sv.name}"
-                  ${blocked ? 'disabled title="В блоке уже пять сервисов — сначала открепите один из них"' : ''}>
+                  ${blocked ? `disabled title="${hint}"` : ''}>
             ${on ? CHECK_SVG + 'На главной' : PLUS_SVG + 'Закрепить на главной'}
           </button>
         </div>
@@ -1570,6 +1618,7 @@ svg{display:block}
 
   /* каталог сгруппирован по блокам главной — видно, куда попадет сервис */
   const renderTiles = () => {
+    const extra = services.filter(sv => !sv.block);
     tiles.innerHTML = blocks.map(b => {
       const list = services.filter(sv => sv.block === b.id);
       return `<div class="tiles-group">
@@ -1581,7 +1630,15 @@ svg{display:block}
          </h2>
          <div class="tiles__grid" data-block="${b.id}">${list.map(tileHTML).join('')}</div>
        </div>`;
-    }).join('');
+    }).join('')
+    + `<div class="tiles-group tiles-group--pool">
+         <h2 class="tiles-group__title">
+           <span class="tiles-group__dot tiles-group__dot--muted"></span>
+           Дополнительные сервисы
+           <span class="tiles-group__count">${extra.length} — перетащите в нужный блок, чтобы показать на главной</span>
+         </h2>
+         <div class="tiles__grid" data-block="">${extra.map(tileHTML).join('')}</div>
+       </div>`;
     tiles.querySelectorAll('.pin-btn').forEach(btn =>
       btn.addEventListener('click', e => { e.stopPropagation(); togglePin(btn.dataset.name); }));
     tiles.querySelectorAll('.block-edit').forEach(btn =>
