@@ -638,7 +638,6 @@ let draft = null; // копия данных в режиме редактиро�
 let artifactApi = null;
 // файл открыт с компьютера: сохраняем, скачивая обновлённую копию файла
 const LOCAL = location.protocol === "file:";
-let savedNote = "";
 
 // Цвета статуса: подпись в редакторе
 const COLORS = {
@@ -796,14 +795,12 @@ function renderTools(note) {
   const tools = document.getElementById("tools");
   if (!artifactApi && !LOCAL) { tools.hidden = true; return; }
   tools.hidden = false;
-  const hint = `Пишите статус любым текстом и выбирайте цвет. Работы можно переименовать, удалить (×) или добавить внизу блока. Для нового еженедельного отчёта поменяйте дату: изменения подсветятся относительно отчёта от ${esc(DATA.reportDate)}.` +
-    (LOCAL ? " «Сохранить» скачает обновлённый файл отчёта: дальше работайте с ним." : "");
+  const hint = `Пишите статус любым текстом и выбирайте цвет. Работы можно переименовать, удалить (×) или добавить внизу блока. Для нового еженедельного отчёта поменяйте дату: изменения подсветятся относительно отчёта от ${esc(DATA.reportDate)}.`;
   tools.innerHTML = draft
     ? `<span class="note">${note || hint}<\/span>
        <button class="btn" id="b-cancel" type="button">Отмена<\/button>
        <button class="btn primary" id="b-save" type="button">Сохранить<\/button>`
-    : (savedNote ? `<span class="note">${savedNote}<\/span>` : "") +
-      `<button class="btn" id="b-edit" type="button">Редактировать<\/button>`;
+    : `<button class="btn" id="b-edit" type="button">Редактировать<\/button>`;
 }
 
 document.addEventListener("click", async (e) => {
@@ -864,7 +861,6 @@ function downloadReport(next) {
   document.body.appendChild(a); a.click(); a.remove();
   setTimeout(() => URL.revokeObjectURL(url), 1000);
   DATA = next; draft = null;
-  savedNote = `Сохранено в файл «${esc(name)}» в папке загрузок. Для следующих правок открывайте его.`;
   render();
 }
 
