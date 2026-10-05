@@ -526,6 +526,9 @@ const SHELL = document.getElementById("page").outerHTML; // пустая раз�
 let DATA = JSON.parse(document.getElementById("report-data").textContent);
 let draft = null; // копия данных в режиме редактирования
 let artifactApi = null;
+// файл открыт с компьютера: сохраняем, скачивая обновлённую копию файла
+const LOCAL = location.protocol === "file:";
+let savedNote = "";
 
 // Цвета статуса: подпись в редакторе
 const COLORS = {
@@ -669,14 +672,16 @@ function render() {
 
 function renderTools(note) {
   const tools = document.getElementById("tools");
-  if (!artifactApi) { tools.hidden = true; return; }
+  if (!artifactApi && !LOCAL) { tools.hidden = true; return; }
   tools.hidden = false;
-  const hint = `Пишите статус любым текстом и выбирайте цвет. Работы можно переименовать, удалить (×) или добавить внизу блока. Для нового еженедельного отчёта поменяйте дату: изменения подсветятся относительно отчёта от ${esc(DATA.reportDate)}.`;
+  const hint = `Пишите статус любым текстом и выбирайте цвет. Работы можно переименовать, удалить (×) или добавить внизу блока. Для нового еженедельного отчёта поменяйте дату: изменения подсветятся относительно отчёта от ${esc(DATA.reportDate)}.` +
+    (LOCAL ? " «Сохранить» скачает обновлённый файл отчёта: дальше работайте с ним." : "");
   tools.innerHTML = draft
     ? `<span class="note">${note || hint}</span>
        <button class="btn" id="b-cancel" type="button">Отмена</button>
        <button class="btn primary" id="b-save" type="button">Сохранить</button>`
-    : `<button class="btn" id="b-edit" type="button">Редактировать</button>`;
+    : (savedNote ? `<span class="note">${savedNote}</span>` : "") +
+      `<button class="btn" id="b-edit" type="button">Редактировать</button>`;
 }
 
 document.addEventListener("click", async (e) => {
@@ -729,6 +734,18 @@ function buildDocument(data) {
     "</body></html>";
 }
 
+function downloadReport(next) {
+  const name = "ai-agents-status-" + (norm(next.reportDate).replace(/[^0-9A-Za-z.-]+/g, "-") || "report") + ".html";
+  const url = URL.createObjectURL(new Blob([buildDocument(next)], { type: "text/html" }));
+  const a = document.createElement("a");
+  a.href = url; a.download = name;
+  document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
+  DATA = next; draft = null;
+  savedNote = `Сохранено в файл «${esc(name)}» в папке загрузок. Для следующих правок открывайте его.`;
+  render();
+}
+
 async function save() {
   const btn = document.getElementById("b-save");
   btn.disabled = true; btn.textContent = "Сохраняю…";
@@ -739,6 +756,7 @@ async function save() {
     b.items.forEach((it) => { it.name = norm(it.name); it.label = norm(it.label); it.due = norm(it.due); });
   });
   try {
+    if (LOCAL && !artifactApi) { downloadReport(next); return; }
     await artifactApi.publish(buildDocument(next));
     // страница перезагрузится на новую версию
   } catch (err) {
