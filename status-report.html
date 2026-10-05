@@ -297,7 +297,19 @@ body {
   font: 800 10.5px/1 var(--f-display); letter-spacing: .06em; text-transform: uppercase;
   color: var(--chg); border: 1px solid var(--chg); border-radius: 5px; padding: 3px 5px;
 }
-.svc .name-wrap { display: grid; justify-items: start; min-width: 0; }
+.svc .name-wrap { display: grid; justify-items: start; gap: 4px; min-width: 0; flex: 1; }
+.name-field { font-weight: 700; }
+.icon-btn {
+  flex: none; width: 30px; height: 30px; border-radius: 8px;
+  border: 1px solid var(--line); background: var(--panel); color: var(--muted);
+  font: 700 18px/1 var(--f-display); cursor: pointer;
+}
+.icon-btn:hover { color: var(--s-red-fg); border-color: var(--s-red-fg); background: var(--s-red-bg); }
+.icon-btn:focus-visible { outline: 2px solid var(--c1); outline-offset: 2px; }
+.add-btn { justify-self: start; border-style: dashed; color: var(--c); }
+.editing .row { grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr) minmax(0, 0.75fr); }
+.editing .svc { gap: 8px; }
+.editing .svc .ic { display: none; }
 .swatches { display: flex; flex-wrap: wrap; gap: 4px; }
 .swatches input { position: absolute; opacity: 0; width: 1px; height: 1px; }
 .swatches label {
@@ -313,7 +325,7 @@ body {
   .block-head .num { display: none; }
   .tile { width: 54px; height: 48px; }
   .tile svg { width: 26px; height: 26px; }
-  .row { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+  .row, .editing .row { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
   .row > div:first-child { grid-column: 1 / -1; }
   .row > div + div { border-top: 1px dashed var(--line); }
   .row > div:nth-child(2) { border-left: 0; }
@@ -354,6 +366,7 @@ body {
    "icon": "laptop",
    "items": [
     {
+     "id": "w01",
      "name": "ИИ-агент транскрибации",
      "icon": "mic",
      "color": "yellow",
@@ -361,6 +374,7 @@ body {
      "due": ""
     },
     {
+     "id": "w02",
      "name": "ИИ-агент суммаризации / протоколирования",
      "icon": "doc",
      "color": "yellow",
@@ -375,6 +389,7 @@ body {
    "icon": "book",
    "items": [
     {
+     "id": "w03",
      "name": "ИИ-агент поиска по внутренней базе знаний Фонда",
      "icon": "search",
      "color": "yellow",
@@ -382,6 +397,7 @@ body {
      "due": ""
     },
     {
+     "id": "w04",
      "name": "Файловый менеджер с ИИ-поиском",
      "icon": "folder",
      "color": "green",
@@ -397,42 +413,49 @@ body {
    "numbered": true,
    "items": [
     {
+     "id": "w05",
      "name": "Формирование закупочной документации",
      "color": "blue",
      "label": "В работе у Шерпы",
      "due": ""
     },
     {
+     "id": "w06",
      "name": "Проверка закупочной документации",
      "color": "red",
      "label": "Пауза (ждём ресурсы Шерпы)",
      "due": ""
     },
     {
+     "id": "w07",
      "name": "Формирование КП",
      "color": "blue",
      "label": "В работе у Шерпы",
      "due": ""
     },
     {
+     "id": "w08",
      "name": "Проверка КП",
      "color": "violet",
      "label": "Тестирование",
      "due": ""
     },
     {
+     "id": "w09",
      "name": "Формирование НМЦД",
      "color": "blue",
      "label": "В работе",
      "due": ""
     },
     {
+     "id": "w10",
      "name": "Формирование договора",
      "color": "red",
      "label": "Пауза (ждём ресурсы Шерпы)",
      "due": ""
     },
     {
+     "id": "w11",
      "name": "Формирование отчётной документации",
      "color": "red",
      "label": "Пауза (ждём ресурсы Шерпы)",
@@ -446,6 +469,7 @@ body {
    "icon": "gear",
    "items": [
     {
+     "id": "w12",
      "name": "Дизайн интерфейса",
      "icon": "palette",
      "color": "blue",
@@ -453,6 +477,7 @@ body {
      "due": ""
     },
     {
+     "id": "w13",
      "name": "Отчёт по 1 этапу",
      "icon": "report",
      "color": "teal",
@@ -460,6 +485,7 @@ body {
      "due": ""
     },
     {
+     "id": "w14",
      "name": "Отчёт по 2 этапу",
      "icon": "report",
      "color": "teal",
@@ -467,6 +493,7 @@ body {
      "due": ""
     },
     {
+     "id": "w15",
      "name": "Отчёт по 3 этапу",
      "icon": "report",
      "color": "blue",
@@ -474,6 +501,7 @@ body {
      "due": ""
     },
     {
+     "id": "w16",
      "name": "Отчёт по 4 этапу",
      "icon": "report",
      "color": "blue",
@@ -506,14 +534,16 @@ const COLORS = {
 };
 
 const clone = (o) => JSON.parse(JSON.stringify(o));
-const keyOf = (bi, it) => bi + "|" + it.name;
 const norm = (v) => String(v || "").trim();
+const newId = () => "w" + Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
+// у каждой работы постоянный id, чтобы переименование не считалось новой работой
+DATA.blocks.forEach((b) => b.items.forEach((it) => { if (!it.id) it.id = newId(); }));
 
 // Снимок отчёта для сравнения со следующим
 function snapshot(d) {
   const items = {};
   d.blocks.forEach((b, bi) => b.items.forEach((it) => {
-    items[keyOf(bi, it)] = { color: it.color, label: norm(it.label), due: norm(it.due) };
+    items[it.id] = { block: bi, name: norm(it.name), color: it.color, label: norm(it.label), due: norm(it.due) };
   }));
   return { date: d.reportDate, items };
 }
@@ -525,11 +555,24 @@ function baselineFor(d) {
 
 function diff(base, bi, it) {
   if (!base) return null;
-  const prev = base.items[keyOf(bi, it)];
+  const prev = findPrev(base, bi, it);
   if (!prev) return { isNew: true };
+  const name = prev.name !== undefined && prev.name !== norm(it.name);
   const status = prev.color !== it.color || prev.label !== norm(it.label);
   const due = prev.due !== norm(it.due);
-  return status || due ? { prev, status, due } : null;
+  return name || status || due ? { prev, name, status, due } : null;
+}
+
+// старые снимки хранили работы по ключу «блок|название»
+const findPrev = (base, bi, it) => base.items[it.id] || base.items[bi + "|" + it.name];
+
+// работы из прошлого отчёта, которых больше нет
+function removedSince(base, d) {
+  if (!base) return [];
+  const alive = new Set();
+  d.blocks.forEach((b, bi) => b.items.forEach((it) => { alive.add(it.id); alive.add(bi + "|" + it.name); }));
+  return Object.keys(base.items).filter((k) => !alive.has(k))
+    .map((k) => base.items[k].name || k.split("|").slice(1).join("|"));
 }
 const ICONS = {
   laptop: '<rect x="4" y="5" width="16" height="11" rx="1.5"/><path d="M2 19h20"/>',
@@ -563,11 +606,11 @@ function render() {
       const lead = b.numbered
         ? `<span class="step">${String(ii + 1).padStart(2, "0")}</span>`
         : `<span class="ic">${svg(it.icon)}</span>`;
-      const key = `${bi}-${ii}`;
+      const key = it.id;
       const ch = diff(base, bi, it);
       if (ch) changed++;
       const tag = ch ? `<span class="tag">${ch.isNew ? "Новая работа" : "Изменено"}</span>` : "";
-      let status, due;
+      let status, due, nameHtml = `<span class="name">${esc(it.name)}</span>`, delHtml = "";
       if (editing) {
         const sw = Object.keys(COLORS).map((c) =>
           `<input type="radio" name="c-${key}" id="c-${key}-${c}" value="${c}" data-b="${bi}" data-i="${ii}" data-f="color"${c === it.color ? " checked" : ""}>` +
@@ -577,18 +620,21 @@ function render() {
           <input class="field" id="l-${key}" data-b="${bi}" data-i="${ii}" data-f="label" value="${esc(it.label)}" placeholder="Текст статуса" aria-label="Текст статуса">
         </div>`;
         due = `<input class="field" id="d-${key}" data-b="${bi}" data-i="${ii}" data-f="due" value="${esc(it.due)}" placeholder="напр. 16.10.2026" aria-label="Плановый срок">`;
+        nameHtml = `<input class="field name-field" id="n-${key}" data-b="${bi}" data-i="${ii}" data-f="name" value="${esc(it.name)}" placeholder="Название работы" aria-label="Название работы">`;
+        delHtml = `<button class="icon-btn" type="button" data-del="${bi}-${ii}" title="Удалить работу" aria-label="Удалить работу «${esc(it.name)}»">×</button>`;
       } else {
         status = `<span class="pill" data-s="${esc(it.color)}">${esc(it.label)}</span>`;
         due = norm(it.due)
           ? `<span class="due">${svg("cal")}${esc(it.due)}</span>`
           : `<span class="due tbd">${svg("cal")}Срок уточняется</span>`;
       }
+      if (ch && ch.name) nameHtml += `<span class="was">было: <s>${esc(ch.prev.name)}</s></span>`;
       if (ch && ch.status) status += `<span class="was">было: <s>${esc(ch.prev.label || "—")}</s></span>`;
       if (ch && ch.due) due += `<span class="was">было: <s>${esc(ch.prev.due || "не задан")}</s></span>`;
       const sc = ch && (ch.status || ch.isNew) ? ' class="chg"' : "";
       const dc = ch && (ch.due || ch.isNew) ? ' class="chg"' : "";
       return `<div class="row">
-        <div class="svc">${lead}<span class="name-wrap"><span class="name">${esc(it.name)}</span>${tag}</span></div>
+        <div class="svc">${lead}<span class="name-wrap">${nameHtml}${tag}</span>${delHtml}</div>
         <div${sc}><div class="cellwrap">${status}</div></div>
         <div${dc}><div class="cellwrap">${due}</div></div>
       </div>`;
@@ -603,14 +649,18 @@ function render() {
         <div class="row th" role="row"><div>Сервисы / работы</div><div>Статус</div><div>Плановые сроки</div></div>
         ${rows}
       </div>
+      ${editing ? `<button class="btn add-btn" type="button" data-add="${bi}">+ Добавить работу</button>` : ""}
     </article>`;
   }).join("");
 
   const legend = document.getElementById("legend");
   legend.hidden = !base;
   if (base) {
-    legend.innerHTML = changed
-      ? `<span><span class="sw"></span>Выделены изменения с отчёта от <b>${esc(base.date)}</b></span><span>Изменено работ: <b>${changed}</b></span>`
+    const removed = removedSince(base, d);
+    legend.innerHTML = changed || removed.length
+      ? `<span><span class="sw"></span>Выделены изменения с отчёта от <b>${esc(base.date)}</b></span>` +
+        (changed ? `<span>Изменено и добавлено работ: <b>${changed}</b></span>` : "") +
+        (removed.length ? `<span>Удалено: <b>${removed.map(esc).join(", ")}</b></span>` : "")
       : `<span>С отчёта от <b>${esc(base.date)}</b> изменений нет</span>`;
   }
 
@@ -621,7 +671,7 @@ function renderTools(note) {
   const tools = document.getElementById("tools");
   if (!artifactApi) { tools.hidden = true; return; }
   tools.hidden = false;
-  const hint = `Пишите статус любым текстом и выбирайте цвет. Для нового еженедельного отчёта поменяйте дату: изменения подсветятся относительно отчёта от ${esc(DATA.reportDate)}.`;
+  const hint = `Пишите статус любым текстом и выбирайте цвет. Работы можно переименовать, удалить (×) или добавить внизу блока. Для нового еженедельного отчёта поменяйте дату: изменения подсветятся относительно отчёта от ${esc(DATA.reportDate)}.`;
   tools.innerHTML = draft
     ? `<span class="note">${note || hint}</span>
        <button class="btn" id="b-cancel" type="button">Отмена</button>
@@ -634,6 +684,21 @@ document.addEventListener("click", async (e) => {
   if (id === "b-edit") { draft = JSON.parse(JSON.stringify(DATA)); render(); }
   if (id === "b-cancel") { draft = null; render(); }
   if (id === "b-save") await save();
+  const del = e.target.closest && e.target.closest("[data-del]");
+  if (del && draft) {
+    const [bi, ii] = del.dataset.del.split("-").map(Number);
+    draft.blocks[bi].items.splice(ii, 1);
+    render();
+  }
+  const add = e.target.closest && e.target.closest("[data-add]");
+  if (add && draft) {
+    const b = draft.blocks[+add.dataset.add];
+    const it = { id: newId(), name: "", icon: "doc", color: "blue", label: "В работе", due: "" };
+    b.items.push(it);
+    render();
+    const el = document.getElementById("n-" + it.id);
+    if (el) el.focus();
+  }
 });
 
 let rerenderTimer = null;
@@ -669,7 +734,10 @@ async function save() {
   btn.disabled = true; btn.textContent = "Сохраняю…";
   const next = clone(draft);
   next.baseline = baselineFor(next);
-  next.blocks.forEach((b) => b.items.forEach((it) => { it.label = norm(it.label); it.due = norm(it.due); }));
+  next.blocks.forEach((b) => {
+    b.items = b.items.filter((it) => norm(it.name)); // работы без названия не сохраняем
+    b.items.forEach((it) => { it.name = norm(it.name); it.label = norm(it.label); it.due = norm(it.due); });
+  });
   try {
     await artifactApi.publish(buildDocument(next));
     // страница перезагрузится на новую версию
