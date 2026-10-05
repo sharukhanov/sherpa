@@ -18,12 +18,16 @@
   --c3: #f08a3c; --c3-soft: #fdf0e5;   /* закупочные процедуры */
   --c4: #7a6fcf; --c4-soft: #efedfb;   /* общие вопросы */
 
-  --s-done-bg: #e3f4ea;  --s-done-fg: #1f7a48;
-  --s-bug-bg: #fdf1d9;   --s-bug-fg: #9a6200;
-  --s-work-bg: #e4eefc;  --s-work-fg: #2459a8;
-  --s-pause-bg: #fde6e4; --s-pause-fg: #b3382d;
-  --s-test-bg: #efe9fc;  --s-test-fg: #5c3fb0;
-  --s-rev-bg: #e1f4f6;   --s-rev-fg: #1d7381;
+  --s-green-bg: #e3f4ea;  --s-green-fg: #1f7a48;
+  --s-yellow-bg: #fdf1d9;   --s-yellow-fg: #9a6200;
+  --s-blue-bg: #e4eefc;  --s-blue-fg: #2459a8;
+  --s-red-bg: #fde6e4; --s-red-fg: #b3382d;
+  --s-violet-bg: #efe9fc;  --s-violet-fg: #5c3fb0;
+  --s-teal-bg: #e1f4f6;   --s-teal-fg: #1d7381;
+  --s-grey-bg: #eceff4;   --s-grey-fg: #4f5a6d;
+
+  /* отметка изменений с прошлого отчёта */
+  --chg: #c0247f; --chg-bg: #fdebf5;
 
   --f-display: "Manrope", "Segoe UI", system-ui, sans-serif;
   --f-body: "PT Sans", "Segoe UI", system-ui, sans-serif;
@@ -33,9 +37,10 @@
     --bg: #0f1522; --panel: #171f30; --ink: #e6ebf5; --muted: #95a1b8; --line: #263149; --cell: #1c2538;
     --c1: #6aa9ee; --c1-soft: #1b2a42; --c2: #5cc39d; --c2-soft: #17302a;
     --c3: #f4a165; --c3-soft: #33251a; --c4: #9d94e6; --c4-soft: #252340;
-    --s-done-bg: #173827; --s-done-fg: #7fd8a5; --s-bug-bg: #3a2d12; --s-bug-fg: #f2c46b;
-    --s-work-bg: #1a2c4a; --s-work-fg: #8fb8f2; --s-pause-bg: #3f1d1b; --s-pause-fg: #f19a90;
-    --s-test-bg: #2a2147; --s-test-fg: #bba8f5; --s-rev-bg: #15353a; --s-rev-fg: #7fd0dc;
+    --s-green-bg: #173827; --s-green-fg: #7fd8a5; --s-yellow-bg: #3a2d12; --s-yellow-fg: #f2c46b;
+    --s-blue-bg: #1a2c4a; --s-blue-fg: #8fb8f2; --s-red-bg: #3f1d1b; --s-red-fg: #f19a90;
+    --s-violet-bg: #2a2147; --s-violet-fg: #bba8f5; --s-teal-bg: #15353a; --s-teal-fg: #7fd0dc;
+    --s-grey-bg: #262d3a; --s-grey-fg: #b0b9c9; --chg: #f07cc4; --chg-bg: #3a1a30;
     color-scheme: dark;
   }
 }
@@ -43,9 +48,10 @@
   --bg: #0f1522; --panel: #171f30; --ink: #e6ebf5; --muted: #95a1b8; --line: #263149; --cell: #1c2538;
   --c1: #6aa9ee; --c1-soft: #1b2a42; --c2: #5cc39d; --c2-soft: #17302a;
   --c3: #f4a165; --c3-soft: #33251a; --c4: #9d94e6; --c4-soft: #252340;
-  --s-done-bg: #173827; --s-done-fg: #7fd8a5; --s-bug-bg: #3a2d12; --s-bug-fg: #f2c46b;
-  --s-work-bg: #1a2c4a; --s-work-fg: #8fb8f2; --s-pause-bg: #3f1d1b; --s-pause-fg: #f19a90;
-  --s-test-bg: #2a2147; --s-test-fg: #bba8f5; --s-rev-bg: #15353a; --s-rev-fg: #7fd0dc;
+  --s-green-bg: #173827; --s-green-fg: #7fd8a5; --s-yellow-bg: #3a2d12; --s-yellow-fg: #f2c46b;
+  --s-blue-bg: #1a2c4a; --s-blue-fg: #8fb8f2; --s-red-bg: #3f1d1b; --s-red-fg: #f19a90;
+  --s-violet-bg: #2a2147; --s-violet-fg: #bba8f5; --s-teal-bg: #15353a; --s-teal-fg: #7fd0dc;
+    --s-grey-bg: #262d3a; --s-grey-fg: #b0b9c9; --chg: #f07cc4; --chg-bg: #3a1a30;
   color-scheme: dark;
 }
 
@@ -213,8 +219,8 @@ body {
   font-size: 13px;
   font-weight: 700;
   line-height: 1.2;
-  background: var(--s-work-bg);
-  color: var(--s-work-fg);
+  background: var(--s-blue-bg);
+  color: var(--s-blue-fg);
 }
 .pill::before {
   content: "";
@@ -223,12 +229,13 @@ body {
   border-radius: 50%;
   background: currentColor;
 }
-.pill[data-s="done"]  { background: var(--s-done-bg);  color: var(--s-done-fg); }
-.pill[data-s="bug"]   { background: var(--s-bug-bg);   color: var(--s-bug-fg); }
-.pill[data-s="work"]  { background: var(--s-work-bg);  color: var(--s-work-fg); }
-.pill[data-s="pause"] { background: var(--s-pause-bg); color: var(--s-pause-fg); }
-.pill[data-s="test"]  { background: var(--s-test-bg);  color: var(--s-test-fg); }
-.pill[data-s="rev"]   { background: var(--s-rev-bg);   color: var(--s-rev-fg); }
+.pill[data-s="green"]  { background: var(--s-green-bg);  color: var(--s-green-fg); }
+.pill[data-s="yellow"]   { background: var(--s-yellow-bg);   color: var(--s-yellow-fg); }
+.pill[data-s="blue"]  { background: var(--s-blue-bg);  color: var(--s-blue-fg); }
+.pill[data-s="red"] { background: var(--s-red-bg); color: var(--s-red-fg); }
+.pill[data-s="violet"]  { background: var(--s-violet-bg);  color: var(--s-violet-fg); }
+.pill[data-s="teal"]   { background: var(--s-teal-bg);   color: var(--s-teal-fg); }
+.pill[data-s="grey"]   { background: var(--s-grey-bg);   color: var(--s-grey-fg); }
 .pill .n { font-variant-numeric: tabular-nums; }
 
 .due {
@@ -271,6 +278,35 @@ body {
 .field.date-field { width: auto; max-width: 160px; font-weight: 700; }
 .editing .block { box-shadow: 0 0 0 2px var(--line) inset; }
 
+/* Отметка изменений */
+.legend {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 8px 14px;
+  font-size: 14px; color: var(--muted);
+}
+.legend .sw {
+  display: inline-block; width: 28px; height: 16px; border-radius: 4px;
+  background: var(--chg-bg); box-shadow: inset 3px 0 0 var(--chg); vertical-align: -3px; margin-right: 8px;
+}
+.legend b { color: var(--ink); }
+.row > div.chg { background: var(--chg-bg); box-shadow: inset 3px 0 0 var(--chg); }
+.cellwrap { display: grid; gap: 5px; justify-items: start; min-width: 0; width: 100%; }
+.was { font-size: 12.5px; color: var(--muted); line-height: 1.3; }
+.was s { text-decoration-color: var(--chg); }
+.tag {
+  display: inline-block; margin-top: 4px;
+  font: 800 10.5px/1 var(--f-display); letter-spacing: .06em; text-transform: uppercase;
+  color: var(--chg); border: 1px solid var(--chg); border-radius: 5px; padding: 3px 5px;
+}
+.svc .name-wrap { display: grid; justify-items: start; min-width: 0; }
+.swatches { display: flex; flex-wrap: wrap; gap: 4px; }
+.swatches input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+.swatches label {
+  width: 20px; height: 20px; border-radius: 50%; cursor: pointer;
+  border: 2px solid var(--panel); box-shadow: 0 0 0 1px var(--line);
+}
+.swatches input:checked + label { box-shadow: 0 0 0 2px var(--ink); }
+.swatches input:focus-visible + label { outline: 2px solid var(--c1); outline-offset: 2px; }
+
 @media (max-width: 620px) {
   .block { padding: 16px; }
   .block-head { grid-template-columns: auto minmax(0, 1fr); gap: 12px 14px; }
@@ -300,6 +336,8 @@ body {
     </div>
   </header>
 
+  <p class="legend" id="legend" hidden></p>
+
   <div class="tools" id="tools" hidden></div>
 
   <section class="grid" id="grid"></section>
@@ -308,6 +346,7 @@ body {
 <script type="application/json" id="report-data">
 {
  "reportDate": "05.10.2026",
+ "baseline": null,
  "blocks": [
   {
    "title": "Корпоративные инструменты",
@@ -317,14 +356,14 @@ body {
     {
      "name": "ИИ-агент транскрибации",
      "icon": "mic",
-     "status": "bug",
+     "color": "yellow",
      "label": "Готово, есть ошибки",
      "due": ""
     },
     {
      "name": "ИИ-агент суммаризации / протоколирования",
      "icon": "doc",
-     "status": "bug",
+     "color": "yellow",
      "label": "Готово, есть ошибки",
      "due": ""
     }
@@ -338,14 +377,14 @@ body {
     {
      "name": "ИИ-агент поиска по внутренней базе знаний Фонда",
      "icon": "search",
-     "status": "bug",
+     "color": "yellow",
      "label": "Готово, есть ошибки",
      "due": ""
     },
     {
      "name": "Файловый менеджер с ИИ-поиском",
      "icon": "folder",
-     "status": "done",
+     "color": "green",
      "label": "Готово",
      "due": ""
     }
@@ -359,43 +398,43 @@ body {
    "items": [
     {
      "name": "Формирование закупочной документации",
-     "status": "work",
+     "color": "blue",
      "label": "В работе у Шерпы",
      "due": ""
     },
     {
      "name": "Проверка закупочной документации",
-     "status": "pause",
+     "color": "red",
      "label": "Пауза (ждём ресурсы Шерпы)",
      "due": ""
     },
     {
      "name": "Формирование КП",
-     "status": "work",
+     "color": "blue",
      "label": "В работе у Шерпы",
      "due": ""
     },
     {
      "name": "Проверка КП",
-     "status": "test",
+     "color": "violet",
      "label": "Тестирование",
      "due": ""
     },
     {
      "name": "Формирование НМЦД",
-     "status": "work",
+     "color": "blue",
      "label": "В работе",
      "due": ""
     },
     {
      "name": "Формирование договора",
-     "status": "pause",
+     "color": "red",
      "label": "Пауза (ждём ресурсы Шерпы)",
      "due": ""
     },
     {
      "name": "Формирование отчётной документации",
-     "status": "pause",
+     "color": "red",
      "label": "Пауза (ждём ресурсы Шерпы)",
      "due": ""
     }
@@ -409,35 +448,35 @@ body {
     {
      "name": "Дизайн интерфейса",
      "icon": "palette",
-     "status": "work",
+     "color": "blue",
      "label": "В работе",
      "due": ""
     },
     {
      "name": "Отчёт по 1 этапу",
      "icon": "report",
-     "status": "rev",
+     "color": "teal",
      "label": "На проверке",
      "due": ""
     },
     {
      "name": "Отчёт по 2 этапу",
      "icon": "report",
-     "status": "rev",
+     "color": "teal",
      "label": "На проверке",
      "due": ""
     },
     {
      "name": "Отчёт по 3 этапу",
      "icon": "report",
-     "status": "work",
+     "color": "blue",
      "label": "В работе",
      "due": ""
     },
     {
      "name": "Отчёт по 4 этапу",
      "icon": "report",
-     "status": "work",
+     "color": "blue",
      "label": "В работе",
      "due": ""
     }
@@ -449,8 +488,9 @@ body {
 
 <script id="app">
 /* Данные отчёта лежат в блоке report-data выше.
-   status: done | bug | work | pause | test | rev — цвет плашки; label — её текст;
-   due — плановый срок, пустая строка показывается как «Срок уточняется». */
+   color: green | yellow | blue | red | violet | teal | grey — цвет плашки; label — текст статуса;
+   due — плановый срок, пустая строка показывается как «Срок уточняется».
+   baseline — снимок прошлого отчёта, с ним сравниваются статусы и сроки для подсветки. */
 const SKELETON = '<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>';
 const HEAD = '<title>Проект «ИИ-агенты»</title>\n<meta name="description" content="Еженедельный статус проекта «ИИ-агенты» Фонда МИК">\n<link rel="preconnect" href="https://fonts.googleapis.com">\n<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>\n<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&family=PT+Sans:wght@400;700&display=swap">\n';
 const SHELL = document.getElementById("page").outerHTML; // пустая разметка до отрисовки
@@ -459,11 +499,38 @@ let DATA = JSON.parse(document.getElementById("report-data").textContent);
 let draft = null; // копия данных в режиме редактирования
 let artifactApi = null;
 
-const STATUS_NAMES = {
-  done: "Готово", bug: "Готово, есть ошибки", work: "В работе",
-  test: "Тестирование", rev: "На проверке", pause: "Пауза",
+// Цвета статуса: подпись в редакторе
+const COLORS = {
+  green: "Зелёный", yellow: "Жёлтый", blue: "Синий", red: "Красный",
+  violet: "Фиолетовый", teal: "Бирюзовый", grey: "Серый",
 };
 
+const clone = (o) => JSON.parse(JSON.stringify(o));
+const keyOf = (bi, it) => bi + "|" + it.name;
+const norm = (v) => String(v || "").trim();
+
+// Снимок отчёта для сравнения со следующим
+function snapshot(d) {
+  const items = {};
+  d.blocks.forEach((b, bi) => b.items.forEach((it) => {
+    items[keyOf(bi, it)] = { color: it.color, label: norm(it.label), due: norm(it.due) };
+  }));
+  return { date: d.reportDate, items };
+}
+
+// Новая дата отчёта = новый отчёт: сравниваем с последним сохранённым
+function baselineFor(d) {
+  return norm(d.reportDate) !== norm(DATA.reportDate) ? snapshot(DATA) : DATA.baseline;
+}
+
+function diff(base, bi, it) {
+  if (!base) return null;
+  const prev = base.items[keyOf(bi, it)];
+  if (!prev) return { isNew: true };
+  const status = prev.color !== it.color || prev.label !== norm(it.label);
+  const due = prev.due !== norm(it.due);
+  return status || due ? { prev, status, due } : null;
+}
 const ICONS = {
   laptop: '<rect x="4" y="5" width="16" height="11" rx="1.5"/><path d="M2 19h20"/>',
   book: '<path d="M12 6c-2-1.5-5-2-8-1.5V19c3-.5 6 0 8 1.5 2-1.5 5-2 8-1.5V4.5c-3-.5-6 0-8 1.5z"/><path d="M12 6v14.5"/>',
@@ -483,37 +550,47 @@ const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&l
 function render() {
   const d = draft || DATA;
   const editing = !!draft;
+  const base = baselineFor(d);
   document.getElementById("page").classList.toggle("editing", editing);
 
   document.getElementById("report-date").innerHTML = editing
     ? `<label>Отчёт на <input class="field date-field" id="f-date" value="${esc(d.reportDate)}" aria-label="Дата отчёта"></label>`
     : "Отчёт на " + esc(d.reportDate);
 
+  let changed = 0;
   document.getElementById("grid").innerHTML = d.blocks.map((b, bi) => {
     const rows = b.items.map((it, ii) => {
       const lead = b.numbered
         ? `<span class="step">${String(ii + 1).padStart(2, "0")}</span>`
         : `<span class="ic">${svg(it.icon)}</span>`;
       const key = `${bi}-${ii}`;
+      const ch = diff(base, bi, it);
+      if (ch) changed++;
+      const tag = ch ? `<span class="tag">${ch.isNew ? "Новая работа" : "Изменено"}</span>` : "";
       let status, due;
       if (editing) {
-        const opts = Object.keys(STATUS_NAMES).map((k) =>
-          `<option value="${k}"${k === it.status ? " selected" : ""}>${STATUS_NAMES[k]}</option>`).join("");
+        const sw = Object.keys(COLORS).map((c) =>
+          `<input type="radio" name="c-${key}" id="c-${key}-${c}" value="${c}" data-b="${bi}" data-i="${ii}" data-f="color"${c === it.color ? " checked" : ""}>` +
+          `<label for="c-${key}-${c}" title="${COLORS[c]}" style="background: var(--s-${c}-fg)"><span hidden>${COLORS[c]}</span></label>`).join("");
         status = `<div class="edit-cell">
-          <select class="field" id="s-${key}" data-b="${bi}" data-i="${ii}" data-f="status" aria-label="Цвет статуса">${opts}</select>
-          <input class="field" id="l-${key}" data-b="${bi}" data-i="${ii}" data-f="label" value="${esc(it.label)}" aria-label="Текст статуса">
+          <div class="swatches" role="radiogroup" aria-label="Цвет статуса">${sw}</div>
+          <input class="field" id="l-${key}" data-b="${bi}" data-i="${ii}" data-f="label" value="${esc(it.label)}" placeholder="Текст статуса" aria-label="Текст статуса">
         </div>`;
         due = `<input class="field" id="d-${key}" data-b="${bi}" data-i="${ii}" data-f="due" value="${esc(it.due)}" placeholder="напр. 16.10.2026" aria-label="Плановый срок">`;
       } else {
-        status = `<span class="pill" data-s="${it.status}">${esc(it.label)}</span>`;
-        due = it.due
+        status = `<span class="pill" data-s="${esc(it.color)}">${esc(it.label)}</span>`;
+        due = norm(it.due)
           ? `<span class="due">${svg("cal")}${esc(it.due)}</span>`
           : `<span class="due tbd">${svg("cal")}Срок уточняется</span>`;
       }
+      if (ch && ch.status) status += `<span class="was">было: <s>${esc(ch.prev.label || "—")}</s></span>`;
+      if (ch && ch.due) due += `<span class="was">было: <s>${esc(ch.prev.due || "не задан")}</s></span>`;
+      const sc = ch && (ch.status || ch.isNew) ? ' class="chg"' : "";
+      const dc = ch && (ch.due || ch.isNew) ? ' class="chg"' : "";
       return `<div class="row">
-        <div class="svc">${lead}<span class="name">${esc(it.name)}</span></div>
-        <div>${status}</div>
-        <div>${due}</div>
+        <div class="svc">${lead}<span class="name-wrap"><span class="name">${esc(it.name)}</span>${tag}</span></div>
+        <div${sc}><div class="cellwrap">${status}</div></div>
+        <div${dc}><div class="cellwrap">${due}</div></div>
       </div>`;
     }).join("");
     return `<article class="block" data-tone="${bi + 1}">
@@ -529,6 +606,14 @@ function render() {
     </article>`;
   }).join("");
 
+  const legend = document.getElementById("legend");
+  legend.hidden = !base;
+  if (base) {
+    legend.innerHTML = changed
+      ? `<span><span class="sw"></span>Выделены изменения с отчёта от <b>${esc(base.date)}</b></span><span>Изменено работ: <b>${changed}</b></span>`
+      : `<span>С отчёта от <b>${esc(base.date)}</b> изменений нет</span>`;
+  }
+
   renderTools();
 }
 
@@ -536,8 +621,9 @@ function renderTools(note) {
   const tools = document.getElementById("tools");
   if (!artifactApi) { tools.hidden = true; return; }
   tools.hidden = false;
+  const hint = `Пишите статус любым текстом и выбирайте цвет. Для нового еженедельного отчёта поменяйте дату: изменения подсветятся относительно отчёта от ${esc(DATA.reportDate)}.`;
   tools.innerHTML = draft
-    ? `<span class="note">${note || "Измените статусы и сроки, затем сохраните. Руководитель увидит новую версию по той же ссылке."}</span>
+    ? `<span class="note">${note || hint}</span>
        <button class="btn" id="b-cancel" type="button">Отмена</button>
        <button class="btn primary" id="b-save" type="button">Сохранить</button>`
     : `<button class="btn" id="b-edit" type="button">Редактировать</button>`;
@@ -550,20 +636,22 @@ document.addEventListener("click", async (e) => {
   if (id === "b-save") await save();
 });
 
+let rerenderTimer = null;
 document.addEventListener("input", (e) => {
   const t = e.target;
   if (!draft) return;
-  if (t.id === "f-date") { draft.reportDate = t.value; return; }
-  if (!t.dataset.f) return;
-  const it = draft.blocks[+t.dataset.b].items[+t.dataset.i];
-  if (t.dataset.f === "status") {
-    // текст статуса подменяется только если он был стандартным
-    const lbl = document.getElementById(`l-${t.dataset.b}-${t.dataset.i}`);
-    if (!it.label.trim() || it.label === STATUS_NAMES[it.status]) { it.label = STATUS_NAMES[t.value]; lbl.value = it.label; }
-    it.status = t.value;
-  } else {
-    it[t.dataset.f] = t.value.trim() === "" ? "" : t.value;
-  }
+  if (t.id === "f-date") draft.reportDate = t.value;
+  else if (t.dataset.f) draft.blocks[+t.dataset.b].items[+t.dataset.i][t.dataset.f] = t.value;
+  else return;
+  // подсветку обновляем после паузы в наборе, сохраняя фокус в поле
+  clearTimeout(rerenderTimer);
+  rerenderTimer = setTimeout(() => {
+    const id = document.activeElement && document.activeElement.id;
+    const pos = document.activeElement && document.activeElement.selectionStart;
+    render();
+    const el = id && document.getElementById(id);
+    if (el) { el.focus(); if (pos != null && el.setSelectionRange) try { el.setSelectionRange(pos, pos); } catch (_) {} }
+  }, t.type === "radio" ? 0 : 600);
 });
 
 function buildDocument(data) {
@@ -579,9 +667,11 @@ function buildDocument(data) {
 async function save() {
   const btn = document.getElementById("b-save");
   btn.disabled = true; btn.textContent = "Сохраняю…";
-  draft.blocks.forEach((b) => b.items.forEach((it) => { if (!it.label.trim()) it.label = STATUS_NAMES[it.status]; }));
+  const next = clone(draft);
+  next.baseline = baselineFor(next);
+  next.blocks.forEach((b) => b.items.forEach((it) => { it.label = norm(it.label); it.due = norm(it.due); }));
   try {
-    await artifactApi.publish(buildDocument(draft));
+    await artifactApi.publish(buildDocument(next));
     // страница перезагрузится на новую версию
   } catch (err) {
     const code = err && err.code;
