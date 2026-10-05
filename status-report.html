@@ -1,0 +1,407 @@
+<title>Проект «ИИ-агенты»</title>
+<meta name="description" content="Еженедельный статус проекта «ИИ-агенты» Фонда МИК">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&family=PT+Sans:wght@400;700&display=swap">
+<style>
+/* Layout: шапка отчёта + сетка 2×2 из блоков проекта; на телефоне блоки идут в одну колонку */
+:root {
+  --bg: #f3f6fb;
+  --panel: #ffffff;
+  --ink: #16213a;
+  --muted: #66728a;
+  --line: #e2e7f0;
+  --cell: #f7f9fc;
+
+  --c1: #3d8be0; --c1-soft: #e9f2fd;   /* корпоративные инструменты */
+  --c2: #3aa982; --c2-soft: #e6f5ef;   /* база знаний */
+  --c3: #f08a3c; --c3-soft: #fdf0e5;   /* закупочные процедуры */
+  --c4: #7a6fcf; --c4-soft: #efedfb;   /* общие вопросы */
+
+  --s-done-bg: #e3f4ea;  --s-done-fg: #1f7a48;
+  --s-bug-bg: #fdf1d9;   --s-bug-fg: #9a6200;
+  --s-work-bg: #e4eefc;  --s-work-fg: #2459a8;
+  --s-pause-bg: #fde6e4; --s-pause-fg: #b3382d;
+  --s-test-bg: #efe9fc;  --s-test-fg: #5c3fb0;
+  --s-rev-bg: #e1f4f6;   --s-rev-fg: #1d7381;
+
+  --f-display: "Manrope", "Segoe UI", system-ui, sans-serif;
+  --f-body: "PT Sans", "Segoe UI", system-ui, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0f1522; --panel: #171f30; --ink: #e6ebf5; --muted: #95a1b8; --line: #263149; --cell: #1c2538;
+    --c1: #6aa9ee; --c1-soft: #1b2a42; --c2: #5cc39d; --c2-soft: #17302a;
+    --c3: #f4a165; --c3-soft: #33251a; --c4: #9d94e6; --c4-soft: #252340;
+    --s-done-bg: #173827; --s-done-fg: #7fd8a5; --s-bug-bg: #3a2d12; --s-bug-fg: #f2c46b;
+    --s-work-bg: #1a2c4a; --s-work-fg: #8fb8f2; --s-pause-bg: #3f1d1b; --s-pause-fg: #f19a90;
+    --s-test-bg: #2a2147; --s-test-fg: #bba8f5; --s-rev-bg: #15353a; --s-rev-fg: #7fd0dc;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0f1522; --panel: #171f30; --ink: #e6ebf5; --muted: #95a1b8; --line: #263149; --cell: #1c2538;
+  --c1: #6aa9ee; --c1-soft: #1b2a42; --c2: #5cc39d; --c2-soft: #17302a;
+  --c3: #f4a165; --c3-soft: #33251a; --c4: #9d94e6; --c4-soft: #252340;
+  --s-done-bg: #173827; --s-done-fg: #7fd8a5; --s-bug-bg: #3a2d12; --s-bug-fg: #f2c46b;
+  --s-work-bg: #1a2c4a; --s-work-fg: #8fb8f2; --s-pause-bg: #3f1d1b; --s-pause-fg: #f19a90;
+  --s-test-bg: #2a2147; --s-test-fg: #bba8f5; --s-rev-bg: #15353a; --s-rev-fg: #7fd0dc;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--f-body);
+  font-size: 15px;
+  line-height: 1.4;
+}
+.page {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding-inline: clamp(16px, 2.5vw, 32px);
+  padding-block: 28px 40px;
+  display: grid;
+  gap: 22px;
+}
+
+/* Шапка */
+.head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px 32px;
+}
+.head h1 {
+  margin: 0;
+  font-family: var(--f-display);
+  font-weight: 800;
+  font-size: clamp(28px, 3.6vw, 46px);
+  letter-spacing: -0.02em;
+  line-height: 1.05;
+  text-wrap: balance;
+}
+.head .sub {
+  margin: 6px 0 0;
+  color: var(--muted);
+  font-family: var(--f-display);
+  font-weight: 600;
+  font-size: clamp(16px, 1.6vw, 21px);
+}
+.org {
+  border-left: 2px solid var(--line);
+  padding-left: 16px;
+  display: grid;
+  gap: 2px;
+}
+.org b { font-family: var(--f-display); font-size: 17px; }
+.org span { color: var(--muted); font-size: 14px; }
+.org .date { color: var(--ink); font-weight: 700; margin-top: 6px; font-variant-numeric: tabular-nums; }
+
+/* Сводка по статусам */
+.summary {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+.summary .label {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+  margin-right: 4px;
+}
+
+/* Сетка блоков */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+  align-items: start;
+}
+@media (max-width: 1080px) { .grid { grid-template-columns: minmax(0, 1fr); } }
+
+.block {
+  --c: var(--c1); --soft: var(--c1-soft);
+  background: linear-gradient(180deg, var(--soft), var(--panel) 160px);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  padding: 22px;
+  display: grid;
+  gap: 18px;
+  min-width: 0;
+}
+.block[data-tone="2"] { --c: var(--c2); --soft: var(--c2-soft); }
+.block[data-tone="3"] { --c: var(--c3); --soft: var(--c3-soft); }
+.block[data-tone="4"] { --c: var(--c4); --soft: var(--c4-soft); }
+
+.block-head {
+  display: grid;
+  grid-template-columns: auto auto minmax(0, 1fr);
+  align-items: center;
+  gap: 18px;
+}
+.tile {
+  width: 72px; height: 62px;
+  border-radius: 14px;
+  background: var(--c);
+  color: #fff;
+  display: grid;
+  place-items: center;
+}
+.tile svg { width: 34px; height: 34px; }
+.num {
+  font-family: var(--f-display);
+  font-weight: 800;
+  font-size: 46px;
+  line-height: 1;
+  color: var(--c);
+  font-variant-numeric: tabular-nums;
+}
+.block-head h2 {
+  margin: 0;
+  font-family: var(--f-display);
+  font-weight: 800;
+  font-size: 22px;
+  text-wrap: balance;
+}
+.block-head p { margin: 4px 0 0; color: var(--muted); font-size: 15px; }
+
+/* Таблица */
+.table {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  overflow: hidden;
+}
+.row {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr) minmax(0, 0.85fr);
+  align-items: center;
+  border-top: 1px solid var(--line);
+}
+.row > div { padding: 10px 14px; min-width: 0; }
+.row > div + div { border-left: 1px solid var(--line); align-self: stretch; display: flex; align-items: center; }
+.row.th {
+  border-top: 0;
+  background: var(--soft);
+  font-family: var(--f-display);
+  font-weight: 700;
+  font-size: 14px;
+}
+.row.th > div + div { justify-content: center; }
+
+.svc { display: flex; align-items: center; gap: 12px; }
+.svc .ic {
+  flex: none;
+  width: 38px; height: 38px;
+  border-radius: 10px;
+  background: var(--cell);
+  color: var(--ink);
+  display: grid; place-items: center;
+}
+.svc .ic svg { width: 22px; height: 22px; }
+.svc .step {
+  flex: none;
+  width: 38px; height: 30px;
+  border-radius: 8px;
+  background: var(--soft);
+  color: var(--c);
+  font-family: var(--f-display);
+  font-weight: 800;
+  display: grid; place-items: center;
+  font-variant-numeric: tabular-nums;
+}
+.svc .name { font-weight: 700; color: var(--ink); }
+.block[data-tone="3"] .svc .name, .block[data-tone="2"] .svc .name, .block[data-tone="4"] .svc .name { color: var(--ink); }
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 5px 10px;
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.2;
+  background: var(--s-work-bg);
+  color: var(--s-work-fg);
+}
+.pill::before {
+  content: "";
+  flex: none;
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: currentColor;
+}
+.pill[data-s="done"]  { background: var(--s-done-bg);  color: var(--s-done-fg); }
+.pill[data-s="bug"]   { background: var(--s-bug-bg);   color: var(--s-bug-fg); }
+.pill[data-s="work"]  { background: var(--s-work-bg);  color: var(--s-work-fg); }
+.pill[data-s="pause"] { background: var(--s-pause-bg); color: var(--s-pause-fg); }
+.pill[data-s="test"]  { background: var(--s-test-bg);  color: var(--s-test-fg); }
+.pill[data-s="rev"]   { background: var(--s-rev-bg);   color: var(--s-rev-fg); }
+.pill .n { font-variant-numeric: tabular-nums; }
+
+.due {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+.due svg { width: 16px; height: 16px; flex: none; color: var(--muted); }
+.due.tbd { color: var(--muted); font-weight: 400; font-style: italic; }
+
+@media (max-width: 620px) {
+  .block { padding: 16px; }
+  .block-head { grid-template-columns: auto minmax(0, 1fr); gap: 12px 14px; }
+  .block-head .num { display: none; }
+  .tile { width: 54px; height: 48px; }
+  .tile svg { width: 26px; height: 26px; }
+  .row { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+  .row > div:first-child { grid-column: 1 / -1; }
+  .row > div + div { border-top: 1px dashed var(--line); }
+  .row > div:nth-child(2) { border-left: 0; }
+  .row.th > div:first-child { display: none; }
+  .row.th > div:nth-child(2) { border-top: 0; border-left: 0; }
+  .row.th > div:nth-child(3) { border-top: 0; }
+}
+</style>
+
+<main class="page">
+  <header class="head">
+    <div>
+      <h1>Проект «ИИ-агенты»</h1>
+      <p class="sub">Текущий статус и плановые сроки</p>
+    </div>
+    <div class="org">
+      <b>Фонд МИК</b>
+      <span>Внутренние сервисы на базе ИИ</span>
+      <span class="date" id="report-date"></span>
+    </div>
+  </header>
+
+  <section class="summary" id="summary" aria-label="Сводка по статусам"></section>
+
+  <section class="grid" id="grid"></section>
+</main>
+
+<script>
+/* ================================================================
+   ДАННЫЕ ОТЧЁТА — правьте только этот блок раз в неделю.
+   status: done | bug | work | pause | test | rev  (цвет плашки)
+   due:    плановый срок, например "16.10.2026" или "IV кв. 2026";
+           пустая строка — покажется «Срок уточняется».
+   ================================================================ */
+const REPORT_DATE = "05.10.2026";
+
+const BLOCKS = [
+  {
+    title: "Корпоративные инструменты",
+    desc: "Сервисы для повышения продуктивности внутренних сотрудников Фонда",
+    icon: "laptop",
+    items: [
+      { name: "ИИ-агент транскрибации", icon: "mic", status: "bug", label: "Готово, есть ошибки", due: "" },
+      { name: "ИИ-агент суммаризации / протоколирования", icon: "doc", status: "bug", label: "Готово, есть ошибки", due: "" },
+    ],
+  },
+  {
+    title: "База знаний",
+    desc: "Удобный доступ к внутренней информации Фонда с помощью ИИ",
+    icon: "book",
+    items: [
+      { name: "ИИ-агент поиска по внутренней базе знаний Фонда", icon: "search", status: "bug", label: "Готово, есть ошибки", due: "" },
+      { name: "Файловый менеджер с ИИ-поиском", icon: "folder", status: "done", label: "Готово", due: "" },
+    ],
+  },
+  {
+    title: "Закупочные процедуры",
+    desc: "Автоматизация ключевых этапов закупочного процесса",
+    icon: "cart",
+    numbered: true,
+    items: [
+      { name: "Формирование закупочной документации", status: "work", label: "В работе у Шерпы", due: "" },
+      { name: "Проверка закупочной документации", status: "pause", label: "Пауза (ждём ресурсы Шерпы)", due: "" },
+      { name: "Формирование КП", status: "work", label: "В работе у Шерпы", due: "" },
+      { name: "Проверка КП", status: "test", label: "Тестирование", due: "" },
+      { name: "Формирование НМЦД", status: "work", label: "В работе", due: "" },
+      { name: "Формирование договора", status: "pause", label: "Пауза (ждём ресурсы Шерпы)", due: "" },
+      { name: "Формирование отчётной документации", status: "pause", label: "Пауза (ждём ресурсы Шерпы)", due: "" },
+    ],
+  },
+  {
+    title: "Общие вопросы",
+    desc: "Ключевые сквозные задачи по проекту",
+    icon: "gear",
+    items: [
+      { name: "Дизайн интерфейса", icon: "palette", status: "work", label: "В работе", due: "" },
+      { name: "Отчёт по 1 этапу", icon: "report", status: "rev", label: "На проверке", due: "" },
+      { name: "Отчёт по 2 этапу", icon: "report", status: "rev", label: "На проверке", due: "" },
+    ],
+  },
+];
+/* ================================================================ */
+
+const STATUS_NAMES = {
+  done: "Готово", bug: "Готово, есть ошибки", work: "В работе",
+  test: "Тестирование", rev: "На проверке", pause: "Пауза",
+};
+
+const ICONS = {
+  laptop: '<rect x="4" y="5" width="16" height="11" rx="1.5"/><path d="M2 19h20"/>',
+  book: '<path d="M12 6c-2-1.5-5-2-8-1.5V19c3-.5 6 0 8 1.5 2-1.5 5-2 8-1.5V4.5c-3-.5-6 0-8 1.5z"/><path d="M12 6v14.5"/>',
+  cart: '<path d="M3 4h2.5l2.2 10.5h10.6L20.5 7H7"/><circle cx="9.5" cy="19" r="1.4"/><circle cx="17" cy="19" r="1.4"/>',
+  gear: '<circle cx="12" cy="12" r="3"/><path d="M12 2.8v2.4M12 18.8v2.4M2.8 12h2.4M18.8 12h2.4M5.5 5.5l1.7 1.7M16.8 16.8l1.7 1.7M5.5 18.5l1.7-1.7M16.8 7.2l1.7-1.7"/>',
+  mic: '<rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5.5 11a6.5 6.5 0 0 0 13 0M12 17.5V21"/>',
+  doc: '<rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 8h6M9 12h6M9 16h4"/>',
+  search: '<circle cx="10.5" cy="10.5" r="6"/><path d="M15 15l5 5"/>',
+  folder: '<path d="M3 7.5A1.5 1.5 0 0 1 4.5 6H9l2 2h8.5A1.5 1.5 0 0 1 21 9.5v8A1.5 1.5 0 0 1 19.5 19h-15A1.5 1.5 0 0 1 3 17.5z"/><path d="M3 10.5h18"/>',
+  palette: '<path d="M12 3a9 9 0 1 0 0 18c1.2 0 1.8-.8 1.8-1.7 0-1.3-1-1.6-1-2.6 0-.9.7-1.5 1.6-1.5H17a4 4 0 0 0 4-4C21 6.6 17 3 12 3z"/><circle cx="7.5" cy="11" r="1.1"/><circle cx="10" cy="7.3" r="1.1"/><circle cx="14.5" cy="7.3" r="1.1"/>',
+  report: '<path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h6"/>',
+  cal: '<rect x="3.5" y="5" width="17" height="15" rx="2"/><path d="M3.5 10h17M8 3v4M16 3v4"/>',
+};
+const svg = (k) => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICONS[k] || ""}</svg>`;
+const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+
+document.getElementById("report-date").textContent = "Отчёт на " + REPORT_DATE;
+
+// Сводка: сколько работ в каждом статусе
+const counts = {};
+BLOCKS.forEach((b) => b.items.forEach((i) => { counts[i.status] = (counts[i.status] || 0) + 1; }));
+const total = Object.values(counts).reduce((a, b) => a + b, 0);
+document.getElementById("summary").innerHTML =
+  `<span class="label">Всего работ: ${total}</span>` +
+  Object.keys(STATUS_NAMES).filter((k) => counts[k])
+    .map((k) => `<span class="pill" data-s="${k}">${STATUS_NAMES[k]} <span class="n">· ${counts[k]}</span></span>`).join("");
+
+document.getElementById("grid").innerHTML = BLOCKS.map((b, bi) => {
+  const rows = b.items.map((it, ii) => {
+    const lead = b.numbered
+      ? `<span class="step">${String(ii + 1).padStart(2, "0")}</span>`
+      : `<span class="ic">${svg(it.icon)}</span>`;
+    const due = it.due
+      ? `<span class="due">${svg("cal")}${esc(it.due)}</span>`
+      : `<span class="due tbd">${svg("cal")}Срок уточняется</span>`;
+    return `<div class="row">
+      <div class="svc">${lead}<span class="name">${esc(it.name)}</span></div>
+      <div><span class="pill" data-s="${it.status}">${esc(it.label)}</span></div>
+      <div>${due}</div>
+    </div>`;
+  }).join("");
+  return `<article class="block" data-tone="${bi + 1}">
+    <div class="block-head">
+      <div class="tile">${svg(b.icon)}</div>
+      <div class="num">${String(bi + 1).padStart(2, "0")}</div>
+      <div><h2>${esc(b.title)}</h2><p>${esc(b.desc)}</p></div>
+    </div>
+    <div class="table" role="table">
+      <div class="row th" role="row"><div>Сервисы / работы</div><div>Статус</div><div>Плановые сроки</div></div>
+      ${rows}
+    </div>
+  </article>`;
+}).join("");
+</script>
