@@ -27,6 +27,8 @@
   --s-teal-bg: #ccf0f4;   --s-teal-fg: #0b8a9c;
   --s-grey-bg: #e4e8ef;   --s-grey-fg: #5a6577;
 
+  --th-ink: #ffffff; --th-line: rgba(255, 255, 255, .35);
+
   --f-display: "Manrope", "Segoe UI", system-ui, sans-serif;
   --f-body: "PT Sans", "Segoe UI", system-ui, sans-serif;
 }
@@ -39,6 +41,7 @@
     --s-blue-bg: #1c3a6e; --s-blue-fg: #7fb0ff; --s-red-bg: #5c1f1a; --s-red-fg: #ff8a7d;
     --s-violet-bg: #392a6b; --s-violet-fg: #b9a0ff; --s-teal-bg: #12474f; --s-teal-fg: #5fdcec;
     --s-grey-bg: #2b3342; --s-grey-fg: #b0b9c9;
+    --th-ink: #0f1522; --th-line: rgba(15, 21, 34, .3);
     color-scheme: dark;
   }
 }
@@ -50,6 +53,7 @@
   --s-blue-bg: #1c3a6e; --s-blue-fg: #7fb0ff; --s-red-bg: #5c1f1a; --s-red-fg: #ff8a7d;
   --s-violet-bg: #392a6b; --s-violet-fg: #b9a0ff; --s-teal-bg: #12474f; --s-teal-fg: #5fdcec;
   --s-grey-bg: #2b3342; --s-grey-fg: #b0b9c9;
+  --th-ink: #0f1522; --th-line: rgba(15, 21, 34, .3);
   color-scheme: dark;
 }
 
@@ -165,15 +169,19 @@ body {
 }
 .row > div { padding: 6px 10px; min-width: 0; display: flex; align-items: center; }
 .row > div + div { border-left: 1px solid var(--line); }
+/* заголовок таблицы — сплошной цвет блока, чтобы не сливаться с цветами статусов */
 .row.th {
   border-top: 0;
-  background: var(--soft);
+  background: var(--c);
   font-family: var(--f-display);
   font-weight: 700;
-  font-size: 12px;
-  color: var(--ink);
+  font-size: 11.5px;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  color: var(--th-ink);
 }
-.row.th > div { padding-block: 5px; }
+.row.th > div { padding-block: 6px; }
+.row.th > div + div { border-left-color: var(--th-line); }
 
 .svc { gap: 8px; }
 .svc .ic {
