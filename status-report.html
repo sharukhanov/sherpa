@@ -5,7 +5,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&family=PT+Sans:wght@400;700&display=swap">
 <style id="page-style">
-/* Layout: шапка отчёта + сетка 2×2 из блоков проекта; на телефоне блоки идут в одну колонку */
+/* Layout: компактная шапка + блоки в две колонки (колонки балансируются по высоте); на узком экране одна колонка */
 :root {
   --bg: #f3f6fb;
   --panel: #ffffff;
@@ -19,16 +19,13 @@
   --c3: #f08a3c; --c3-soft: #fdf0e5;   /* закупочные процедуры */
   --c4: #7a6fcf; --c4-soft: #efedfb;   /* общие вопросы */
 
-  --s-green-bg: #e3f4ea;  --s-green-fg: #1f7a48;
-  --s-yellow-bg: #fdf1d9;   --s-yellow-fg: #9a6200;
-  --s-blue-bg: #e4eefc;  --s-blue-fg: #2459a8;
-  --s-red-bg: #fde6e4; --s-red-fg: #b3382d;
-  --s-violet-bg: #efe9fc;  --s-violet-fg: #5c3fb0;
-  --s-teal-bg: #e1f4f6;   --s-teal-fg: #1d7381;
-  --s-grey-bg: #eceff4;   --s-grey-fg: #4f5a6d;
-
-  /* отметка изменений с прошлого отчёта */
-  --chg: #c0247f; --chg-bg: #fdebf5;
+  --s-green-bg: #e9f6ee;  --s-green-fg: #1f7a48;
+  --s-yellow-bg: #fdf4e1; --s-yellow-fg: #9a6200;
+  --s-blue-bg: #eaf1fd;   --s-blue-fg: #2459a8;
+  --s-red-bg: #fdebe9;    --s-red-fg: #b3382d;
+  --s-violet-bg: #f2eefd; --s-violet-fg: #5c3fb0;
+  --s-teal-bg: #e6f5f7;   --s-teal-fg: #1d7381;
+  --s-grey-bg: #f0f2f6;   --s-grey-fg: #5a6577;
 
   --f-display: "Manrope", "Segoe UI", system-ui, sans-serif;
   --f-body: "PT Sans", "Segoe UI", system-ui, sans-serif;
@@ -38,10 +35,10 @@
     --bg: #0f1522; --panel: #171f30; --ink: #e6ebf5; --muted: #95a1b8; --line: #263149; --cell: #1c2538;
     --c1: #6aa9ee; --c1-soft: #1b2a42; --c2: #5cc39d; --c2-soft: #17302a;
     --c3: #f4a165; --c3-soft: #33251a; --c4: #9d94e6; --c4-soft: #252340;
-    --s-green-bg: #173827; --s-green-fg: #7fd8a5; --s-yellow-bg: #3a2d12; --s-yellow-fg: #f2c46b;
-    --s-blue-bg: #1a2c4a; --s-blue-fg: #8fb8f2; --s-red-bg: #3f1d1b; --s-red-fg: #f19a90;
-    --s-violet-bg: #2a2147; --s-violet-fg: #bba8f5; --s-teal-bg: #15353a; --s-teal-fg: #7fd0dc;
-    --s-grey-bg: #262d3a; --s-grey-fg: #b0b9c9; --chg: #f07cc4; --chg-bg: #3a1a30;
+    --s-green-bg: #16301f; --s-green-fg: #7fd8a5; --s-yellow-bg: #33280f; --s-yellow-fg: #f2c46b;
+    --s-blue-bg: #172741; --s-blue-fg: #8fb8f2; --s-red-bg: #381a18; --s-red-fg: #f19a90;
+    --s-violet-bg: #251d40; --s-violet-fg: #bba8f5; --s-teal-bg: #132f33; --s-teal-fg: #7fd0dc;
+    --s-grey-bg: #222936; --s-grey-fg: #b0b9c9;
     color-scheme: dark;
   }
 }
@@ -49,10 +46,10 @@
   --bg: #0f1522; --panel: #171f30; --ink: #e6ebf5; --muted: #95a1b8; --line: #263149; --cell: #1c2538;
   --c1: #6aa9ee; --c1-soft: #1b2a42; --c2: #5cc39d; --c2-soft: #17302a;
   --c3: #f4a165; --c3-soft: #33251a; --c4: #9d94e6; --c4-soft: #252340;
-  --s-green-bg: #173827; --s-green-fg: #7fd8a5; --s-yellow-bg: #3a2d12; --s-yellow-fg: #f2c46b;
-  --s-blue-bg: #1a2c4a; --s-blue-fg: #8fb8f2; --s-red-bg: #3f1d1b; --s-red-fg: #f19a90;
-  --s-violet-bg: #2a2147; --s-violet-fg: #bba8f5; --s-teal-bg: #15353a; --s-teal-fg: #7fd0dc;
-    --s-grey-bg: #262d3a; --s-grey-fg: #b0b9c9; --chg: #f07cc4; --chg-bg: #3a1a30;
+  --s-green-bg: #16301f; --s-green-fg: #7fd8a5; --s-yellow-bg: #33280f; --s-yellow-fg: #f2c46b;
+  --s-blue-bg: #172741; --s-blue-fg: #8fb8f2; --s-red-bg: #381a18; --s-red-fg: #f19a90;
+  --s-violet-bg: #251d40; --s-violet-fg: #bba8f5; --s-teal-bg: #132f33; --s-teal-fg: #7fd0dc;
+  --s-grey-bg: #222936; --s-grey-fg: #b0b9c9;
   color-scheme: dark;
 }
 
@@ -62,200 +59,184 @@ body {
   background: var(--bg);
   color: var(--ink);
   font-family: var(--f-body);
-  font-size: 15px;
-  line-height: 1.4;
+  font-size: 14px;
+  line-height: 1.35;
 }
 .page {
-  max-width: 1440px;
+  max-width: 2200px;
   margin: 0 auto;
-  padding-inline: clamp(16px, 2.5vw, 32px);
-  padding-block: 28px 40px;
+  padding-inline: clamp(16px, 2vw, 28px);
+  padding-block: 18px 24px;
   display: grid;
-  gap: 22px;
+  gap: 14px;
 }
 
 /* Шапка */
 .head {
   display: flex;
   flex-wrap: wrap;
-  align-items: flex-end;
+  align-items: center;
   justify-content: space-between;
-  gap: 16px 32px;
+  gap: 10px 28px;
 }
 .head h1 {
   margin: 0;
   font-family: var(--f-display);
   font-weight: 800;
-  font-size: clamp(28px, 3.6vw, 46px);
+  font-size: clamp(24px, 2.4vw, 32px);
   letter-spacing: -0.02em;
-  line-height: 1.05;
-  text-wrap: balance;
+  line-height: 1.1;
 }
 .head .sub {
-  margin: 6px 0 0;
+  margin: 2px 0 0;
   color: var(--muted);
   font-family: var(--f-display);
   font-weight: 600;
-  font-size: clamp(16px, 1.6vw, 21px);
+  font-size: 15px;
 }
 .org {
   border-left: 2px solid var(--line);
-  padding-left: 16px;
+  padding-left: 14px;
   display: grid;
-  gap: 2px;
+  gap: 1px;
+  font-size: 13px;
 }
-.org b { font-family: var(--f-display); font-size: 17px; }
-.org span { color: var(--muted); font-size: 14px; }
-.org .date { color: var(--ink); font-weight: 700; margin-top: 6px; font-variant-numeric: tabular-nums; }
+.org b { font-family: var(--f-display); font-size: 15px; }
+.org span { color: var(--muted); }
+.org .date { color: var(--ink); font-weight: 700; margin-top: 3px; font-variant-numeric: tabular-nums; }
 
-/* Сетка блоков */
-.grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 20px;
-  align-items: start;
+/* Блоки: две колонки как на исходном макете (01 и 03 слева, 02 и 04 справа), без выравнивания по строкам */
+.grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; align-items: start; }
+.grid > .col { display: grid; gap: 14px; min-width: 0; }
+@media (max-width: 1000px) {
+  .grid { grid-template-columns: minmax(0, 1fr); }
+  .grid > .col { display: contents; }
 }
-@media (max-width: 1080px) { .grid { grid-template-columns: minmax(0, 1fr); } }
 
 .block {
   --c: var(--c1); --soft: var(--c1-soft);
-  background: linear-gradient(180deg, var(--soft), var(--panel) 160px);
+  background: var(--panel);
   border: 1px solid var(--line);
-  border-radius: 18px;
-  padding: 22px;
+  border-top: 4px solid var(--c);
+  border-radius: 12px;
+  padding: 12px 12px 10px;
   display: grid;
-  gap: 18px;
+  gap: 10px;
   min-width: 0;
 }
 .block[data-tone="2"] { --c: var(--c2); --soft: var(--c2-soft); }
 .block[data-tone="3"] { --c: var(--c3); --soft: var(--c3-soft); }
 .block[data-tone="4"] { --c: var(--c4); --soft: var(--c4-soft); }
 
-.block-head {
-  display: grid;
-  grid-template-columns: auto auto minmax(0, 1fr);
-  align-items: center;
-  gap: 18px;
-}
+.block-head { display: flex; align-items: center; gap: 10px; min-width: 0; }
 .tile {
-  width: 72px; height: 62px;
-  border-radius: 14px;
+  flex: none;
+  width: 34px; height: 34px;
+  border-radius: 9px;
   background: var(--c);
   color: #fff;
   display: grid;
   place-items: center;
 }
-.tile svg { width: 34px; height: 34px; }
-.num {
+.tile svg { width: 20px; height: 20px; }
+.block-head .num {
   font-family: var(--f-display);
   font-weight: 800;
-  font-size: 46px;
-  line-height: 1;
+  font-size: 22px;
   color: var(--c);
   font-variant-numeric: tabular-nums;
 }
+.block-head .titles { min-width: 0; }
 .block-head h2 {
   margin: 0;
   font-family: var(--f-display);
   font-weight: 800;
-  font-size: 22px;
-  text-wrap: balance;
+  font-size: 17px;
+  line-height: 1.2;
 }
-.block-head p { margin: 4px 0 0; color: var(--muted); font-size: 15px; }
+.block-head p { margin: 1px 0 0; color: var(--muted); font-size: 12.5px; }
 
-/* Таблица */
-.table {
-  background: var(--panel);
-  border: 1px solid var(--line);
-  border-radius: 12px;
-  overflow: hidden;
-}
+/* Таблица работ */
+.table { border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
 .row {
   display: grid;
-  grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr) minmax(0, 0.85fr);
-  align-items: center;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.8fr) 84px;
   border-top: 1px solid var(--line);
 }
-.row > div { padding: 10px 14px; min-width: 0; }
-.row > div + div { border-left: 1px solid var(--line); align-self: stretch; display: flex; align-items: center; }
+.row > div { padding: 6px 10px; min-width: 0; display: flex; align-items: center; }
+.row > div + div { border-left: 1px solid var(--line); }
 .row.th {
   border-top: 0;
   background: var(--soft);
   font-family: var(--f-display);
   font-weight: 700;
-  font-size: 14px;
+  font-size: 12px;
+  color: var(--ink);
 }
-.row.th > div + div { justify-content: center; }
+.row.th > div { padding-block: 5px; }
 
-.svc { display: flex; align-items: center; gap: 12px; }
+.svc { gap: 8px; }
 .svc .ic {
   flex: none;
-  width: 38px; height: 38px;
-  border-radius: 10px;
+  width: 26px; height: 26px;
+  border-radius: 7px;
   background: var(--cell);
-  color: var(--ink);
+  color: var(--muted);
   display: grid; place-items: center;
 }
-.svc .ic svg { width: 22px; height: 22px; }
+.svc .ic svg { width: 16px; height: 16px; }
 .svc .step {
   flex: none;
-  width: 38px; height: 30px;
-  border-radius: 8px;
+  width: 26px; height: 22px;
+  border-radius: 6px;
   background: var(--soft);
   color: var(--c);
-  font-family: var(--f-display);
-  font-weight: 800;
+  font: 800 12px/1 var(--f-display);
   display: grid; place-items: center;
   font-variant-numeric: tabular-nums;
 }
-.svc .name { font-weight: 700; color: var(--ink); }
-.block[data-tone="3"] .svc .name, .block[data-tone="2"] .svc .name, .block[data-tone="4"] .svc .name { color: var(--ink); }
+.svc .name { font-weight: 700; font-size: 13.5px; }
+.name-wrap { display: grid; gap: 4px; min-width: 0; flex: 1; }
 
-.pill {
-  display: inline-flex;
-  align-items: center;
-  gap: 7px;
-  padding: 5px 10px;
-  border-radius: 10px;
+/* Статус: ячейка с цветной полосой и фоном цвета статуса */
+.st { --sb: var(--s-blue-bg); --sf: var(--s-blue-fg); }
+.row > div.st {
+  background: var(--sb);
+  box-shadow: inset 3px 0 0 var(--sf);
   font-size: 13px;
-  font-weight: 700;
-  line-height: 1.2;
-  background: var(--s-blue-bg);
-  color: var(--s-blue-fg);
+  line-height: 1.3;
 }
-.pill::before {
-  content: "";
-  flex: none;
-  width: 7px; height: 7px;
-  border-radius: 50%;
-  background: currentColor;
-}
-.pill[data-s="green"]  { background: var(--s-green-bg);  color: var(--s-green-fg); }
-.pill[data-s="yellow"]   { background: var(--s-yellow-bg);   color: var(--s-yellow-fg); }
-.pill[data-s="blue"]  { background: var(--s-blue-bg);  color: var(--s-blue-fg); }
-.pill[data-s="red"] { background: var(--s-red-bg); color: var(--s-red-fg); }
-.pill[data-s="violet"]  { background: var(--s-violet-bg);  color: var(--s-violet-fg); }
-.pill[data-s="teal"]   { background: var(--s-teal-bg);   color: var(--s-teal-fg); }
-.pill[data-s="grey"]   { background: var(--s-grey-bg);   color: var(--s-grey-fg); }
-.pill .n { font-variant-numeric: tabular-nums; }
+.st[data-s="green"]  { --sb: var(--s-green-bg);  --sf: var(--s-green-fg); }
+.st[data-s="yellow"] { --sb: var(--s-yellow-bg); --sf: var(--s-yellow-fg); }
+.st[data-s="blue"]   { --sb: var(--s-blue-bg);   --sf: var(--s-blue-fg); }
+.st[data-s="red"]    { --sb: var(--s-red-bg);    --sf: var(--s-red-fg); }
+.st[data-s="violet"] { --sb: var(--s-violet-bg); --sf: var(--s-violet-fg); }
+.st[data-s="teal"]   { --sb: var(--s-teal-bg);   --sf: var(--s-teal-fg); }
+.st[data-s="grey"]   { --sb: var(--s-grey-bg);   --sf: var(--s-grey-fg); }
+.st .txt { white-space: pre-line; overflow-wrap: anywhere; }
+.st .empty, .due.empty { color: var(--muted); }
 
 .due {
-  display: flex;
-  align-items: center;
-  gap: 8px;
   font-weight: 700;
+  font-size: 13px;
   font-variant-numeric: tabular-nums;
 }
-.due svg { width: 16px; height: 16px; flex: none; color: var(--muted); }
-.due.tbd { color: var(--muted); font-weight: 400; font-style: italic; }
+.row > div.due { white-space: nowrap; }
+
+.link-btn {
+  justify-self: start; margin-top: 4px; padding: 0;
+  font: 600 12.5px/1.2 var(--f-body); color: var(--c1);
+  background: none; border: 0; cursor: pointer; text-decoration: underline; text-underline-offset: 2px;
+}
+.link-btn:focus-visible { outline: 2px solid var(--c1); outline-offset: 2px; }
 
 /* Режим редактирования */
 .tools { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; justify-content: flex-end; }
-.tools .note { color: var(--muted); font-size: 13px; margin-right: auto; }
+.tools .note { color: var(--muted); font-size: 12.5px; margin-right: auto; max-width: 80ch; }
 .btn {
-  font: 700 14px/1 var(--f-display);
-  padding: 10px 16px;
-  border-radius: 10px;
+  font: 700 13px/1 var(--f-display);
+  padding: 9px 14px;
+  border-radius: 9px;
   border: 1px solid var(--line);
   background: var(--panel);
   color: var(--ink);
@@ -264,75 +245,49 @@ body {
 .btn:hover { border-color: var(--muted); }
 .btn.primary { background: var(--ink); color: var(--bg); border-color: var(--ink); }
 .btn:disabled { opacity: .55; cursor: default; }
-.btn:focus-visible, .field:focus-visible { outline: 2px solid var(--c1); outline-offset: 2px; }
-.edit-cell { display: grid; gap: 6px; width: 100%; }
+.btn:focus-visible, .field:focus-visible, .icon-btn:focus-visible { outline: 2px solid var(--c1); outline-offset: 2px; }
+.edit-cell { display: grid; gap: 5px; width: 100%; }
 .field {
   width: 100%;
   min-width: 0;
-  font: 14px/1.3 var(--f-body);
-  padding: 7px 9px;
-  border-radius: 8px;
+  font: 13px/1.3 var(--f-body);
+  padding: 5px 7px;
+  border-radius: 6px;
   border: 1px solid var(--line);
-  background: var(--cell);
+  background: var(--panel);
   color: var(--ink);
 }
-.field.date-field { width: auto; max-width: 160px; font-weight: 700; }
-.editing .block { box-shadow: 0 0 0 2px var(--line) inset; }
-
-/* Отметка изменений */
-.legend {
-  display: flex; flex-wrap: wrap; align-items: center; gap: 8px 14px;
-  font-size: 14px; color: var(--muted);
-}
-.legend .sw {
-  display: inline-block; width: 28px; height: 16px; border-radius: 4px;
-  background: var(--chg-bg); box-shadow: inset 3px 0 0 var(--chg); vertical-align: -3px; margin-right: 8px;
-}
-.legend b { color: var(--ink); }
-.row > div.chg { background: var(--chg-bg); box-shadow: inset 3px 0 0 var(--chg); }
-.cellwrap { display: grid; gap: 5px; justify-items: start; min-width: 0; width: 100%; }
-.was { font-size: 12.5px; color: var(--muted); line-height: 1.3; }
-.was s { text-decoration-color: var(--chg); }
-.tag {
-  display: inline-block; margin-top: 4px;
-  font: 800 10.5px/1 var(--f-display); letter-spacing: .06em; text-transform: uppercase;
-  color: var(--chg); border: 1px solid var(--chg); border-radius: 5px; padding: 3px 5px;
-}
-.svc .name-wrap { display: grid; justify-items: start; gap: 4px; min-width: 0; flex: 1; }
+textarea.field { resize: none; overflow: hidden; display: block; }
+.field.date-field { width: auto; max-width: 140px; font-weight: 700; }
 .name-field { font-weight: 700; }
 .icon-btn {
-  flex: none; width: 30px; height: 30px; border-radius: 8px;
+  flex: none; width: 26px; height: 26px; border-radius: 7px;
   border: 1px solid var(--line); background: var(--panel); color: var(--muted);
-  font: 700 18px/1 var(--f-display); cursor: pointer;
+  font: 700 16px/1 var(--f-display); cursor: pointer;
 }
 .icon-btn:hover { color: var(--s-red-fg); border-color: var(--s-red-fg); background: var(--s-red-bg); }
-.icon-btn:focus-visible { outline: 2px solid var(--c1); outline-offset: 2px; }
-.add-btn { justify-self: start; border-style: dashed; color: var(--c); }
-.editing .row { grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr) minmax(0, 0.75fr); }
-.editing .svc { gap: 8px; }
+.add-btn { justify-self: start; border-style: dashed; color: var(--c); padding: 7px 12px; }
 .editing .svc .ic { display: none; }
+.editing .row { grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.6fr) 104px; }
+.editing .row > div { align-items: flex-start; }
 .swatches { display: flex; flex-wrap: wrap; gap: 4px; }
 .swatches input { position: absolute; opacity: 0; width: 1px; height: 1px; }
 .swatches label {
-  width: 20px; height: 20px; border-radius: 50%; cursor: pointer;
+  width: 18px; height: 18px; border-radius: 50%; cursor: pointer;
   border: 2px solid var(--panel); box-shadow: 0 0 0 1px var(--line);
 }
 .swatches input:checked + label { box-shadow: 0 0 0 2px var(--ink); }
 .swatches input:focus-visible + label { outline: 2px solid var(--c1); outline-offset: 2px; }
 
 @media (max-width: 620px) {
-  .block { padding: 16px; }
-  .block-head { grid-template-columns: auto minmax(0, 1fr); gap: 12px 14px; }
-  .block-head .num { display: none; }
-  .tile { width: 54px; height: 48px; }
-  .tile svg { width: 26px; height: 26px; }
-  .row, .editing .row { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+  .row { grid-template-columns: minmax(0, 1fr) 84px; }
+  .editing .row { grid-template-columns: minmax(0, 1fr) 104px; }
   .row > div:first-child { grid-column: 1 / -1; }
   .row > div + div { border-top: 1px dashed var(--line); }
   .row > div:nth-child(2) { border-left: 0; }
   .row.th > div:first-child { display: none; }
-  .row.th > div:nth-child(2) { border-top: 0; border-left: 0; }
-  .row.th > div:nth-child(3) { border-top: 0; }
+  .row.th > div + div { border-top: 0; }
+  .row.th > div:nth-child(2) { border-left: 0; }
 }
 </style>
 
@@ -345,130 +300,148 @@ body {
     <div class="org">
       <b>Фонд МИК</b>
       <span>Внутренние сервисы на базе ИИ</span>
-      <span class="date" id="report-date">Отчёт на 05.10.2026</span>
+      <span class="date" id="report-date">Отчёт на 13.10.2026</span>
+      <button class="link-btn" id="b-fit" type="button" hidden=""></button>
     </div>
   </header>
 
-  <p class="legend" id="legend" hidden=""></p>
-
   <div class="tools" id="tools" hidden=""></div>
 
-  <section class="grid" id="grid"><article class="block" data-tone="1">
+  <section class="grid" id="grid"><div class="col"><article class="block" data-tone="1" style="order: 0">
       <div class="block-head">
         <div class="tile"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="5" width="16" height="11" rx="1.5"></rect><path d="M2 19h20"></path></svg></div>
         <div class="num">01</div>
-        <div><h2>Корпоративные инструменты</h2><p>Сервисы для повышения продуктивности внутренних сотрудников Фонда</p></div>
+        <div class="titles"><h2>Корпоративные инструменты</h2><p>Сервисы для повышения продуктивности внутренних сотрудников Фонда</p></div>
       </div>
       <div class="table" role="table">
-        <div class="row th" role="row"><div>Сервисы / работы</div><div>Статус</div><div>Плановые сроки</div></div>
+        <div class="row th" role="row"><div>Сервисы / работы</div><div>Статус</div><div>Срок</div></div>
         <div class="row">
         <div class="svc"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3"></rect><path d="M5.5 11a6.5 6.5 0 0 0 13 0M12 17.5V21"></path></svg></span><span class="name-wrap"><span class="name">ИИ-агент транскрибации</span></span></div>
-        <div><div class="cellwrap"><span class="pill" data-s="yellow"></span></div></div>
-        <div><div class="cellwrap"><span class="due tbd"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15" rx="2"></rect><path d="M3.5 10h17M8 3v4M16 3v4"></path></svg>Срок уточняется</span></div></div>
+        <div class="st" data-s="green"><span class="txt">Готово. Хотим увеличить объем загружаемых файлов, чтобы не резать их</span></div>
+        <div class="due">до 16.10</div>
       </div><div class="row">
         <div class="svc"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="2"></rect><path d="M9 8h6M9 12h6M9 16h4"></path></svg></span><span class="name-wrap"><span class="name">ИИ-агент суммаризации / протоколирования</span></span></div>
-        <div><div class="cellwrap"><span class="pill" data-s="yellow">Готово, есть ошибки</span></div></div>
-        <div><div class="cellwrap"><span class="due tbd"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15" rx="2"></rect><path d="M3.5 10h17M8 3v4M16 3v4"></path></svg>Срок уточняется</span></div></div>
-      </div>
-      </div>
-      
-    </article><article class="block" data-tone="2">
-      <div class="block-head">
-        <div class="tile"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 6c-2-1.5-5-2-8-1.5V19c3-.5 6 0 8 1.5 2-1.5 5-2 8-1.5V4.5c-3-.5-6 0-8 1.5z"></path><path d="M12 6v14.5"></path></svg></div>
-        <div class="num">02</div>
-        <div><h2>База знаний</h2><p>Удобный доступ к внутренней информации Фонда с помощью ИИ</p></div>
-      </div>
-      <div class="table" role="table">
-        <div class="row th" role="row"><div>Сервисы / работы</div><div>Статус</div><div>Плановые сроки</div></div>
-        <div class="row">
-        <div class="svc"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6"></circle><path d="M15 15l5 5"></path></svg></span><span class="name-wrap"><span class="name">ИИ-агент поиска по внутренней базе знаний Фонда</span></span></div>
-        <div><div class="cellwrap"><span class="pill" data-s="yellow">Готово, есть ошибки</span></div></div>
-        <div><div class="cellwrap"><span class="due tbd"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15" rx="2"></rect><path d="M3.5 10h17M8 3v4M16 3v4"></path></svg>Срок уточняется</span></div></div>
+        <div class="st" data-s="green"><span class="txt">Готово, хотим поменять логику работы - чтобы агент давал полной саммари в файле</span></div>
+        <div class="due">до 16.10</div>
       </div><div class="row">
-        <div class="svc"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7.5A1.5 1.5 0 0 1 4.5 6H9l2 2h8.5A1.5 1.5 0 0 1 21 9.5v8A1.5 1.5 0 0 1 19.5 19h-15A1.5 1.5 0 0 1 3 17.5z"></path><path d="M3 10.5h18"></path></svg></span><span class="name-wrap"><span class="name">Файловый менеджер с ИИ-поиском</span></span></div>
-        <div><div class="cellwrap"><span class="pill" data-s="green">Готово</span></div></div>
-        <div><div class="cellwrap"><span class="due tbd"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15" rx="2"></rect><path d="M3.5 10h17M8 3v4M16 3v4"></path></svg>Срок уточняется</span></div></div>
+        <div class="svc"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="2"></rect><path d="M9 8h6M9 12h6M9 16h4"></path></svg></span><span class="name-wrap"><span class="name">ИИ-агент протоколирования</span></span></div>
+        <div class="st" data-s="red"><span class="txt">Не работает</span></div>
+        <div class="due">до 16.10</div>
       </div>
       </div>
       
-    </article><article class="block" data-tone="3">
+    </article><article class="block" data-tone="3" style="order: 2">
       <div class="block-head">
         <div class="tile"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 4h2.5l2.2 10.5h10.6L20.5 7H7"></path><circle cx="9.5" cy="19" r="1.4"></circle><circle cx="17" cy="19" r="1.4"></circle></svg></div>
         <div class="num">03</div>
-        <div><h2>Закупочные процедуры</h2><p>Автоматизация ключевых этапов закупочного процесса</p></div>
+        <div class="titles"><h2>Закупочные процедуры</h2><p>Автоматизация ключевых этапов закупочного процесса</p></div>
       </div>
       <div class="table" role="table">
-        <div class="row th" role="row"><div>Сервисы / работы</div><div>Статус</div><div>Плановые сроки</div></div>
+        <div class="row th" role="row"><div>Сервисы / работы</div><div>Статус</div><div>Срок</div></div>
         <div class="row">
         <div class="svc"><span class="step">01</span><span class="name-wrap"><span class="name">Формирование закупочной документации</span></span></div>
-        <div><div class="cellwrap"><span class="pill" data-s="blue">В работе у Шерпы</span></div></div>
-        <div><div class="cellwrap"><span class="due tbd"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15" rx="2"></rect><path d="M3.5 10h17M8 3v4M16 3v4"></path></svg>Срок уточняется</span></div></div>
+        <div class="st" data-s="blue"><span class="txt">В работе у Шерпы</span></div>
+        <div class="due">до 14.10</div>
       </div><div class="row">
         <div class="svc"><span class="step">02</span><span class="name-wrap"><span class="name">Проверка закупочной документации</span></span></div>
-        <div><div class="cellwrap"><span class="pill" data-s="red">Пауза (ждём ресурсы Шерпы)</span></div></div>
-        <div><div class="cellwrap"><span class="due tbd"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15" rx="2"></rect><path d="M3.5 10h17M8 3v4M16 3v4"></path></svg>Срок уточняется</span></div></div>
+        <div class="st" data-s="grey"><span class="txt">Пауза (ждём ресурсы Шерпы)</span></div>
+        <div class="due empty">—</div>
       </div><div class="row">
         <div class="svc"><span class="step">03</span><span class="name-wrap"><span class="name">Формирование КП</span></span></div>
-        <div><div class="cellwrap"><span class="pill" data-s="blue">В работе у Шерпы</span></div></div>
-        <div><div class="cellwrap"><span class="due tbd"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15" rx="2"></rect><path d="M3.5 10h17M8 3v4M16 3v4"></path></svg>Срок уточняется</span></div></div>
+        <div class="st" data-s="blue"><span class="txt">В работе у Шерпы</span></div>
+        <div class="due">до 14.10</div>
       </div><div class="row">
         <div class="svc"><span class="step">04</span><span class="name-wrap"><span class="name">Проверка КП</span></span></div>
-        <div><div class="cellwrap"><span class="pill" data-s="violet">Тестирование</span></div></div>
-        <div><div class="cellwrap"><span class="due tbd"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15" rx="2"></rect><path d="M3.5 10h17M8 3v4M16 3v4"></path></svg>Срок уточняется</span></div></div>
+        <div class="st" data-s="green"><span class="txt">Тестирование + отдел закупок</span></div>
+        <div class="due">до 14.10</div>
       </div><div class="row">
         <div class="svc"><span class="step">05</span><span class="name-wrap"><span class="name">Формирование НМЦД</span></span></div>
-        <div><div class="cellwrap"><span class="pill" data-s="blue">В работе</span></div></div>
-        <div><div class="cellwrap"><span class="due tbd"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15" rx="2"></rect><path d="M3.5 10h17M8 3v4M16 3v4"></path></svg>Срок уточняется</span></div></div>
+        <div class="st" data-s="green"><span class="txt">Тестирование</span></div>
+        <div class="due">до 14.10</div>
       </div><div class="row">
         <div class="svc"><span class="step">06</span><span class="name-wrap"><span class="name">Формирование договора</span></span></div>
-        <div><div class="cellwrap"><span class="pill" data-s="red">Пауза (ждём ресурсы Шерпы)</span></div></div>
-        <div><div class="cellwrap"><span class="due tbd"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15" rx="2"></rect><path d="M3.5 10h17M8 3v4M16 3v4"></path></svg>Срок уточняется</span></div></div>
+        <div class="st" data-s="grey"><span class="txt">Пауза (ждём ресурсы Шерпы)</span></div>
+        <div class="due empty">—</div>
       </div><div class="row">
         <div class="svc"><span class="step">07</span><span class="name-wrap"><span class="name">Формирование отчётной документации</span></span></div>
-        <div><div class="cellwrap"><span class="pill" data-s="red">Пауза (ждём ресурсы Шерпы)</span></div></div>
-        <div><div class="cellwrap"><span class="due tbd"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15" rx="2"></rect><path d="M3.5 10h17M8 3v4M16 3v4"></path></svg>Срок уточняется</span></div></div>
+        <div class="st" data-s="grey"><span class="txt">Пауза (ждём ресурсы Шерпы)</span></div>
+        <div class="due empty">—</div>
+      </div><div class="row">
+        <div class="svc"><span class="step">08</span><span class="name-wrap"><span class="name">Проверка отчетной документации</span></span></div>
+        <div class="st" data-s="grey"><span class="txt">Пауза (ждём ресурсы Шерпы)</span></div>
+        <div class="due empty">—</div>
       </div>
       </div>
       
-    </article><article class="block" data-tone="4">
+    </article></div><div class="col"><article class="block" data-tone="2" style="order: 1">
+      <div class="block-head">
+        <div class="tile"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 6c-2-1.5-5-2-8-1.5V19c3-.5 6 0 8 1.5 2-1.5 5-2 8-1.5V4.5c-3-.5-6 0-8 1.5z"></path><path d="M12 6v14.5"></path></svg></div>
+        <div class="num">02</div>
+        <div class="titles"><h2>База знаний</h2><p>Удобный доступ к внутренней информации Фонда с помощью ИИ</p></div>
+      </div>
+      <div class="table" role="table">
+        <div class="row th" role="row"><div>Сервисы / работы</div><div>Статус</div><div>Срок</div></div>
+        <div class="row">
+        <div class="svc"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6"></circle><path d="M15 15l5 5"></path></svg></span><span class="name-wrap"><span class="name">ИИ-агент База Знаний</span></span></div>
+        <div class="st" data-s="blue"><span class="txt">Тестирование после баг-фикса</span></div>
+        <div class="due">до 20.10</div>
+      </div><div class="row">
+        <div class="svc"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7.5A1.5 1.5 0 0 1 4.5 6H9l2 2h8.5A1.5 1.5 0 0 1 21 9.5v8A1.5 1.5 0 0 1 19.5 19h-15A1.5 1.5 0 0 1 3 17.5z"></path><path d="M3 10.5h18"></path></svg></span><span class="name-wrap"><span class="name">Файловый менеджер</span></span></div>
+        <div class="st" data-s="blue"><span class="txt">Тестирование после баг-фикса</span></div>
+        <div class="due">до 20.10</div>
+      </div>
+      </div>
+      
+    </article><article class="block" data-tone="4" style="order: 3">
       <div class="block-head">
         <div class="tile"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"></circle><path d="M12 2.8v2.4M12 18.8v2.4M2.8 12h2.4M18.8 12h2.4M5.5 5.5l1.7 1.7M16.8 16.8l1.7 1.7M5.5 18.5l1.7-1.7M16.8 7.2l1.7-1.7"></path></svg></div>
         <div class="num">04</div>
-        <div><h2>Общие вопросы</h2><p>Ключевые сквозные задачи по проекту</p></div>
+        <div class="titles"><h2>Общие вопросы</h2><p>Ключевые сквозные задачи по проекту</p></div>
       </div>
       <div class="table" role="table">
-        <div class="row th" role="row"><div>Сервисы / работы</div><div>Статус</div><div>Плановые сроки</div></div>
+        <div class="row th" role="row"><div>Сервисы / работы</div><div>Статус</div><div>Срок</div></div>
         <div class="row">
         <div class="svc"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3a9 9 0 1 0 0 18c1.2 0 1.8-.8 1.8-1.7 0-1.3-1-1.6-1-2.6 0-.9.7-1.5 1.6-1.5H17a4 4 0 0 0 4-4C21 6.6 17 3 12 3z"></path><circle cx="7.5" cy="11" r="1.1"></circle><circle cx="10" cy="7.3" r="1.1"></circle><circle cx="14.5" cy="7.3" r="1.1"></circle></svg></span><span class="name-wrap"><span class="name">Дизайн интерфейса</span></span></div>
-        <div><div class="cellwrap"><span class="pill" data-s="blue">В работе</span></div></div>
-        <div><div class="cellwrap"><span class="due tbd"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15" rx="2"></rect><path d="M3.5 10h17M8 3v4M16 3v4"></path></svg>Срок уточняется</span></div></div>
+        <div class="st" data-s="grey"><span class="txt">Шерпа должна вернуться и сказать что они смогут сделать с нашим дизайном</span></div>
+        <div class="due">до 14.10</div>
       </div><div class="row">
         <div class="svc"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"></path><path d="M14 3v5h5M9 13h6M9 17h6"></path></svg></span><span class="name-wrap"><span class="name">Отчёт по 1 этапу</span></span></div>
-        <div><div class="cellwrap"><span class="pill" data-s="teal">На проверке</span></div></div>
-        <div><div class="cellwrap"><span class="due tbd"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15" rx="2"></rect><path d="M3.5 10h17M8 3v4M16 3v4"></path></svg>Срок уточняется</span></div></div>
+        <div class="st" data-s="green"><span class="txt">На проверке</span></div>
+        <div class="due">до 13.10</div>
       </div><div class="row">
         <div class="svc"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"></path><path d="M14 3v5h5M9 13h6M9 17h6"></path></svg></span><span class="name-wrap"><span class="name">Отчёт по 2 этапу</span></span></div>
-        <div><div class="cellwrap"><span class="pill" data-s="teal">На проверке</span></div></div>
-        <div><div class="cellwrap"><span class="due tbd"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15" rx="2"></rect><path d="M3.5 10h17M8 3v4M16 3v4"></path></svg>Срок уточняется</span></div></div>
+        <div class="st" data-s="green"><span class="txt">На проверке</span></div>
+        <div class="due">до 20.10</div>
       </div><div class="row">
         <div class="svc"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"></path><path d="M14 3v5h5M9 13h6M9 17h6"></path></svg></span><span class="name-wrap"><span class="name">Отчёт по 3 этапу</span></span></div>
-        <div><div class="cellwrap"><span class="pill" data-s="blue">В работе</span></div></div>
-        <div><div class="cellwrap"><span class="due tbd"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15" rx="2"></rect><path d="M3.5 10h17M8 3v4M16 3v4"></path></svg>Срок уточняется</span></div></div>
+        <div class="st" data-s="green"><span class="txt">В работе у Шерпы</span></div>
+        <div class="due">до 28.10</div>
       </div><div class="row">
-        <div class="svc"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"></path><path d="M14 3v5h5M9 13h6M9 17h6"></path></svg></span><span class="name-wrap"><span class="name">Отчёт по 4 этапу</span></span></div>
-        <div><div class="cellwrap"><span class="pill" data-s="blue">В работе</span></div></div>
-        <div><div class="cellwrap"><span class="due tbd"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15" rx="2"></rect><path d="M3.5 10h17M8 3v4M16 3v4"></path></svg>Срок уточняется</span></div></div>
+        <div class="svc"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="2"></rect><path d="M9 8h6M9 12h6M9 16h4"></path></svg></span><span class="name-wrap"><span class="name">МЭЦ_SmartDocs</span></span></div>
+        <div class="st" data-s="grey"><span class="txt">Ждем ОС от МЭЦ по MCP и доступам к тесту</span></div>
+        <div class="due">до 14.10</div>
+      </div><div class="row">
+        <div class="svc"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="2"></rect><path d="M9 8h6M9 12h6M9 16h4"></path></svg></span><span class="name-wrap"><span class="name">Прокси МИК (!!!!)</span></span></div>
+        <div class="st" data-s="red"><span class="txt">с 07.10 (ср) наблюдались технические неполадки с работой ИИ-моделей в нашем контуре. Выяснили что связано с тем, что МИК переписывал "прокси" на другой язык. Ошибки наблюадись 09.10 (пт)</span></div>
+        <div class="due empty">—</div>
+      </div><div class="row">
+        <div class="svc"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="2"></rect><path d="M9 8h6M9 12h6M9 16h4"></path></svg></span><span class="name-wrap"><span class="name">Права на Шерпу (бэк/фронт)</span></span></div>
+        <div class="st" data-s="green"><span class="txt">Промежуточно - передают только доступ к фронту (через сваггер). Бэк - не переходит тк передают неисключительные права. То есть если будут ошибки, баги, то мы не сможем сами ничего менять и другой подрядчик тоже. Планирую встречу с Шерпой, где они расскажут более детально что у нас будет по итогам контракта</span></div>
+        <div class="due empty">—</div>
+      </div><div class="row">
+        <div class="svc"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="2"></rect><path d="M9 8h6M9 12h6M9 16h4"></path></svg></span><span class="name-wrap"><span class="name">Ресурсы - Бизнес аналитик (для тех. вопросов, корректировки текущих агентов и пр)</span></span></div>
+        <div class="st" data-s="blue"><span class="empty">—</span></div>
+        <div class="due empty">—</div>
       </div>
       </div>
       
-    </article></section>
+    </article></div></section>
 </main>
 
 <div hidden>
 <script type="application/json" id="report-data">
 {
- "reportDate": "05.10.2026",
- "baseline": null,
+ "reportDate": "13.10.2026",
  "blocks": [
   {
    "title": "Корпоративные инструменты",
@@ -479,17 +452,25 @@ body {
      "id": "w01",
      "name": "ИИ-агент транскрибации",
      "icon": "mic",
-     "color": "yellow",
-     "label": "",
-     "due": ""
+     "color": "green",
+     "label": "Готово. Хотим увеличить объем загружаемых файлов, чтобы не резать их",
+     "due": "до 16.10"
     },
     {
      "id": "w02",
      "name": "ИИ-агент суммаризации / протоколирования",
      "icon": "doc",
-     "color": "yellow",
-     "label": "Готово, есть ошибки",
-     "due": ""
+     "color": "green",
+     "label": "Готово, хотим поменять логику работы - чтобы агент давал полной саммари в файле",
+     "due": "до 16.10"
+    },
+    {
+     "id": "wmv0r84q2nmb9",
+     "name": "ИИ-агент протоколирования",
+     "icon": "doc",
+     "color": "red",
+     "label": "Не работает",
+     "due": "до 16.10"
     }
    ]
   },
@@ -500,19 +481,19 @@ body {
    "items": [
     {
      "id": "w03",
-     "name": "ИИ-агент поиска по внутренней базе знаний Фонда",
+     "name": "ИИ-агент База Знаний",
      "icon": "search",
-     "color": "yellow",
-     "label": "Готово, есть ошибки",
-     "due": ""
+     "color": "blue",
+     "label": "Тестирование после баг-фикса",
+     "due": "до 20.10"
     },
     {
      "id": "w04",
-     "name": "Файловый менеджер с ИИ-поиском",
+     "name": "Файловый менеджер",
      "icon": "folder",
-     "color": "green",
-     "label": "Готово",
-     "due": ""
+     "color": "blue",
+     "label": "Тестирование после баг-фикса",
+     "due": "до 20.10"
     }
    ]
   },
@@ -527,49 +508,57 @@ body {
      "name": "Формирование закупочной документации",
      "color": "blue",
      "label": "В работе у Шерпы",
-     "due": ""
+     "due": "до 14.10"
     },
     {
      "id": "w06",
      "name": "Проверка закупочной документации",
-     "color": "red",
+     "color": "grey",
      "label": "Пауза (ждём ресурсы Шерпы)",
-     "due": ""
+     "due": "-"
     },
     {
      "id": "w07",
      "name": "Формирование КП",
      "color": "blue",
      "label": "В работе у Шерпы",
-     "due": ""
+     "due": "до 14.10"
     },
     {
      "id": "w08",
      "name": "Проверка КП",
-     "color": "violet",
-     "label": "Тестирование",
-     "due": ""
+     "color": "green",
+     "label": "Тестирование + отдел закупок",
+     "due": "до 14.10"
     },
     {
      "id": "w09",
      "name": "Формирование НМЦД",
-     "color": "blue",
-     "label": "В работе",
-     "due": ""
+     "color": "green",
+     "label": "Тестирование",
+     "due": "до 14.10"
     },
     {
      "id": "w10",
      "name": "Формирование договора",
-     "color": "red",
+     "color": "grey",
      "label": "Пауза (ждём ресурсы Шерпы)",
-     "due": ""
+     "due": "-"
     },
     {
      "id": "w11",
      "name": "Формирование отчётной документации",
-     "color": "red",
+     "color": "grey",
      "label": "Пауза (ждём ресурсы Шерпы)",
-     "due": ""
+     "due": "-"
+    },
+    {
+     "id": "wmuzfzelo2r43",
+     "name": "Проверка отчетной документации",
+     "icon": "doc",
+     "color": "grey",
+     "label": "Пауза (ждём ресурсы Шерпы)",
+     "due": "-"
     }
    ]
   },
@@ -582,40 +571,64 @@ body {
      "id": "w12",
      "name": "Дизайн интерфейса",
      "icon": "palette",
-     "color": "blue",
-     "label": "В работе",
-     "due": ""
+     "color": "grey",
+     "label": "Шерпа должна вернуться и сказать что они смогут сделать с нашим дизайном",
+     "due": "до 14.10"
     },
     {
      "id": "w13",
      "name": "Отчёт по 1 этапу",
      "icon": "report",
-     "color": "teal",
+     "color": "green",
      "label": "На проверке",
-     "due": ""
+     "due": "до 13.10"
     },
     {
      "id": "w14",
      "name": "Отчёт по 2 этапу",
      "icon": "report",
-     "color": "teal",
+     "color": "green",
      "label": "На проверке",
-     "due": ""
+     "due": "до 20.10"
     },
     {
      "id": "w15",
      "name": "Отчёт по 3 этапу",
      "icon": "report",
-     "color": "blue",
-     "label": "В работе",
+     "color": "green",
+     "label": "В работе у Шерпы",
+     "due": "до 28.10"
+    },
+    {
+     "id": "wmuy1bnsfcbn0",
+     "name": "МЭЦ_SmartDocs",
+     "icon": "doc",
+     "color": "grey",
+     "label": "Ждем ОС от МЭЦ по MCP и доступам к тесту",
+     "due": "до 14.10"
+    },
+    {
+     "id": "wmuy1bvj24g4q",
+     "name": "Прокси МИК (!!!!)",
+     "icon": "doc",
+     "color": "red",
+     "label": "с 07.10 (ср) наблюдались технические неполадки с работой ИИ-моделей в нашем контуре. Выяснили что связано с тем, что МИК переписывал \"прокси\" на другой язык. Ошибки наблюадись 09.10 (пт)",
+     "due": "-"
+    },
+    {
+     "id": "wmuy1ddq16nzz",
+     "name": "Права на Шерпу (бэк/фронт)",
+     "icon": "doc",
+     "color": "green",
+     "label": "Промежуточно - передают только доступ к фронту (через сваггер). Бэк - не переходит тк передают неисключительные права. То есть если будут ошибки, баги, то мы не сможем сами ничего менять и другой подрядчик тоже. Планирую встречу с Шерпой, где они расскажут более детально что у нас будет по итогам контракта",
      "due": ""
     },
     {
-     "id": "w16",
-     "name": "Отчёт по 4 этапу",
-     "icon": "report",
+     "id": "wmuzfymzutziv",
+     "name": "Ресурсы - Бизнес аналитик (для тех. вопросов, корректировки текущих агентов и пр)",
+     "icon": "doc",
      "color": "blue",
-     "label": "В работе",
+     "label": "",
      "due": ""
     }
    ]
@@ -626,20 +639,19 @@ body {
 
 <script id="app">
 /* Данные отчёта лежат в блоке report-data выше.
-   color: green | yellow | blue | red | violet | teal | grey — цвет плашки; label — текст статуса;
-   due — плановый срок, пустая строка показывается как «Срок уточняется».
-   baseline — снимок прошлого отчёта, с ним сравниваются статусы и сроки для подсветки. */
+   color: green | yellow | blue | red | violet | teal | grey — цвет статуса; label — текст статуса;
+   due — плановый срок. */
 const SKELETON = '\x3c!doctype html>\x3chtml>\x3chead>\x3cmeta charset=utf8>\x3cmeta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover">\x3cstyle>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}\x3c/style>\x3c/head>\x3cbody>';
 const HEAD = '\x3ctitle>Проект «ИИ-агенты»\x3c/title>\n\x3cmeta name="description" content="Еженедельный статус проекта «ИИ-агенты» Фонда МИК">\n\x3clink rel="preconnect" href="https://fonts.googleapis.com">\n\x3clink rel="preconnect" href="https://fonts.gstatic.com" crossorigin>\n\x3clink rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&family=PT+Sans:wght@400;700&display=swap">\n';
 const SHELL = document.getElementById("page").outerHTML; // разметка страницы, в неё отрисовывается отчёт
 
 let DATA = JSON.parse(document.getElementById("report-data").textContent);
+delete DATA.baseline; // от прежней версии с подсветкой изменений
 let draft = null; // копия данных в режиме редактирования
 let artifactApi = null;
 // файл открыт с компьютера: сохраняем, скачивая обновлённую копию файла
 const LOCAL = location.protocol === "file:";
 
-// Цвета статуса: подпись в редакторе
 const COLORS = {
   green: "Зелёный", yellow: "Жёлтый", blue: "Синий", red: "Красный",
   violet: "Фиолетовый", teal: "Бирюзовый", grey: "Серый",
@@ -648,44 +660,8 @@ const COLORS = {
 const clone = (o) => JSON.parse(JSON.stringify(o));
 const norm = (v) => String(v || "").trim();
 const newId = () => "w" + Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
-// у каждой работы постоянный id, чтобы переименование не считалось новой работой
 DATA.blocks.forEach((b) => b.items.forEach((it) => { if (!it.id) it.id = newId(); }));
 
-// Снимок отчёта для сравнения со следующим
-function snapshot(d) {
-  const items = {};
-  d.blocks.forEach((b, bi) => b.items.forEach((it) => {
-    items[it.id] = { block: bi, name: norm(it.name), color: it.color, label: norm(it.label), due: norm(it.due) };
-  }));
-  return { date: d.reportDate, items };
-}
-
-// Новая дата отчёта = новый отчёт: сравниваем с последним сохранённым
-function baselineFor(d) {
-  return norm(d.reportDate) !== norm(DATA.reportDate) ? snapshot(DATA) : DATA.baseline;
-}
-
-function diff(base, bi, it) {
-  if (!base) return null;
-  const prev = findPrev(base, bi, it);
-  if (!prev) return { isNew: true };
-  const name = prev.name !== undefined && prev.name !== norm(it.name);
-  const status = prev.color !== it.color || prev.label !== norm(it.label);
-  const due = prev.due !== norm(it.due);
-  return name || status || due ? { prev, name, status, due } : null;
-}
-
-// старые снимки хранили работы по ключу «блок|название»
-const findPrev = (base, bi, it) => base.items[it.id] || base.items[bi + "|" + it.name];
-
-// работы из прошлого отчёта, которых больше нет
-function removedSince(base, d) {
-  if (!base) return [];
-  const alive = new Set();
-  d.blocks.forEach((b, bi) => b.items.forEach((it) => { alive.add(it.id); alive.add(bi + "|" + it.name); }));
-  return Object.keys(base.items).filter((k) => !alive.has(k))
-    .map((k) => base.items[k].name || k.split("|").slice(1).join("|"));
-}
 const ICONS = {
   laptop: '<rect x="4" y="5" width="16" height="11" rx="1.5"/><path d="M2 19h20"/>',
   book: '<path d="M12 6c-2-1.5-5-2-8-1.5V19c3-.5 6 0 8 1.5 2-1.5 5-2 8-1.5V4.5c-3-.5-6 0-8 1.5z"/><path d="M12 6v14.5"/>',
@@ -697,88 +673,107 @@ const ICONS = {
   folder: '<path d="M3 7.5A1.5 1.5 0 0 1 4.5 6H9l2 2h8.5A1.5 1.5 0 0 1 21 9.5v8A1.5 1.5 0 0 1 19.5 19h-15A1.5 1.5 0 0 1 3 17.5z"/><path d="M3 10.5h18"/>',
   palette: '<path d="M12 3a9 9 0 1 0 0 18c1.2 0 1.8-.8 1.8-1.7 0-1.3-1-1.6-1-2.6 0-.9.7-1.5 1.6-1.5H17a4 4 0 0 0 4-4C21 6.6 17 3 12 3z"/><circle cx="7.5" cy="11" r="1.1"/><circle cx="10" cy="7.3" r="1.1"/><circle cx="14.5" cy="7.3" r="1.1"/>',
   report: '<path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h6"/>',
-  cal: '<rect x="3.5" y="5" width="17" height="15" rx="2"/><path d="M3.5 10h17M8 3v4M16 3v4"/>',
 };
-const svg = (k) => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICONS[k] || ""}<\/svg>`;
+const svg = (k) => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICONS[k] || ICONS.doc}<\/svg>`;
 const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
 
 function render(root = document, isStatic = false) {
   const d = draft || DATA;
   const editing = !!draft;
-  const base = baselineFor(d);
   root.querySelector("#page").classList.toggle("editing", editing);
 
   root.querySelector("#report-date").innerHTML = editing
     ? `<label>Отчёт на <input class="field date-field" id="f-date" value="${esc(d.reportDate)}" aria-label="Дата отчёта"><\/label>`
     : "Отчёт на " + esc(d.reportDate);
 
-  let changed = 0;
-  root.querySelector("#grid").innerHTML = d.blocks.map((b, bi) => {
+  const blocks = d.blocks.map((b, bi) => {
     const rows = b.items.map((it, ii) => {
       const lead = b.numbered
         ? `<span class="step">${String(ii + 1).padStart(2, "0")}<\/span>`
         : `<span class="ic">${svg(it.icon)}<\/span>`;
       const key = it.id;
-      const ch = diff(base, bi, it);
-      if (ch) changed++;
-      const tag = ch ? `<span class="tag">${ch.isNew ? "Новая работа" : "Изменено"}<\/span>` : "";
-      let status, due, nameHtml = `<span class="name">${esc(it.name)}<\/span>`, delHtml = "";
+      const attrs = `data-b="${bi}" data-i="${ii}"`;
+      let name, status, due, del = "";
       if (editing) {
         const sw = Object.keys(COLORS).map((c) =>
-          `<input type="radio" name="c-${key}" id="c-${key}-${c}" value="${c}" data-b="${bi}" data-i="${ii}" data-f="color"${c === it.color ? " checked" : ""}>` +
+          `<input type="radio" name="c-${key}" id="c-${key}-${c}" value="${c}" ${attrs} data-f="color"${c === it.color ? " checked" : ""}>` +
           `<label for="c-${key}-${c}" title="${COLORS[c]}" style="background: var(--s-${c}-fg)"><span hidden>${COLORS[c]}<\/span><\/label>`).join("");
+        name = `<textarea class="field name-field" id="n-${key}" ${attrs} data-f="name" rows="1" placeholder="Название работы" aria-label="Название работы">${esc(it.name)}<\/textarea>`;
         status = `<div class="edit-cell">
           <div class="swatches" role="radiogroup" aria-label="Цвет статуса">${sw}<\/div>
-          <input class="field" id="l-${key}" data-b="${bi}" data-i="${ii}" data-f="label" value="${esc(it.label)}" placeholder="Текст статуса" aria-label="Текст статуса">
+          <textarea class="field" id="l-${key}" ${attrs} data-f="label" rows="1" placeholder="Текст статуса" aria-label="Текст статуса">${esc(it.label)}<\/textarea>
         <\/div>`;
-        due = `<input class="field" id="d-${key}" data-b="${bi}" data-i="${ii}" data-f="due" value="${esc(it.due)}" placeholder="напр. 16.10.2026" aria-label="Плановый срок">`;
-        nameHtml = `<input class="field name-field" id="n-${key}" data-b="${bi}" data-i="${ii}" data-f="name" value="${esc(it.name)}" placeholder="Название работы" aria-label="Название работы">`;
-        delHtml = `<button class="icon-btn" type="button" data-del="${bi}-${ii}" title="Удалить работу" aria-label="Удалить работу «${esc(it.name)}»">×<\/button>`;
+        due = `<input class="field" id="d-${key}" ${attrs} data-f="due" value="${esc(it.due)}" placeholder="до 16.10" aria-label="Плановый срок">`;
+        del = `<button class="icon-btn" type="button" data-del="${bi}-${ii}" title="Удалить работу" aria-label="Удалить работу «${esc(it.name)}»">×<\/button>`;
       } else {
-        status = `<span class="pill" data-s="${esc(it.color)}">${esc(it.label)}<\/span>`;
-        due = norm(it.due)
-          ? `<span class="due">${svg("cal")}${esc(it.due)}<\/span>`
-          : `<span class="due tbd">${svg("cal")}Срок уточняется<\/span>`;
+        name = `<span class="name">${esc(it.name)}<\/span>`;
+        status = norm(it.label) ? `<span class="txt">${esc(norm(it.label))}<\/span>` : `<span class="empty">—<\/span>`;
+        const dv = norm(it.due);
+        due = dv && dv !== "-" ? esc(dv) : "—";
       }
-      if (ch && ch.name) nameHtml += `<span class="was">было: <s>${esc(ch.prev.name)}<\/s><\/span>`;
-      if (ch && ch.status) status += `<span class="was">было: <s>${esc(ch.prev.label || "—")}<\/s><\/span>`;
-      if (ch && ch.due) due += `<span class="was">было: <s>${esc(ch.prev.due || "не задан")}<\/s><\/span>`;
-      const sc = ch && (ch.status || ch.isNew) ? ' class="chg"' : "";
-      const dc = ch && (ch.due || ch.isNew) ? ' class="chg"' : "";
+      const dueCls = editing ? "due" : (norm(it.due) && norm(it.due) !== "-" ? "due" : "due empty");
       return `<div class="row">
-        <div class="svc">${lead}<span class="name-wrap">${nameHtml}${tag}<\/span>${delHtml}<\/div>
-        <div${sc}><div class="cellwrap">${status}<\/div><\/div>
-        <div${dc}><div class="cellwrap">${due}<\/div><\/div>
+        <div class="svc">${lead}<span class="name-wrap">${name}<\/span>${del}<\/div>
+        <div class="st" data-s="${esc(it.color)}">${status}<\/div>
+        <div class="${dueCls}">${due}<\/div>
       <\/div>`;
     }).join("");
-    return `<article class="block" data-tone="${bi + 1}">
+    return `<article class="block" data-tone="${bi % 4 + 1}" style="order: ${bi}">
       <div class="block-head">
         <div class="tile">${svg(b.icon)}<\/div>
         <div class="num">${String(bi + 1).padStart(2, "0")}<\/div>
-        <div><h2>${esc(b.title)}<\/h2><p>${esc(b.desc)}<\/p><\/div>
+        <div class="titles"><h2>${esc(b.title)}<\/h2><p>${esc(b.desc)}<\/p><\/div>
       <\/div>
       <div class="table" role="table">
-        <div class="row th" role="row"><div>Сервисы / работы<\/div><div>Статус<\/div><div>Плановые сроки<\/div><\/div>
+        <div class="row th" role="row"><div>Сервисы / работы<\/div><div>Статус<\/div><div>Срок<\/div><\/div>
         ${rows}
       <\/div>
       ${editing ? `<button class="btn add-btn" type="button" data-add="${bi}">+ Добавить работу<\/button>` : ""}
     <\/article>`;
-  }).join("");
+  });
+  root.querySelector("#grid").innerHTML =
+    `<div class="col">${blocks.filter((_, i) => i % 2 === 0).join("")}<\/div>` +
+    `<div class="col">${blocks.filter((_, i) => i % 2 === 1).join("")}<\/div>`;
 
-  const legend = root.querySelector("#legend");
-  legend.hidden = !base;
-  if (base) {
-    const removed = removedSince(base, d);
-    legend.innerHTML = changed || removed.length
-      ? `<span><span class="sw"><\/span>Выделены изменения с отчёта от <b>${esc(base.date)}<\/b><\/span>` +
-        (changed ? `<span>Изменено и добавлено работ: <b>${changed}<\/b><\/span>` : "") +
-        (removed.length ? `<span>Удалено: <b>${removed.map(esc).join(", ")}<\/b><\/span>` : "")
-      : `<span>С отчёта от <b>${esc(base.date)}<\/b> изменений нет<\/span>`;
+  if (isStatic) {
+    const tools = root.querySelector("#tools");
+    tools.hidden = true; tools.innerHTML = "";
+    const fb = root.querySelector("#b-fit");
+    fb.hidden = true; fb.textContent = "";
+    return;
   }
+  renderTools();
+  root.querySelectorAll("textarea.field").forEach(autosize);
+  fit();
+}
 
-  if (!isStatic) { renderTools(); return; }
-  const tools = root.querySelector("#tools");
-  tools.hidden = true; tools.innerHTML = "";
+// «Весь отчёт на экране»: уменьшаем масштаб, чтобы отчёт поместился в окно по высоте
+let fitOn = true;
+try { fitOn = localStorage.getItem("fit") !== "off"; } catch (_) {}
+function fit() {
+  const page = document.getElementById("page");
+  const btn = document.getElementById("b-fit");
+  page.style.zoom = "";
+  const wide = innerWidth >= 1000 && !draft;
+  btn.hidden = !wide;
+  if (!wide) return;
+  btn.textContent = fitOn ? "Обычный размер" : "Весь отчёт на экране";
+  if (!fitOn) return;
+  let z = 1;
+  for (let k = 0; k < 4; k++) { // после уменьшения строки становятся шире и короче, уточняем
+    const h = page.getBoundingClientRect().height;
+    if (h <= innerHeight + 1) break;
+    z = Math.max(0.6, z * innerHeight / h);
+    page.style.zoom = z;
+    if (z === 0.6) break;
+  }
+}
+window.addEventListener("resize", fit);
+
+// поле растёт по высоте вместе с текстом
+function autosize(t) {
+  t.style.height = "auto";
+  t.style.height = t.scrollHeight + 2 + "px";
 }
 
 // готовая разметка отчёта: файл читается и там, где скрипты не выполняются
@@ -795,7 +790,7 @@ function renderTools(note) {
   const tools = document.getElementById("tools");
   if (!artifactApi && !LOCAL) { tools.hidden = true; return; }
   tools.hidden = false;
-  const hint = `Пишите статус любым текстом и выбирайте цвет. Работы можно переименовать, удалить (×) или добавить внизу блока. Для нового еженедельного отчёта поменяйте дату: изменения подсветятся относительно отчёта от ${esc(DATA.reportDate)}.`;
+  const hint = "Пишите статус любым текстом (Enter — новая строка) и выбирайте цвет. Работы можно переименовать, удалить (×) или добавить внизу блока.";
   tools.innerHTML = draft
     ? `<span class="note">${note || hint}<\/span>
        <button class="btn" id="b-cancel" type="button">Отмена<\/button>
@@ -805,7 +800,12 @@ function renderTools(note) {
 
 document.addEventListener("click", async (e) => {
   const id = e.target.id;
-  if (id === "b-edit") { draft = JSON.parse(JSON.stringify(DATA)); render(); }
+  if (id === "b-fit") {
+    fitOn = !fitOn;
+    try { localStorage.setItem("fit", fitOn ? "on" : "off"); } catch (_) {}
+    fit();
+  }
+  if (id === "b-edit") { draft = clone(DATA); render(); }
   if (id === "b-cancel") { draft = null; render(); }
   if (id === "b-save") await save();
   const del = e.target.closest && e.target.closest("[data-del]");
@@ -816,32 +816,25 @@ document.addEventListener("click", async (e) => {
   }
   const add = e.target.closest && e.target.closest("[data-add]");
   if (add && draft) {
-    const b = draft.blocks[+add.dataset.add];
-    const it = { id: newId(), name: "", icon: "doc", color: "blue", label: "В работе", due: "" };
-    b.items.push(it);
+    const it = { id: newId(), name: "", icon: "doc", color: "blue", label: "", due: "" };
+    draft.blocks[+add.dataset.add].items.push(it);
     render();
     const el = document.getElementById("n-" + it.id);
     if (el) el.focus();
   }
 });
 
-let rerenderTimer = null;
 document.addEventListener("input", (e) => {
   const t = e.target;
   if (!draft) return;
-  if (t.id === "f-date") draft.reportDate = t.value;
-  else if (t.dataset.f) draft.blocks[+t.dataset.b].items[+t.dataset.i][t.dataset.f] = t.value;
-  else return;
-  // подсветку обновляем после паузы в наборе, сохраняя фокус в поле
-  clearTimeout(rerenderTimer);
-  rerenderTimer = setTimeout(() => {
-    const id = document.activeElement && document.activeElement.id;
-    const pos = document.activeElement && document.activeElement.selectionStart;
-    render();
-    const el = id && document.getElementById(id);
-    if (el) { el.focus(); if (pos != null && el.setSelectionRange) try { el.setSelectionRange(pos, pos); } catch (_) {} }
-  }, t.type === "radio" ? 0 : 600);
+  if (t.id === "f-date") { draft.reportDate = t.value; return; }
+  if (!t.dataset.f) return;
+  draft.blocks[+t.dataset.b].items[+t.dataset.i][t.dataset.f] = t.value;
+  if (t.tagName === "TEXTAREA") autosize(t);
+  if (t.dataset.f === "color") t.closest(".st").dataset.s = t.value;
 });
+
+window.addEventListener("resize", () => document.querySelectorAll("textarea.field").forEach(autosize));
 
 function buildDocument(data) {
   const json = JSON.stringify(data, null, 1).replace(/[<]/g, "\\u003c");
@@ -868,7 +861,6 @@ async function save() {
   const btn = document.getElementById("b-save");
   btn.disabled = true; btn.textContent = "Сохраняю…";
   const next = clone(draft);
-  next.baseline = baselineFor(next);
   next.blocks.forEach((b) => {
     b.items = b.items.filter((it) => norm(it.name)); // работы без названия не сохраняем
     b.items.forEach((it) => { it.name = norm(it.name); it.label = norm(it.label); it.due = norm(it.due); });
