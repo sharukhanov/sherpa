@@ -19,13 +19,13 @@
   --c3: #f08a3c; --c3-soft: #fdf0e5;   /* закупочные процедуры */
   --c4: #7a6fcf; --c4-soft: #efedfb;   /* общие вопросы */
 
-  --s-green-bg: #e9f6ee;  --s-green-fg: #1f7a48;
-  --s-yellow-bg: #fdf4e1; --s-yellow-fg: #9a6200;
-  --s-blue-bg: #eaf1fd;   --s-blue-fg: #2459a8;
-  --s-red-bg: #fdebe9;    --s-red-fg: #b3382d;
-  --s-violet-bg: #f2eefd; --s-violet-fg: #5c3fb0;
-  --s-teal-bg: #e6f5f7;   --s-teal-fg: #1d7381;
-  --s-grey-bg: #f0f2f6;   --s-grey-fg: #5a6577;
+  --s-green-bg: #d4f2df;  --s-green-fg: #12924c;
+  --s-yellow-bg: #fde7b0; --s-yellow-fg: #c27a00;
+  --s-blue-bg: #d6e5fe;   --s-blue-fg: #1f66e0;
+  --s-red-bg: #fdd5d0;    --s-red-fg: #d92d20;
+  --s-violet-bg: #e5dafd; --s-violet-fg: #6d3ce0;
+  --s-teal-bg: #ccf0f4;   --s-teal-fg: #0b8a9c;
+  --s-grey-bg: #e4e8ef;   --s-grey-fg: #5a6577;
 
   --f-display: "Manrope", "Segoe UI", system-ui, sans-serif;
   --f-body: "PT Sans", "Segoe UI", system-ui, sans-serif;
@@ -35,10 +35,10 @@
     --bg: #0f1522; --panel: #171f30; --ink: #e6ebf5; --muted: #95a1b8; --line: #263149; --cell: #1c2538;
     --c1: #6aa9ee; --c1-soft: #1b2a42; --c2: #5cc39d; --c2-soft: #17302a;
     --c3: #f4a165; --c3-soft: #33251a; --c4: #9d94e6; --c4-soft: #252340;
-    --s-green-bg: #16301f; --s-green-fg: #7fd8a5; --s-yellow-bg: #33280f; --s-yellow-fg: #f2c46b;
-    --s-blue-bg: #172741; --s-blue-fg: #8fb8f2; --s-red-bg: #381a18; --s-red-fg: #f19a90;
-    --s-violet-bg: #251d40; --s-violet-fg: #bba8f5; --s-teal-bg: #132f33; --s-teal-fg: #7fd0dc;
-    --s-grey-bg: #222936; --s-grey-fg: #b0b9c9;
+    --s-green-bg: #1b4a2e; --s-green-fg: #5fe39a; --s-yellow-bg: #4d3a0e; --s-yellow-fg: #ffc94d;
+    --s-blue-bg: #1c3a6e; --s-blue-fg: #7fb0ff; --s-red-bg: #5c1f1a; --s-red-fg: #ff8a7d;
+    --s-violet-bg: #392a6b; --s-violet-fg: #b9a0ff; --s-teal-bg: #12474f; --s-teal-fg: #5fdcec;
+    --s-grey-bg: #2b3342; --s-grey-fg: #b0b9c9;
     color-scheme: dark;
   }
 }
@@ -46,10 +46,10 @@
   --bg: #0f1522; --panel: #171f30; --ink: #e6ebf5; --muted: #95a1b8; --line: #263149; --cell: #1c2538;
   --c1: #6aa9ee; --c1-soft: #1b2a42; --c2: #5cc39d; --c2-soft: #17302a;
   --c3: #f4a165; --c3-soft: #33251a; --c4: #9d94e6; --c4-soft: #252340;
-  --s-green-bg: #16301f; --s-green-fg: #7fd8a5; --s-yellow-bg: #33280f; --s-yellow-fg: #f2c46b;
-  --s-blue-bg: #172741; --s-blue-fg: #8fb8f2; --s-red-bg: #381a18; --s-red-fg: #f19a90;
-  --s-violet-bg: #251d40; --s-violet-fg: #bba8f5; --s-teal-bg: #132f33; --s-teal-fg: #7fd0dc;
-  --s-grey-bg: #222936; --s-grey-fg: #b0b9c9;
+  --s-green-bg: #1b4a2e; --s-green-fg: #5fe39a; --s-yellow-bg: #4d3a0e; --s-yellow-fg: #ffc94d;
+  --s-blue-bg: #1c3a6e; --s-blue-fg: #7fb0ff; --s-red-bg: #5c1f1a; --s-red-fg: #ff8a7d;
+  --s-violet-bg: #392a6b; --s-violet-fg: #b9a0ff; --s-teal-bg: #12474f; --s-teal-fg: #5fdcec;
+  --s-grey-bg: #2b3342; --s-grey-fg: #b0b9c9;
   color-scheme: dark;
 }
 
@@ -202,7 +202,7 @@ body {
 .st { --sb: var(--s-blue-bg); --sf: var(--s-blue-fg); }
 .row > div.st {
   background: var(--sb);
-  box-shadow: inset 3px 0 0 var(--sf);
+  box-shadow: inset 4px 0 0 var(--sf);
   font-size: 13px;
   line-height: 1.3;
 }
@@ -351,7 +351,7 @@ textarea.field { resize: none; overflow: hidden; display: block; }
       
     </article><article class="block" data-tone="3">
       <div class="block-head">
-        <div class="tile"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 4h2.5l2.2 10.5h10.6L20.5 7H7"></path><circle cx="9.5" cy="19" r="1.4"></circle><circle cx="17" cy="19" r="1.4"></circle></svg></div>
+        <div class="tile"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h8l4 4v14H6z"></path><text x="12" y="16.6" text-anchor="middle" font-size="9" font-family="Inter, Segoe UI, Arial, sans-serif" font-weight="700" fill="currentColor" stroke="none">₽</text></svg></div>
         <div class="num">03</div>
         <div class="titles"><h2>Закупочные процедуры</h2><p>Автоматизация ключевых этапов закупочного процесса</p></div>
       </div>
@@ -665,7 +665,8 @@ DATA.blocks.forEach((b) => b.items.forEach((it) => { if (!it.id) it.id = newId()
 const ICONS = {
   laptop: '<rect x="4" y="5" width="16" height="11" rx="1.5"/><path d="M2 19h20"/>',
   book: '<path d="M12 6c-2-1.5-5-2-8-1.5V19c3-.5 6 0 8 1.5 2-1.5 5-2 8-1.5V4.5c-3-.5-6 0-8 1.5z"/><path d="M12 6v14.5"/>',
-  cart: '<path d="M3 4h2.5l2.2 10.5h10.6L20.5 7H7"/><circle cx="9.5" cy="19" r="1.4"/><circle cx="17" cy="19" r="1.4"/>',
+  // закупки: документ со знаком рубля, как на макете главной страницы
+  cart: '<path d="M6 3h8l4 4v14H6z"/><text x="12" y="16.6" text-anchor="middle" font-size="9" font-family="Inter, Segoe UI, Arial, sans-serif" font-weight="700" fill="currentColor" stroke="none">₽<\/text>',
   gear: '<circle cx="12" cy="12" r="3"/><path d="M12 2.8v2.4M12 18.8v2.4M2.8 12h2.4M18.8 12h2.4M5.5 5.5l1.7 1.7M16.8 16.8l1.7 1.7M5.5 18.5l1.7-1.7M16.8 7.2l1.7-1.7"/>',
   mic: '<rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5.5 11a6.5 6.5 0 0 0 13 0M12 17.5V21"/>',
   doc: '<rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 8h6M9 12h6M9 16h4"/>',
