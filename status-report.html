@@ -27,6 +27,8 @@
   --s-teal-bg: #ccf0f4;   --s-teal-fg: #0b8a9c;
   --s-grey-bg: #e4e8ef;   --s-grey-fg: #5a6577;
 
+  --link: #1747b5;
+
   --f-display: "Manrope", "Segoe UI", system-ui, sans-serif;
   --f-body: "PT Sans", "Segoe UI", system-ui, sans-serif;
 }
@@ -39,6 +41,7 @@
     --s-blue-bg: #1c3a6e; --s-blue-fg: #7fb0ff; --s-red-bg: #5c1f1a; --s-red-fg: #ff8a7d;
     --s-violet-bg: #392a6b; --s-violet-fg: #b9a0ff; --s-teal-bg: #12474f; --s-teal-fg: #5fdcec;
     --s-grey-bg: #2b3342; --s-grey-fg: #b0b9c9;
+    --link: #9cc2ff;
     color-scheme: dark;
   }
 }
@@ -50,6 +53,7 @@
   --s-blue-bg: #1c3a6e; --s-blue-fg: #7fb0ff; --s-red-bg: #5c1f1a; --s-red-fg: #ff8a7d;
   --s-violet-bg: #392a6b; --s-violet-fg: #b9a0ff; --s-teal-bg: #12474f; --s-teal-fg: #5fdcec;
   --s-grey-bg: #2b3342; --s-grey-fg: #b0b9c9;
+  --link: #9cc2ff;
   color-scheme: dark;
 }
 
@@ -217,7 +221,9 @@ body {
 .st[data-s="violet"] { --sb: var(--s-violet-bg); --sf: var(--s-violet-fg); }
 .st[data-s="teal"]   { --sb: var(--s-teal-bg);   --sf: var(--s-teal-fg); }
 .st[data-s="grey"]   { --sb: var(--s-grey-bg);   --sf: var(--s-grey-fg); }
-.st .txt { white-space: pre-line; overflow-wrap: anywhere; }
+.st .txt { overflow-wrap: anywhere; }
+.st a, .rich a { color: var(--link); text-decoration: underline; text-underline-offset: 2px; }
+.st u, .rich u { text-underline-offset: 2px; }
 .st .empty, .due.empty { color: var(--muted); }
 
 .due {
@@ -274,7 +280,22 @@ textarea.field { resize: none; overflow: hidden; display: block; }
 .editing .svc .ic { display: none; }
 .editing .row { grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.6fr) 104px; }
 .editing .row > div { align-items: flex-start; }
+.edit-bar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 6px; }
 .swatches { display: flex; flex-wrap: wrap; gap: 4px; }
+.fmt { display: flex; gap: 3px; }
+.fmt-btn {
+  width: 26px; height: 24px; border-radius: 6px;
+  border: 1px solid var(--line); background: var(--panel); color: var(--ink);
+  font: 700 13px/1 var(--f-display); cursor: pointer; display: grid; place-items: center;
+}
+.fmt-btn:hover { border-color: var(--muted); }
+.fmt-btn:focus-visible { outline: 2px solid var(--c1); outline-offset: 2px; }
+.fmt-btn svg { width: 15px; height: 15px; }
+.rich { min-height: 30px; cursor: text; overflow-wrap: anywhere; }
+.rich:empty::before { content: attr(data-placeholder); color: var(--muted); }
+.link-form { display: flex; flex-wrap: wrap; gap: 4px; align-items: center; }
+.link-form .field { flex: 1 1 140px; width: auto; }
+.btn.small { padding: 6px 9px; font-size: 12px; }
 .swatches input { position: absolute; opacity: 0; width: 1px; height: 1px; }
 .swatches label {
   width: 18px; height: 18px; border-radius: 50%; cursor: pointer;
@@ -616,7 +637,7 @@ textarea.field { resize: none; overflow: hidden; display: block; }
      "name": "Прокси МИК (!!!!)",
      "icon": "doc",
      "color": "red",
-     "label": "с 07.10 (ср) наблюдались технические неполадки с работой ИИ-моделей в нашем контуре. Выяснили что связано с тем, что МИК переписывал \"прокси\" на другой язык. Ошибки наблюадись 09.10 (пт)",
+     "label": "с 07.10 (ср) наблюдались технические неполадки с работой ИИ-моделей в нашем контуре. Выяснили что связано с тем, что МИК переписывал &quot;прокси&quot; на другой язык. Ошибки наблюадись 09.10 (пт)",
      "due": "-"
     },
     {
@@ -637,7 +658,8 @@ textarea.field { resize: none; overflow: hidden; display: block; }
     }
    ]
   }
- ]
+ ],
+ "richText": true
 }
 </script>
 
@@ -666,6 +688,42 @@ const norm = (v) => String(v || "").trim();
 const newId = () => "w" + Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
 DATA.blocks.forEach((b) => b.items.forEach((it) => { if (!it.id) it.id = newId(); }));
 
+// оставляем только жирный, подчёркнутый, ссылки и переносы строк; всё остальное — простым текстом
+function sanitize(html) {
+  const tpl = document.createElement("template");
+  tpl.innerHTML = String(html || "");
+  const out = document.createElement("div");
+  const walk = (src, dst) => {
+    for (const n of [...src.childNodes]) {
+      if (n.nodeType === 3) { dst.appendChild(document.createTextNode(n.nodeValue)); continue; }
+      if (n.nodeType !== 1) continue;
+      const tag = n.tagName;
+      if (tag === "SCRIPT" || tag === "STYLE" || tag === "TEMPLATE") continue;
+      if (tag === "BR") { dst.appendChild(document.createElement("br")); continue; }
+      if ((tag === "DIV" || tag === "P" || tag === "LI") && dst.lastChild && dst.lastChild.nodeName !== "BR") {
+        dst.appendChild(document.createElement("br"));
+      }
+      let el = null;
+      if (tag === "B" || tag === "STRONG") el = document.createElement("b");
+      else if (tag === "U") el = document.createElement("u");
+      else if (tag === "A") {
+        const href = (n.getAttribute("href") || "").trim();
+        if (/^(https?:|mailto:)/i.test(href)) {
+          el = document.createElement("a");
+          el.setAttribute("href", href);
+          el.setAttribute("target", "_blank");
+          el.setAttribute("rel", "noopener noreferrer");
+        }
+      }
+      if (el) { walk(n, el); dst.appendChild(el); } else walk(n, dst);
+    }
+  };
+  walk(tpl.content, out);
+  while (out.lastChild && out.lastChild.nodeName === "BR") out.lastChild.remove();
+  while (out.firstChild && out.firstChild.nodeName === "BR") out.firstChild.remove();
+  return out.textContent.trim() ? out.innerHTML : "";
+}
+
 const ICONS = {
   laptop: '<rect x="4" y="5" width="16" height="11" rx="1.5"/><path d="M2 19h20"/>',
   book: '<path d="M12 6c-2-1.5-5-2-8-1.5V19c3-.5 6 0 8 1.5 2-1.5 5-2 8-1.5V4.5c-3-.5-6 0-8 1.5z"/><path d="M12 6v14.5"/>',
@@ -681,6 +739,12 @@ const ICONS = {
 };
 const svg = (k) => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICONS[k] || ICONS.doc}<\/svg>`;
 const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+
+// статус хранится как размеченный текст (жирный, подчёркнутый, ссылки); старый простой текст переводим один раз
+if (!DATA.richText) {
+  DATA.blocks.forEach((b) => b.items.forEach((it) => { it.label = esc(it.label || "").replace(/\n/g, "<br>"); }));
+  DATA.richText = true;
+}
 
 function render(root = document, isStatic = false) {
   const d = draft || DATA;
@@ -705,14 +769,28 @@ function render(root = document, isStatic = false) {
           `<label for="c-${key}-${c}" title="${COLORS[c]}" style="background: var(--s-${c}-fg)"><span hidden>${COLORS[c]}<\/span><\/label>`).join("");
         name = `<textarea class="field name-field" id="n-${key}" ${attrs} data-f="name" rows="1" placeholder="Название работы" aria-label="Название работы">${esc(it.name)}<\/textarea>`;
         status = `<div class="edit-cell">
-          <div class="swatches" role="radiogroup" aria-label="Цвет статуса">${sw}<\/div>
-          <textarea class="field" id="l-${key}" ${attrs} data-f="label" rows="1" placeholder="Текст статуса" aria-label="Текст статуса">${esc(it.label)}<\/textarea>
+          <div class="edit-bar">
+            <div class="swatches" role="radiogroup" aria-label="Цвет статуса">${sw}<\/div>
+            <div class="fmt" role="toolbar" aria-label="Оформление текста">
+              <button class="fmt-btn" type="button" data-cmd="bold" data-for="${key}" title="Жирный (Ctrl+B)">Ж<\/button>
+              <button class="fmt-btn" type="button" data-cmd="underline" data-for="${key}" title="Подчёркнутый (Ctrl+U)"><u>Ч<\/u><\/button>
+              <button class="fmt-btn" type="button" data-cmd="link" data-for="${key}" title="Ссылка (Ctrl+K)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.5.5l3-3a5 5 0 0 0-7-7l-1.7 1.7"/><path d="M14 11a5 5 0 0 0-7.5-.5l-3 3a5 5 0 0 0 7 7l1.7-1.7"/><\/svg><\/button>
+            <\/div>
+          <\/div>
+          <div class="field rich" id="l-${key}" ${attrs} data-f="label" contenteditable="true" role="textbox" aria-multiline="true" aria-label="Текст статуса" data-placeholder="Текст статуса">${sanitize(it.label)}<\/div>
+          <div class="link-form" id="lf-${key}" hidden>
+            <input class="field" id="lu-${key}" data-link-url="${key}" placeholder="https://…" aria-label="Адрес ссылки">
+            <button class="btn small primary" type="button" data-link-apply="${key}">Вставить<\/button>
+            <button class="btn small" type="button" data-link-remove="${key}">Убрать ссылку<\/button>
+            <button class="btn small" type="button" data-link-cancel="${key}">Отмена<\/button>
+          <\/div>
         <\/div>`;
         due = `<input class="field" id="d-${key}" ${attrs} data-f="due" value="${esc(it.due)}" placeholder="до 16.10" aria-label="Плановый срок">`;
         del = `<button class="icon-btn" type="button" data-del="${bi}-${ii}" title="Удалить работу" aria-label="Удалить работу «${esc(it.name)}»">×<\/button>`;
       } else {
         name = `<span class="name">${esc(it.name)}<\/span>`;
-        status = norm(it.label) ? `<span class="txt">${esc(norm(it.label))}<\/span>` : `<span class="empty">—<\/span>`;
+        const html = sanitize(it.label);
+        status = html ? `<span class="txt">${html}<\/span>` : `<span class="empty">—<\/span>`;
         const dv = norm(it.due);
         due = dv && dv !== "-" ? esc(dv) : "—";
       }
@@ -793,7 +871,7 @@ function renderTools(note) {
   const tools = document.getElementById("tools");
   if (!artifactApi && !LOCAL) { tools.hidden = true; return; }
   tools.hidden = false;
-  const hint = "Пишите статус любым текстом (Enter — новая строка) и выбирайте цвет. Работы можно переименовать, удалить (×) или добавить внизу блока.";
+  const hint = "Пишите статус любым текстом и выбирайте цвет. Выделите слова и нажмите Ж (жирный), Ч (подчёркнутый) или значок ссылки. Работы можно переименовать, удалить (×) или добавить внизу блока.";
   tools.innerHTML = draft
     ? `<span class="note">${note || hint}<\/span>
        <button class="btn" id="b-cancel" type="button">Отмена<\/button>
@@ -832,12 +910,121 @@ document.addEventListener("input", (e) => {
   if (!draft) return;
   if (t.id === "f-date") { draft.reportDate = t.value; return; }
   if (!t.dataset.f) return;
-  draft.blocks[+t.dataset.b].items[+t.dataset.i][t.dataset.f] = t.value;
+  draft.blocks[+t.dataset.b].items[+t.dataset.i][t.dataset.f] = t.isContentEditable ? t.innerHTML : t.value;
   if (t.tagName === "TEXTAREA") autosize(t);
   if (t.dataset.f === "color") t.closest(".st").dataset.s = t.value;
 });
 
 window.addEventListener("resize", () => document.querySelectorAll("textarea.field").forEach(autosize));
+
+/* Оформление статуса: жирный, подчёркнутый, ссылка */
+let linkRange = null; // выделение, к которому применится ссылка
+
+function editorOf(key) { return document.getElementById("l-" + key); }
+function selectionIn(ed) {
+  const sel = getSelection();
+  return sel.rangeCount && ed.contains(sel.getRangeAt(0).commonAncestorContainer) ? sel.getRangeAt(0) : null;
+}
+function caretAtEnd(ed) {
+  const r = document.createRange();
+  r.selectNodeContents(ed); r.collapse(false);
+  return r;
+}
+function restore(ed, range) {
+  ed.focus();
+  const sel = getSelection();
+  sel.removeAllRanges();
+  sel.addRange(range || caretAtEnd(ed));
+}
+function syncEditor(ed) {
+  ed.dispatchEvent(new Event("input", { bubbles: true }));
+}
+function linkAt(ed, range) {
+  let n = range && range.commonAncestorContainer;
+  while (n && n !== ed) { if (n.nodeName === "A") return n; n = n.parentNode; }
+  return null;
+}
+function openLinkForm(key) {
+  const ed = editorOf(key);
+  linkRange = selectionIn(ed) || caretAtEnd(ed);
+  const a = linkAt(ed, linkRange);
+  const form = document.getElementById("lf-" + key);
+  const url = document.getElementById("lu-" + key);
+  form.hidden = false;
+  url.value = a ? a.getAttribute("href") : "";
+  url.focus();
+}
+function closeLinkForm(key) {
+  document.getElementById("lf-" + key).hidden = true;
+  restore(editorOf(key), linkRange);
+  linkRange = null;
+}
+function applyLink(key) {
+  let url = document.getElementById("lu-" + key).value.trim();
+  if (!url) return;
+  if (!/^(https?:|mailto:)/i.test(url)) url = (url.includes("@") && !url.includes("/") ? "mailto:" : "https://") + url;
+  const ed = editorOf(key);
+  restore(ed, linkRange);
+  const a = linkAt(ed, linkRange);
+  if (a) a.setAttribute("href", url);
+  else if (linkRange && !linkRange.collapsed) document.execCommand("createLink", false, url);
+  else document.execCommand("insertHTML", false, `<a href="${esc(url)}">${esc(url)}<\/a>`);
+  document.getElementById("lf-" + key).hidden = true;
+  linkRange = null;
+  syncEditor(ed);
+}
+function removeLink(key) {
+  const ed = editorOf(key);
+  const a = linkAt(ed, linkRange);
+  if (a) a.replaceWith(...a.childNodes);
+  else { restore(ed, linkRange); document.execCommand("unlink"); }
+  document.getElementById("lf-" + key).hidden = true;
+  restore(ed, null);
+  linkRange = null;
+  syncEditor(ed);
+}
+
+// кнопки оформления не забирают выделение у текста
+document.addEventListener("mousedown", (e) => {
+  if (e.target.closest && e.target.closest(".fmt-btn")) e.preventDefault();
+});
+document.addEventListener("click", (e) => {
+  if (!draft || !e.target.closest) return;
+  const fb = e.target.closest(".fmt-btn");
+  if (fb) {
+    const ed = editorOf(fb.dataset.for);
+    if (fb.dataset.cmd === "link") { openLinkForm(fb.dataset.for); return; }
+    if (!selectionIn(ed)) restore(ed, null);
+    document.execCommand("styleWithCSS", false, false);
+    document.execCommand(fb.dataset.cmd);
+    syncEditor(ed);
+    return;
+  }
+  const ap = e.target.closest("[data-link-apply]");
+  if (ap) { applyLink(ap.dataset.linkApply); return; }
+  const rm = e.target.closest("[data-link-remove]");
+  if (rm) { removeLink(rm.dataset.linkRemove); return; }
+  const cn = e.target.closest("[data-link-cancel]");
+  if (cn) closeLinkForm(cn.dataset.linkCancel);
+});
+document.addEventListener("keydown", (e) => {
+  const t = e.target;
+  if (!draft) return;
+  if (t.classList && t.classList.contains("rich") && (e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "k") {
+    e.preventDefault();
+    openLinkForm(t.id.slice(2));
+  }
+  if (t.dataset && t.dataset.linkUrl) {
+    if (e.key === "Enter") { e.preventDefault(); applyLink(t.dataset.linkUrl); }
+    if (e.key === "Escape") { e.preventDefault(); closeLinkForm(t.dataset.linkUrl); }
+  }
+});
+// вставка из буфера — простым текстом, без чужого оформления
+document.addEventListener("paste", (e) => {
+  if (!e.target.closest || !e.target.closest(".rich")) return;
+  e.preventDefault();
+  document.execCommand("insertText", false, e.clipboardData.getData("text/plain"));
+});
 
 function buildDocument(data) {
   const json = JSON.stringify(data, null, 1).replace(/[<]/g, "\\u003c");
@@ -866,7 +1053,7 @@ async function save() {
   const next = clone(draft);
   next.blocks.forEach((b) => {
     b.items = b.items.filter((it) => norm(it.name)); // работы без названия не сохраняем
-    b.items.forEach((it) => { it.name = norm(it.name); it.label = norm(it.label); it.due = norm(it.due); });
+    b.items.forEach((it) => { it.name = norm(it.name); it.label = sanitize(it.label); it.due = norm(it.due); });
   });
   try {
     if (LOCAL && !artifactApi) { downloadReport(next); return; }
