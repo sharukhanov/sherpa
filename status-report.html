@@ -107,6 +107,13 @@ body {
 }
 .org b { font-family: var(--f-display); font-size: 15px; }
 .org span { color: var(--muted); }
+.org .total { color: var(--ink); font-variant-numeric: tabular-nums; }
+.org .total b { font-family: var(--f-display); }
+.block-head .count {
+  margin-left: 6px; padding: 2px 7px; border-radius: 999px; vertical-align: 2px;
+  background: var(--soft); color: var(--c);
+  font: 700 11.5px/1.3 var(--f-display); font-variant-numeric: tabular-nums;
+}
 .org .date { color: var(--ink); font-weight: 700; margin-top: 3px; font-variant-numeric: tabular-nums; }
 
 /* Блоки: сетка 2×2, блоки в одной строке одинаковой высоты и начинаются на одном уровне */
@@ -195,7 +202,7 @@ body {
 .svc .ic svg { width: 16px; height: 16px; }
 .svc .step {
   flex: none;
-  width: 26px; height: 22px;
+  min-width: 30px; height: 22px; padding-inline: 4px;
   border-radius: 6px;
   background: var(--soft);
   color: var(--c);
@@ -277,7 +284,6 @@ textarea.field { resize: none; overflow: hidden; display: block; }
 }
 .icon-btn:hover { color: var(--s-red-fg); border-color: var(--s-red-fg); background: var(--s-red-bg); }
 .add-btn { align-self: flex-start; border-style: dashed; color: var(--c); padding: 7px 12px; }
-.editing .svc .ic { display: none; }
 .editing .row { grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.6fr) 104px; }
 .editing .row > div { align-items: flex-start; }
 .edit-bar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 6px; }
@@ -326,6 +332,7 @@ textarea.field { resize: none; overflow: hidden; display: block; }
       <b>Фонд МИК</b>
       <span>Внутренние сервисы на базе ИИ</span>
       <span class="date" id="report-date">Отчёт на 13.10.2026</span>
+      <span class="total" id="total">Всего: <b>21 задача</b></span>
       <button class="link-btn" id="b-fit" type="button" hidden=""></button>
     </div>
   </header>
@@ -336,20 +343,20 @@ textarea.field { resize: none; overflow: hidden; display: block; }
       <div class="block-head">
         <div class="tile"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="5" width="16" height="11" rx="1.5"></rect><path d="M2 19h20"></path></svg></div>
         <div class="num">01</div>
-        <div class="titles"><h2>Корпоративные инструменты</h2><p>Сервисы для повышения продуктивности внутренних сотрудников Фонда</p></div>
+        <div class="titles"><h2>Корпоративные инструменты <span class="count">3 задачи</span></h2><p>Сервисы для повышения продуктивности внутренних сотрудников Фонда</p></div>
       </div>
       <div class="table" role="table">
         <div class="row th" role="row"><div>Сервисы / работы</div><div>Статус</div><div>Срок</div></div>
         <div class="row">
-        <div class="svc"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3"></rect><path d="M5.5 11a6.5 6.5 0 0 0 13 0M12 17.5V21"></path></svg></span><span class="name-wrap"><span class="name">ИИ-агент транскрибации</span></span></div>
-        <div class="st" data-s="green"><span class="txt">Готово. Хотим увеличить объем загружаемых файлов, чтобы не резать их</span></div>
+        <div class="svc"><span class="step" title="Задача 1.1">1.1</span><span class="name-wrap"><span class="name">ИИ-агент транскрибации</span></span></div>
+        <div class="st" data-s="green"><span class="txt">Готово. Хотим увеличить объем загружаемых файлов, чтобы не резать их. Необходимо уточнить у ДИТа</span></div>
         <div class="due">до 16.10</div>
       </div><div class="row">
-        <div class="svc"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="2"></rect><path d="M9 8h6M9 12h6M9 16h4"></path></svg></span><span class="name-wrap"><span class="name">ИИ-агент суммаризации / протоколирования</span></span></div>
-        <div class="st" data-s="green"><span class="txt">Готово, хотим поменять логику работы - чтобы агент давал полной саммари в файле</span></div>
+        <div class="svc"><span class="step" title="Задача 1.2">1.2</span><span class="name-wrap"><span class="name">ИИ-агент суммаризации / протоколирования</span></span></div>
+        <div class="st" data-s="green"><span class="txt">Готово, хотим поменять логику работы - чтобы агент давал полной саммари в файле. Сейчас дает краткое саммари</span></div>
         <div class="due">до 16.10</div>
       </div><div class="row">
-        <div class="svc"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="2"></rect><path d="M9 8h6M9 12h6M9 16h4"></path></svg></span><span class="name-wrap"><span class="name">ИИ-агент протоколирования</span></span></div>
+        <div class="svc"><span class="step" title="Задача 1.3">1.3</span><span class="name-wrap"><span class="name">ИИ-агент протоколирования</span></span></div>
         <div class="st" data-s="red"><span class="txt">Не работает</span></div>
         <div class="due">до 16.10</div>
       </div>
@@ -359,17 +366,17 @@ textarea.field { resize: none; overflow: hidden; display: block; }
       <div class="block-head">
         <div class="tile"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 6c-2-1.5-5-2-8-1.5V19c3-.5 6 0 8 1.5 2-1.5 5-2 8-1.5V4.5c-3-.5-6 0-8 1.5z"></path><path d="M12 6v14.5"></path></svg></div>
         <div class="num">02</div>
-        <div class="titles"><h2>База знаний</h2><p>Удобный доступ к внутренней информации Фонда с помощью ИИ</p></div>
+        <div class="titles"><h2>База знаний <span class="count">2 задачи</span></h2><p>Удобный доступ к внутренней информации Фонда с помощью ИИ</p></div>
       </div>
       <div class="table" role="table">
         <div class="row th" role="row"><div>Сервисы / работы</div><div>Статус</div><div>Срок</div></div>
         <div class="row">
-        <div class="svc"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6"></circle><path d="M15 15l5 5"></path></svg></span><span class="name-wrap"><span class="name">ИИ-агент База Знаний</span></span></div>
-        <div class="st" data-s="blue"><span class="txt">Тестирование после баг-фикса</span></div>
+        <div class="svc"><span class="step" title="Задача 2.1">2.1</span><span class="name-wrap"><span class="name">ИИ-агент База Знаний</span></span></div>
+        <div class="st" data-s="blue"><span class="txt">Тестирование после баг-фикса. Шерпа сказали что все поправили</span></div>
         <div class="due">до 20.10</div>
       </div><div class="row">
-        <div class="svc"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7.5A1.5 1.5 0 0 1 4.5 6H9l2 2h8.5A1.5 1.5 0 0 1 21 9.5v8A1.5 1.5 0 0 1 19.5 19h-15A1.5 1.5 0 0 1 3 17.5z"></path><path d="M3 10.5h18"></path></svg></span><span class="name-wrap"><span class="name">Файловый менеджер</span></span></div>
-        <div class="st" data-s="blue"><span class="txt">Тестирование после баг-фикса</span></div>
+        <div class="svc"><span class="step" title="Задача 2.2">2.2</span><span class="name-wrap"><span class="name">Файловый менеджер</span></span></div>
+        <div class="st" data-s="blue"><span class="txt">Тестирование после баг-фикса. Шерпа сказали что переделали тегирование</span></div>
         <div class="due">до 20.10</div>
       </div>
       </div>
@@ -378,41 +385,41 @@ textarea.field { resize: none; overflow: hidden; display: block; }
       <div class="block-head">
         <div class="tile"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h8l4 4v14H6z"></path><text x="12" y="16.6" text-anchor="middle" font-size="9" font-family="Inter, Segoe UI, Arial, sans-serif" font-weight="700" fill="currentColor" stroke="none">₽</text></svg></div>
         <div class="num">03</div>
-        <div class="titles"><h2>Закупочные процедуры</h2><p>Автоматизация ключевых этапов закупочного процесса</p></div>
+        <div class="titles"><h2>Закупочные процедуры <span class="count">8 задач</span></h2><p>Автоматизация ключевых этапов закупочного процесса</p></div>
       </div>
       <div class="table" role="table">
         <div class="row th" role="row"><div>Сервисы / работы</div><div>Статус</div><div>Срок</div></div>
         <div class="row">
-        <div class="svc"><span class="step">01</span><span class="name-wrap"><span class="name">Формирование закупочной документации</span></span></div>
+        <div class="svc"><span class="step" title="Задача 3.1">3.1</span><span class="name-wrap"><span class="name">Формирование закупочной документации</span></span></div>
         <div class="st" data-s="blue"><span class="txt">В работе у Шерпы</span></div>
         <div class="due">до 14.10</div>
       </div><div class="row">
-        <div class="svc"><span class="step">02</span><span class="name-wrap"><span class="name">Проверка закупочной документации</span></span></div>
-        <div class="st" data-s="grey"><span class="txt">Пауза (ждём ресурсы Шерпы)</span></div>
+        <div class="svc"><span class="step" title="Задача 3.2">3.2</span><span class="name-wrap"><span class="name">Проверка закупочной документации</span></span></div>
+        <div class="st" data-s="yellow"><span class="txt">Пауза (ждём ресурсы Шерпы)</span></div>
         <div class="due empty">—</div>
       </div><div class="row">
-        <div class="svc"><span class="step">03</span><span class="name-wrap"><span class="name">Формирование КП</span></span></div>
+        <div class="svc"><span class="step" title="Задача 3.3">3.3</span><span class="name-wrap"><span class="name">Формирование КП</span></span></div>
         <div class="st" data-s="blue"><span class="txt">В работе у Шерпы</span></div>
         <div class="due">до 14.10</div>
       </div><div class="row">
-        <div class="svc"><span class="step">04</span><span class="name-wrap"><span class="name">Проверка КП</span></span></div>
-        <div class="st" data-s="green"><span class="txt">Тестирование + отдел закупок</span></div>
+        <div class="svc"><span class="step" title="Задача 3.4">3.4</span><span class="name-wrap"><span class="name">Проверка КП</span></span></div>
+        <div class="st" data-s="blue"><span class="txt">Тестирование + отдел закупок</span></div>
         <div class="due">до 14.10</div>
       </div><div class="row">
-        <div class="svc"><span class="step">05</span><span class="name-wrap"><span class="name">Формирование НМЦД</span></span></div>
-        <div class="st" data-s="green"><span class="txt">Тестирование</span></div>
+        <div class="svc"><span class="step" title="Задача 3.5">3.5</span><span class="name-wrap"><span class="name">Формирование НМЦД</span></span></div>
+        <div class="st" data-s="blue"><span class="txt">Тестирование</span></div>
         <div class="due">до 14.10</div>
       </div><div class="row">
-        <div class="svc"><span class="step">06</span><span class="name-wrap"><span class="name">Формирование договора</span></span></div>
-        <div class="st" data-s="grey"><span class="txt">Пауза (ждём ресурсы Шерпы)</span></div>
+        <div class="svc"><span class="step" title="Задача 3.6">3.6</span><span class="name-wrap"><span class="name">Формирование договора</span></span></div>
+        <div class="st" data-s="yellow"><span class="txt">Пауза (ждём ресурсы Шерпы)</span></div>
         <div class="due empty">—</div>
       </div><div class="row">
-        <div class="svc"><span class="step">07</span><span class="name-wrap"><span class="name">Формирование отчётной документации</span></span></div>
-        <div class="st" data-s="grey"><span class="txt">Пауза (ждём ресурсы Шерпы)</span></div>
+        <div class="svc"><span class="step" title="Задача 3.7">3.7</span><span class="name-wrap"><span class="name">Формирование отчётной документации</span></span></div>
+        <div class="st" data-s="yellow"><span class="txt">Пауза (ждём ресурсы Шерпы)</span></div>
         <div class="due empty">—</div>
       </div><div class="row">
-        <div class="svc"><span class="step">08</span><span class="name-wrap"><span class="name">Проверка отчетной документации</span></span></div>
-        <div class="st" data-s="grey"><span class="txt">Пауза (ждём ресурсы Шерпы)</span></div>
+        <div class="svc"><span class="step" title="Задача 3.8">3.8</span><span class="name-wrap"><span class="name">Проверка отчетной документации</span></span></div>
+        <div class="st" data-s="yellow"><span class="txt">Пауза (ждём ресурсы Шерпы)</span></div>
         <div class="due empty">—</div>
       </div>
       </div>
@@ -421,40 +428,40 @@ textarea.field { resize: none; overflow: hidden; display: block; }
       <div class="block-head">
         <div class="tile"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"></circle><path d="M12 2.8v2.4M12 18.8v2.4M2.8 12h2.4M18.8 12h2.4M5.5 5.5l1.7 1.7M16.8 16.8l1.7 1.7M5.5 18.5l1.7-1.7M16.8 7.2l1.7-1.7"></path></svg></div>
         <div class="num">04</div>
-        <div class="titles"><h2>Общие вопросы</h2><p>Ключевые сквозные задачи по проекту</p></div>
+        <div class="titles"><h2>Общие вопросы <span class="count">8 задач</span></h2><p>Ключевые сквозные задачи по проекту</p></div>
       </div>
       <div class="table" role="table">
         <div class="row th" role="row"><div>Сервисы / работы</div><div>Статус</div><div>Срок</div></div>
         <div class="row">
-        <div class="svc"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3a9 9 0 1 0 0 18c1.2 0 1.8-.8 1.8-1.7 0-1.3-1-1.6-1-2.6 0-.9.7-1.5 1.6-1.5H17a4 4 0 0 0 4-4C21 6.6 17 3 12 3z"></path><circle cx="7.5" cy="11" r="1.1"></circle><circle cx="10" cy="7.3" r="1.1"></circle><circle cx="14.5" cy="7.3" r="1.1"></circle></svg></span><span class="name-wrap"><span class="name">Дизайн интерфейса</span></span></div>
-        <div class="st" data-s="grey"><span class="txt">Шерпа должна вернуться и сказать что они смогут сделать с нашим дизайном</span></div>
+        <div class="svc"><span class="step" title="Задача 4.1">4.1</span><span class="name-wrap"><span class="name">Дизайн интерфейса</span></span></div>
+        <div class="st" data-s="yellow"><span class="txt">Шерпа должна вернуться и сказать что они смогут сделать с нашим дизайном</span></div>
         <div class="due">до 14.10</div>
       </div><div class="row">
-        <div class="svc"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"></path><path d="M14 3v5h5M9 13h6M9 17h6"></path></svg></span><span class="name-wrap"><span class="name">Отчёт по 1 этапу</span></span></div>
-        <div class="st" data-s="green"><span class="txt">На проверке</span></div>
+        <div class="svc"><span class="step" title="Задача 4.2">4.2</span><span class="name-wrap"><span class="name">Отчёт по 1 этапу</span></span></div>
+        <div class="st" data-s="blue"><span class="txt">На проверке у отдела закупок</span></div>
         <div class="due">до 13.10</div>
       </div><div class="row">
-        <div class="svc"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"></path><path d="M14 3v5h5M9 13h6M9 17h6"></path></svg></span><span class="name-wrap"><span class="name">Отчёт по 2 этапу</span></span></div>
-        <div class="st" data-s="green"><span class="txt">На проверке</span></div>
+        <div class="svc"><span class="step" title="Задача 4.3">4.3</span><span class="name-wrap"><span class="name">Отчёт по 2 этапу</span></span></div>
+        <div class="st" data-s="blue"><span class="txt">На проверке у отдела закупок</span></div>
         <div class="due">до 20.10</div>
       </div><div class="row">
-        <div class="svc"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"></path><path d="M14 3v5h5M9 13h6M9 17h6"></path></svg></span><span class="name-wrap"><span class="name">Отчёт по 3 этапу</span></span></div>
-        <div class="st" data-s="green"><span class="txt">В работе у Шерпы</span></div>
+        <div class="svc"><span class="step" title="Задача 4.4">4.4</span><span class="name-wrap"><span class="name">Отчёт по 3 этапу</span></span></div>
+        <div class="st" data-s="blue"><span class="txt">В работе у Шерпы</span></div>
         <div class="due">до 28.10</div>
       </div><div class="row">
-        <div class="svc"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="2"></rect><path d="M9 8h6M9 12h6M9 16h4"></path></svg></span><span class="name-wrap"><span class="name">МЭЦ_SmartDocs</span></span></div>
-        <div class="st" data-s="grey"><span class="txt">Ждем ОС от МЭЦ по MCP и доступам к тесту</span></div>
+        <div class="svc"><span class="step" title="Задача 4.5">4.5</span><span class="name-wrap"><span class="name">МЭЦ_SmartDocs</span></span></div>
+        <div class="st" data-s="yellow"><span class="txt">Ждем ОС от МЭЦ по MCP и доступам к тесту</span></div>
         <div class="due">до 14.10</div>
       </div><div class="row">
-        <div class="svc"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="2"></rect><path d="M9 8h6M9 12h6M9 16h4"></path></svg></span><span class="name-wrap"><span class="name">Прокси МИК (!!!!)</span></span></div>
-        <div class="st" data-s="red"><span class="txt">с 07.10 (ср) наблюдались технические неполадки с работой ИИ-моделей в нашем контуре. Выяснили что связано с тем, что МИК переписывал "прокси" на другой язык. Ошибки наблюадись 09.10 (пт)</span></div>
+        <div class="svc"><span class="step" title="Задача 4.6">4.6</span><span class="name-wrap"><span class="name">Прокси МИК</span></span></div>
+        <div class="st" data-s="red"><span class="txt">с 07.10 (ср) наблюдались технические неполадки с работой ИИ-моделей в нашем контуре. Выяснили что связано с тем, что <b>МИК переписывал "прокси" на другой язык.</b> Ошибки наблюадись 09.10 (пт), контур до сих пор не работает. <b><u>Попросил Шерпу перенести всех агентов в их контур чтобы не приостанавливать тесты</u></b></span></div>
         <div class="due empty">—</div>
       </div><div class="row">
-        <div class="svc"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="2"></rect><path d="M9 8h6M9 12h6M9 16h4"></path></svg></span><span class="name-wrap"><span class="name">Права на Шерпу (бэк/фронт)</span></span></div>
-        <div class="st" data-s="green"><span class="txt">Промежуточно - передают только доступ к фронту (через сваггер). Бэк - не переходит тк передают неисключительные права. То есть если будут ошибки, баги, то мы не сможем сами ничего менять и другой подрядчик тоже. Планирую встречу с Шерпой, где они расскажут более детально что у нас будет по итогам контракта</span></div>
+        <div class="svc"><span class="step" title="Задача 4.7">4.7</span><span class="name-wrap"><span class="name">Права на Шерпу (бэк/фронт)</span></span></div>
+        <div class="st" data-s="blue"><span class="txt">Промежуточно -<b><u> передают только доступ к фронту (через сваггер)</u></b>. <b>Бэк - не переходит тк передают неисключительные права. </b>То есть если будут ошибки, баги, то мы не сможем сами ничего менять и другой подрядчик тоже. Планирую встречу с Шерпой, где они расскажут более детально что у нас будет по итогам контракта</span></div>
         <div class="due empty">—</div>
       </div><div class="row">
-        <div class="svc"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="2"></rect><path d="M9 8h6M9 12h6M9 16h4"></path></svg></span><span class="name-wrap"><span class="name">Ресурсы - Бизнес аналитик (для тех. вопросов, корректировки текущих агентов и пр)</span></span></div>
+        <div class="svc"><span class="step" title="Задача 4.8">4.8</span><span class="name-wrap"><span class="name">Ресурсы - Бизнес аналитик (для тех. вопросов, корректировки текущих агентов и пр)</span></span></div>
         <div class="st" data-s="blue"><span class="empty">—</span></div>
         <div class="due empty">—</div>
       </div>
@@ -478,7 +485,7 @@ textarea.field { resize: none; overflow: hidden; display: block; }
      "name": "ИИ-агент транскрибации",
      "icon": "mic",
      "color": "green",
-     "label": "Готово. Хотим увеличить объем загружаемых файлов, чтобы не резать их",
+     "label": "Готово. Хотим увеличить объем загружаемых файлов, чтобы не резать их. Необходимо уточнить у ДИТа",
      "due": "до 16.10"
     },
     {
@@ -486,7 +493,7 @@ textarea.field { resize: none; overflow: hidden; display: block; }
      "name": "ИИ-агент суммаризации / протоколирования",
      "icon": "doc",
      "color": "green",
-     "label": "Готово, хотим поменять логику работы - чтобы агент давал полной саммари в файле",
+     "label": "Готово, хотим поменять логику работы - чтобы агент давал полной саммари в файле. Сейчас дает краткое саммари",
      "due": "до 16.10"
     },
     {
@@ -509,7 +516,7 @@ textarea.field { resize: none; overflow: hidden; display: block; }
      "name": "ИИ-агент База Знаний",
      "icon": "search",
      "color": "blue",
-     "label": "Тестирование после баг-фикса",
+     "label": "Тестирование после баг-фикса. Шерпа сказали что все поправили",
      "due": "до 20.10"
     },
     {
@@ -517,7 +524,7 @@ textarea.field { resize: none; overflow: hidden; display: block; }
      "name": "Файловый менеджер",
      "icon": "folder",
      "color": "blue",
-     "label": "Тестирование после баг-фикса",
+     "label": "Тестирование после баг-фикса. Шерпа сказали что переделали тегирование",
      "due": "до 20.10"
     }
    ]
@@ -538,7 +545,7 @@ textarea.field { resize: none; overflow: hidden; display: block; }
     {
      "id": "w06",
      "name": "Проверка закупочной документации",
-     "color": "grey",
+     "color": "yellow",
      "label": "Пауза (ждём ресурсы Шерпы)",
      "due": "-"
     },
@@ -552,28 +559,28 @@ textarea.field { resize: none; overflow: hidden; display: block; }
     {
      "id": "w08",
      "name": "Проверка КП",
-     "color": "green",
+     "color": "blue",
      "label": "Тестирование + отдел закупок",
      "due": "до 14.10"
     },
     {
      "id": "w09",
      "name": "Формирование НМЦД",
-     "color": "green",
+     "color": "blue",
      "label": "Тестирование",
      "due": "до 14.10"
     },
     {
      "id": "w10",
      "name": "Формирование договора",
-     "color": "grey",
+     "color": "yellow",
      "label": "Пауза (ждём ресурсы Шерпы)",
      "due": "-"
     },
     {
      "id": "w11",
      "name": "Формирование отчётной документации",
-     "color": "grey",
+     "color": "yellow",
      "label": "Пауза (ждём ресурсы Шерпы)",
      "due": "-"
     },
@@ -581,7 +588,7 @@ textarea.field { resize: none; overflow: hidden; display: block; }
      "id": "wmuzfzelo2r43",
      "name": "Проверка отчетной документации",
      "icon": "doc",
-     "color": "grey",
+     "color": "yellow",
      "label": "Пауза (ждём ресурсы Шерпы)",
      "due": "-"
     }
@@ -596,7 +603,7 @@ textarea.field { resize: none; overflow: hidden; display: block; }
      "id": "w12",
      "name": "Дизайн интерфейса",
      "icon": "palette",
-     "color": "grey",
+     "color": "yellow",
      "label": "Шерпа должна вернуться и сказать что они смогут сделать с нашим дизайном",
      "due": "до 14.10"
     },
@@ -604,23 +611,23 @@ textarea.field { resize: none; overflow: hidden; display: block; }
      "id": "w13",
      "name": "Отчёт по 1 этапу",
      "icon": "report",
-     "color": "green",
-     "label": "На проверке",
+     "color": "blue",
+     "label": "На проверке у отдела закупок",
      "due": "до 13.10"
     },
     {
      "id": "w14",
      "name": "Отчёт по 2 этапу",
      "icon": "report",
-     "color": "green",
-     "label": "На проверке",
+     "color": "blue",
+     "label": "На проверке у отдела закупок",
      "due": "до 20.10"
     },
     {
      "id": "w15",
      "name": "Отчёт по 3 этапу",
      "icon": "report",
-     "color": "green",
+     "color": "blue",
      "label": "В работе у Шерпы",
      "due": "до 28.10"
     },
@@ -628,24 +635,24 @@ textarea.field { resize: none; overflow: hidden; display: block; }
      "id": "wmuy1bnsfcbn0",
      "name": "МЭЦ_SmartDocs",
      "icon": "doc",
-     "color": "grey",
+     "color": "yellow",
      "label": "Ждем ОС от МЭЦ по MCP и доступам к тесту",
      "due": "до 14.10"
     },
     {
      "id": "wmuy1bvj24g4q",
-     "name": "Прокси МИК (!!!!)",
+     "name": "Прокси МИК",
      "icon": "doc",
      "color": "red",
-     "label": "с 07.10 (ср) наблюдались технические неполадки с работой ИИ-моделей в нашем контуре. Выяснили что связано с тем, что МИК переписывал &quot;прокси&quot; на другой язык. Ошибки наблюадись 09.10 (пт)",
+     "label": "с 07.10 (ср) наблюдались технические неполадки с работой ИИ-моделей в нашем контуре. Выяснили что связано с тем, что \u003cb>МИК переписывал \"прокси\" на другой язык.\u003c/b> Ошибки наблюадись 09.10 (пт), контур до сих пор не работает. \u003cb>\u003cu>Попросил Шерпу перенести всех агентов в их контур чтобы не приостанавливать тесты\u003c/u>\u003c/b>",
      "due": "-"
     },
     {
      "id": "wmuy1ddq16nzz",
      "name": "Права на Шерпу (бэк/фронт)",
      "icon": "doc",
-     "color": "green",
-     "label": "Промежуточно - передают только доступ к фронту (через сваггер). Бэк - не переходит тк передают неисключительные права. То есть если будут ошибки, баги, то мы не сможем сами ничего менять и другой подрядчик тоже. Планирую встречу с Шерпой, где они расскажут более детально что у нас будет по итогам контракта",
+     "color": "blue",
+     "label": "Промежуточно -\u003cb>\u003cu> передают только доступ к фронту (через сваггер)\u003c/u>\u003c/b>. \u003cb>Бэк - не переходит тк передают неисключительные права. \u003c/b>То есть если будут ошибки, баги, то мы не сможем сами ничего менять и другой подрядчик тоже. Планирую встречу с Шерпой, где они расскажут более детально что у нас будет по итогам контракта",
      "due": ""
     },
     {
@@ -738,6 +745,12 @@ const ICONS = {
   report: '<path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h6"/>',
 };
 const svg = (k) => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICONS[k] || ICONS.doc}<\/svg>`;
+// 1 задача, 2 задачи, 5 задач
+function tasks(n) {
+  const m10 = n % 10, m100 = n % 100;
+  const w = m10 === 1 && m100 !== 11 ? "задача" : m10 >= 2 && m10 <= 4 && (m100 < 12 || m100 > 14) ? "задачи" : "задач";
+  return n + " " + w;
+}
 const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
 
 // статус хранится как размеченный текст (жирный, подчёркнутый, ссылки); старый простой текст переводим один раз
@@ -757,9 +770,8 @@ function render(root = document, isStatic = false) {
 
   const blocks = d.blocks.map((b, bi) => {
     const rows = b.items.map((it, ii) => {
-      const lead = b.numbered
-        ? `<span class="step">${String(ii + 1).padStart(2, "0")}<\/span>`
-        : `<span class="ic">${svg(it.icon)}<\/span>`;
+      // номер задачи: «блок.порядок», чтобы сохранялась последовательность внутри блока
+      const lead = `<span class="step" title="Задача ${bi + 1}.${ii + 1}">${bi + 1}.${ii + 1}<\/span>`;
       const key = it.id;
       const attrs = `data-b="${bi}" data-i="${ii}"`;
       let name, status, due, del = "";
@@ -805,7 +817,7 @@ function render(root = document, isStatic = false) {
       <div class="block-head">
         <div class="tile">${svg(b.icon)}<\/div>
         <div class="num">${String(bi + 1).padStart(2, "0")}<\/div>
-        <div class="titles"><h2>${esc(b.title)}<\/h2><p>${esc(b.desc)}<\/p><\/div>
+        <div class="titles"><h2>${esc(b.title)} <span class="count">${tasks(b.items.length)}<\/span><\/h2><p>${esc(b.desc)}<\/p><\/div>
       <\/div>
       <div class="table" role="table">
         <div class="row th" role="row"><div>Сервисы / работы<\/div><div>Статус<\/div><div>Срок<\/div><\/div>
@@ -815,6 +827,8 @@ function render(root = document, isStatic = false) {
     <\/article>`;
   });
   root.querySelector("#grid").innerHTML = blocks.join("");
+  const total = d.blocks.reduce((n, b) => n + b.items.length, 0);
+  root.querySelector("#total").innerHTML = `Всего: <b>${tasks(total)}<\/b>`;
 
   if (isStatic) {
     const tools = root.querySelector("#tools");
