@@ -283,6 +283,32 @@ textarea.field { resize: none; overflow: hidden; display: block; }
   font: 700 16px/1 var(--f-display); cursor: pointer;
 }
 .icon-btn:hover { color: var(--s-red-fg); border-color: var(--s-red-fg); background: var(--s-red-bg); }
+/* перемещение задач */
+.grip {
+  flex: none; cursor: grab; user-select: none;
+  color: var(--muted); font-size: 16px; line-height: 22px; padding-inline: 1px;
+}
+.grip:active { cursor: grabbing; }
+.svc-edit { display: grid; gap: 5px; width: 100%; min-width: 0; }
+.svc-bar { display: flex; align-items: center; gap: 4px; }
+.svc-bar .gap { flex: 1; }
+.moves { display: flex; gap: 3px; flex: none; }
+.mv-btn {
+  width: 24px; height: 24px; padding: 0; border-radius: 6px;
+  border: 1px solid var(--line); background: var(--panel); color: var(--muted);
+  font: 700 13px/1 var(--f-display); cursor: pointer;
+}
+.mv-btn:hover { color: var(--ink); border-color: var(--muted); }
+.mv-btn:focus-visible { outline: 2px solid var(--c1); outline-offset: 1px; }
+.editing .row { position: relative; }
+.row.dragging { opacity: .45; }
+.row.drop-before::before, .row.drop-after::after {
+  content: ""; position: absolute; left: 0; right: 0; height: 3px; z-index: 2;
+  background: var(--c); border-radius: 2px;
+}
+.row.drop-before::before { top: -2px; }
+.row.drop-after::after { bottom: -2px; }
+.table.drop-end { box-shadow: 0 0 0 2px var(--c); }
 .add-btn { align-self: flex-start; border-style: dashed; color: var(--c); padding: 7px 12px; }
 .editing .row { grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.6fr) 104px; }
 .editing .row > div { align-items: flex-start; }
@@ -332,7 +358,7 @@ textarea.field { resize: none; overflow: hidden; display: block; }
       <b>Фонд МИК</b>
       <span>Внутренние сервисы на базе ИИ</span>
       <span class="date" id="report-date">Отчёт на 13.10.2026</span>
-      <span class="total" id="total">Всего: <b>21 задача</b></span>
+      <span class="total" id="total">Всего: <b>22 задачи</b></span>
       <button class="link-btn" id="b-fit" type="button" hidden=""></button>
     </div>
   </header>
@@ -345,7 +371,7 @@ textarea.field { resize: none; overflow: hidden; display: block; }
         <div class="num">01</div>
         <div class="titles"><h2>Корпоративные инструменты <span class="count">3 задачи</span></h2><p>Сервисы для повышения продуктивности внутренних сотрудников Фонда</p></div>
       </div>
-      <div class="table" role="table">
+      <div class="table" role="table" data-b="0">
         <div class="row th" role="row"><div>Сервисы / работы</div><div>Статус</div><div>Срок</div></div>
         <div class="row">
         <div class="svc"><span class="step" title="Задача 1.1">1.1</span><span class="name-wrap"><span class="name">ИИ-агент транскрибации</span></span></div>
@@ -368,7 +394,7 @@ textarea.field { resize: none; overflow: hidden; display: block; }
         <div class="num">02</div>
         <div class="titles"><h2>База знаний <span class="count">2 задачи</span></h2><p>Удобный доступ к внутренней информации Фонда с помощью ИИ</p></div>
       </div>
-      <div class="table" role="table">
+      <div class="table" role="table" data-b="1">
         <div class="row th" role="row"><div>Сервисы / работы</div><div>Статус</div><div>Срок</div></div>
         <div class="row">
         <div class="svc"><span class="step" title="Задача 2.1">2.1</span><span class="name-wrap"><span class="name">ИИ-агент База Знаний</span></span></div>
@@ -387,7 +413,7 @@ textarea.field { resize: none; overflow: hidden; display: block; }
         <div class="num">03</div>
         <div class="titles"><h2>Закупочные процедуры <span class="count">8 задач</span></h2><p>Автоматизация ключевых этапов закупочного процесса</p></div>
       </div>
-      <div class="table" role="table">
+      <div class="table" role="table" data-b="2">
         <div class="row th" role="row"><div>Сервисы / работы</div><div>Статус</div><div>Срок</div></div>
         <div class="row">
         <div class="svc"><span class="step" title="Задача 3.1">3.1</span><span class="name-wrap"><span class="name">Формирование закупочной документации</span></span></div>
@@ -403,11 +429,11 @@ textarea.field { resize: none; overflow: hidden; display: block; }
         <div class="due">до 14.10</div>
       </div><div class="row">
         <div class="svc"><span class="step" title="Задача 3.4">3.4</span><span class="name-wrap"><span class="name">Проверка КП</span></span></div>
-        <div class="st" data-s="blue"><span class="txt">Тестирование + отдел закупок</span></div>
+        <div class="st" data-s="blue"><span class="txt"><a href="https://www.figma.com/board/me9HNjXWvLGBYLeyowLnXe/%25D0%2598%25D0%2598-%25D0%25B0%25D0%25B3%25D0%25B5%25D0%25BD%25D1%2582%25D1%258B-%25D0%259C%25D0%2598%25D0%259A?node-id=0-1&amp;p=f&amp;t=gmYdYdZI55rqVzLL-0" target="_blank" rel="noopener noreferrer">Тестирование </a>+ отдел закупок</span></div>
         <div class="due">до 14.10</div>
       </div><div class="row">
         <div class="svc"><span class="step" title="Задача 3.5">3.5</span><span class="name-wrap"><span class="name">Формирование НМЦД</span></span></div>
-        <div class="st" data-s="blue"><span class="txt">Тестирование</span></div>
+        <div class="st" data-s="blue"><span class="txt"><a href="https://www.figma.com/board/me9HNjXWvLGBYLeyowLnXe/%25D0%2598%25D0%2598-%25D0%25B0%25D0%25B3%25D0%25B5%25D0%25BD%25D1%2582%25D1%258B-%25D0%259C%25D0%2598%25D0%259A?node-id=0-1&amp;p=f&amp;t=gmYdYdZI55rqVzLL-0" target="_blank" rel="noopener noreferrer">Тестирование</a></span></div>
         <div class="due">до 14.10</div>
       </div><div class="row">
         <div class="svc"><span class="step" title="Задача 3.6">3.6</span><span class="name-wrap"><span class="name">Формирование договора</span></span></div>
@@ -428,9 +454,9 @@ textarea.field { resize: none; overflow: hidden; display: block; }
       <div class="block-head">
         <div class="tile"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"></circle><path d="M12 2.8v2.4M12 18.8v2.4M2.8 12h2.4M18.8 12h2.4M5.5 5.5l1.7 1.7M16.8 16.8l1.7 1.7M5.5 18.5l1.7-1.7M16.8 7.2l1.7-1.7"></path></svg></div>
         <div class="num">04</div>
-        <div class="titles"><h2>Общие вопросы <span class="count">8 задач</span></h2><p>Ключевые сквозные задачи по проекту</p></div>
+        <div class="titles"><h2>Общие вопросы <span class="count">9 задач</span></h2><p>Ключевые сквозные задачи по проекту</p></div>
       </div>
-      <div class="table" role="table">
+      <div class="table" role="table" data-b="3">
         <div class="row th" role="row"><div>Сервисы / работы</div><div>Статус</div><div>Срок</div></div>
         <div class="row">
         <div class="svc"><span class="step" title="Задача 4.1">4.1</span><span class="name-wrap"><span class="name">Дизайн интерфейса</span></span></div>
@@ -463,6 +489,10 @@ textarea.field { resize: none; overflow: hidden; display: block; }
       </div><div class="row">
         <div class="svc"><span class="step" title="Задача 4.8">4.8</span><span class="name-wrap"><span class="name">Ресурсы - Бизнес аналитик (для тех. вопросов, корректировки текущих агентов и пр)</span></span></div>
         <div class="st" data-s="blue"><span class="empty">—</span></div>
+        <div class="due empty">—</div>
+      </div><div class="row">
+        <div class="svc"><span class="step" title="Задача 4.9">4.9</span><span class="name-wrap"><span class="name">Доступ к ИС РПП</span></span></div>
+        <div class="st" data-s="red"><span class="txt">Из нашего контура нет доступов в ИС РПП - необходимо обсудить с сис. админами</span></div>
         <div class="due empty">—</div>
       </div>
       </div>
@@ -560,14 +590,14 @@ textarea.field { resize: none; overflow: hidden; display: block; }
      "id": "w08",
      "name": "Проверка КП",
      "color": "blue",
-     "label": "Тестирование + отдел закупок",
+     "label": "\u003ca href=\"https://www.figma.com/board/me9HNjXWvLGBYLeyowLnXe/%25D0%2598%25D0%2598-%25D0%25B0%25D0%25B3%25D0%25B5%25D0%25BD%25D1%2582%25D1%258B-%25D0%259C%25D0%2598%25D0%259A?node-id=0-1&amp;p=f&amp;t=gmYdYdZI55rqVzLL-0\" target=\"_blank\" rel=\"noopener noreferrer\">Тестирование \u003c/a>+ отдел закупок",
      "due": "до 14.10"
     },
     {
      "id": "w09",
      "name": "Формирование НМЦД",
      "color": "blue",
-     "label": "Тестирование",
+     "label": "\u003ca href=\"https://www.figma.com/board/me9HNjXWvLGBYLeyowLnXe/%25D0%2598%25D0%2598-%25D0%25B0%25D0%25B3%25D0%25B5%25D0%25BD%25D1%2582%25D1%258B-%25D0%259C%25D0%2598%25D0%259A?node-id=0-1&amp;p=f&amp;t=gmYdYdZI55rqVzLL-0\" target=\"_blank\" rel=\"noopener noreferrer\">Тестирование\u003c/a>",
      "due": "до 14.10"
     },
     {
@@ -661,6 +691,14 @@ textarea.field { resize: none; overflow: hidden; display: block; }
      "icon": "doc",
      "color": "blue",
      "label": "",
+     "due": ""
+    },
+    {
+     "id": "wmv0uay0kmkaw",
+     "name": "Доступ к ИС РПП",
+     "icon": "doc",
+     "color": "red",
+     "label": "Из нашего контура нет доступов в ИС РПП - необходимо обсудить с сис. админами",
      "due": ""
     }
    ]
@@ -798,7 +836,11 @@ function render(root = document, isStatic = false) {
           <\/div>
         <\/div>`;
         due = `<input class="field" id="d-${key}" ${attrs} data-f="due" value="${esc(it.due)}" placeholder="до 16.10" aria-label="Плановый срок">`;
-        del = `<button class="icon-btn" type="button" data-del="${bi}-${ii}" title="Удалить работу" aria-label="Удалить работу «${esc(it.name)}»">×<\/button>`;
+        del = `<span class="moves">
+            <button class="mv-btn" type="button" data-move="${bi}-${ii}-up" title="Выше" aria-label="Переместить выше">↑<\/button>
+            <button class="mv-btn" type="button" data-move="${bi}-${ii}-down" title="Ниже" aria-label="Переместить ниже">↓<\/button>
+          <\/span>
+          <button class="icon-btn" type="button" data-del="${bi}-${ii}" title="Удалить работу" aria-label="Удалить работу «${esc(it.name)}»">×<\/button>`;
       } else {
         name = `<span class="name">${esc(it.name)}<\/span>`;
         const html = sanitize(it.label);
@@ -807,8 +849,11 @@ function render(root = document, isStatic = false) {
         due = dv && dv !== "-" ? esc(dv) : "—";
       }
       const dueCls = editing ? "due" : (norm(it.due) && norm(it.due) !== "-" ? "due" : "due empty");
-      return `<div class="row">
-        <div class="svc">${lead}<span class="name-wrap">${name}<\/span>${del}<\/div>
+      const grip = editing ? `<span class="grip" draggable="true" data-drag="${bi}-${ii}" title="Перетащите, чтобы переместить задачу" aria-hidden="true">⠿<\/span>` : "";
+      return `<div class="row"${editing ? ` data-b="${bi}" data-i="${ii}"` : ""}>
+        <div class="svc">${editing
+          ? `<div class="svc-edit"><div class="svc-bar">${grip}${lead}<span class="gap"><\/span>${del}<\/div>${name}<\/div>`
+          : `${lead}<span class="name-wrap">${name}<\/span>`}<\/div>
         <div class="st" data-s="${esc(it.color)}">${status}<\/div>
         <div class="${dueCls}">${due}<\/div>
       <\/div>`;
@@ -819,7 +864,7 @@ function render(root = document, isStatic = false) {
         <div class="num">${String(bi + 1).padStart(2, "0")}<\/div>
         <div class="titles"><h2>${esc(b.title)} <span class="count">${tasks(b.items.length)}<\/span><\/h2><p>${esc(b.desc)}<\/p><\/div>
       <\/div>
-      <div class="table" role="table">
+      <div class="table" role="table" data-b="${bi}">
         <div class="row th" role="row"><div>Сервисы / работы<\/div><div>Статус<\/div><div>Срок<\/div><\/div>
         ${rows}
       <\/div>
@@ -885,7 +930,7 @@ function renderTools(note) {
   const tools = document.getElementById("tools");
   if (!artifactApi && !LOCAL) { tools.hidden = true; return; }
   tools.hidden = false;
-  const hint = "Пишите статус любым текстом и выбирайте цвет. Выделите слова и нажмите Ж (жирный), Ч (подчёркнутый) или значок ссылки. Работы можно переименовать, удалить (×) или добавить внизу блока.";
+  const hint = "Пишите статус любым текстом и выбирайте цвет. Выделите слова и нажмите Ж (жирный), Ч (подчёркнутый) или значок ссылки. Порядок задач меняйте перетаскиванием за значок ⠿ (можно и в другой блок) или стрелками ↑↓. Работы можно переименовать, удалить (×) или добавить внизу блока.";
   tools.innerHTML = draft
     ? `<span class="note">${note || hint}<\/span>
        <button class="btn" id="b-cancel" type="button">Отмена<\/button>
@@ -930,6 +975,85 @@ document.addEventListener("input", (e) => {
 });
 
 window.addEventListener("resize", () => document.querySelectorAll("textarea.field").forEach(autosize));
+
+/* Перемещение задач: перетаскивание за ⠿ и стрелки ↑↓ */
+function moveItem(fb, fi, tb, ti) {
+  const [it] = draft.blocks[fb].items.splice(fi, 1);
+  if (fb === tb && fi < ti) ti--;
+  draft.blocks[tb].items.splice(ti, 0, it);
+  render();
+  return [tb, ti];
+}
+document.addEventListener("click", (e) => {
+  const mv = draft && e.target.closest && e.target.closest("[data-move]");
+  if (!mv) return;
+  const [bi, ii, dir] = mv.dataset.move.split("-");
+  let b = +bi, i = +ii;
+  const items = draft.blocks[b].items;
+  let to;
+  if (dir === "up") {
+    if (i > 0) to = moveItem(b, i, b, i - 1);
+    else if (b > 0) to = moveItem(b, i, b - 1, draft.blocks[b - 1].items.length); // в конец предыдущего блока
+  } else {
+    if (i < items.length - 1) to = moveItem(b, i, b, i + 2);
+    else if (b < draft.blocks.length - 1) to = moveItem(b, i, b + 1, 0); // в начало следующего блока
+  }
+  if (to) {
+    const btn = document.querySelector(`[data-move="${to[0]}-${to[1]}-${dir}"]`);
+    if (btn) { btn.focus(); btn.closest(".row").scrollIntoView({ block: "nearest" }); }
+  }
+});
+
+let dragFrom = null;
+function clearDrop() {
+  document.querySelectorAll(".drop-before, .drop-after, .drop-end").forEach((el) =>
+    el.classList.remove("drop-before", "drop-after", "drop-end"));
+}
+function dropTarget(e) {
+  const table = e.target.closest && e.target.closest(".table");
+  if (!table) return null;
+  const tb = +table.dataset.b;
+  const row = e.target.closest(".row[data-i]");
+  if (!row) return { table, tb, ti: draft.blocks[tb].items.length };
+  const r = row.getBoundingClientRect();
+  const after = e.clientY > r.top + r.height / 2;
+  return { table, row, after, tb, ti: +row.dataset.i + (after ? 1 : 0) };
+}
+document.addEventListener("dragstart", (e) => {
+  const h = draft && e.target.closest && e.target.closest("[data-drag]");
+  if (!h) return;
+  dragFrom = h.dataset.drag.split("-").map(Number);
+  const row = h.closest(".row");
+  e.dataTransfer.effectAllowed = "move";
+  e.dataTransfer.setData("text/plain", "");
+  e.dataTransfer.setDragImage(row, 24, 16);
+  requestAnimationFrame(() => row.classList.add("dragging"));
+});
+document.addEventListener("dragover", (e) => {
+  if (!dragFrom) return;
+  const t = dropTarget(e);
+  if (!t) return;
+  e.preventDefault();
+  e.dataTransfer.dropEffect = "move";
+  clearDrop();
+  if (t.row) t.row.classList.add(t.after ? "drop-after" : "drop-before");
+  else t.table.classList.add("drop-end");
+});
+document.addEventListener("drop", (e) => {
+  if (!dragFrom) return;
+  const t = dropTarget(e);
+  if (!t) return;
+  e.preventDefault();
+  clearDrop();
+  const [fb, fi] = dragFrom;
+  dragFrom = null;
+  moveItem(fb, fi, t.tb, t.ti);
+});
+document.addEventListener("dragend", () => {
+  dragFrom = null;
+  clearDrop();
+  document.querySelectorAll(".row.dragging").forEach((r) => r.classList.remove("dragging"));
+});
 
 /* Оформление статуса: жирный, подчёркнутый, ссылка */
 let linkRange = null; // выделение, к которому применится ссылка
